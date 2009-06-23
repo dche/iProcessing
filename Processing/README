@@ -1,0 +1,16 @@
+
+Processing Touch
+----------------
+
+What Processing Touch is NOT
+
+It is not a processignjs like port of Processing. Processing Touch is not
+able to execute original processing's java style code. You must write in
+Cocoa.
+
+Specification mismatch
+----------------------
+
+1. When using the QUARTZ2D (P2D) mode, the |arc| method will draw a line
+   frome the center of the circle to the end point of the arc.
+   
