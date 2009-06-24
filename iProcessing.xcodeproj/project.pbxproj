@@ -57,6 +57,27 @@
 		5DBE60A90FF05116003176FB /* Functions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE60A80FF05116003176FB /* Functions.m */; };
 		5DBE60D50FF05679003176FB /* BezierEllipse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE60D40FF05679003176FB /* BezierEllipse.m */; };
 		5DBE60DC0FF059ED003176FB /* IncrementDecrement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE60DB0FF059ED003176FB /* IncrementDecrement.m */; };
+		5DBE61960FF0853B003176FB /* Modulo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE61950FF0853B003176FB /* Modulo.m */; };
+		5DBE626B0FF111B7003176FB /* Bezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE626A0FF111B7003176FB /* Bezier.m */; };
+		5DBE62B80FF1478E003176FB /* Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE62B70FF1478E003176FB /* Rotate.m */; };
+		5DBE62CD0FF1496A003176FB /* Translate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE62CC0FF1496A003176FB /* Translate.m */; };
+		5DBE62E80FF14BF6003176FB /* Distance1D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE62E70FF14BF6003176FB /* Distance1D.m */; };
+		5DBE62FD0FF14E84003176FB /* Sine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE62FC0FF14E84003176FB /* Sine.m */; };
+		5DBE63030FF15315003176FB /* SineCosine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE63020FF15315003176FB /* SineCosine.m */; };
+		5DBE630A0FF155D0003176FB /* SineWave.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE63090FF155D0003176FB /* SineWave.m */; };
+		5DBE63590FF15EED003176FB /* AdditiveWave.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE63580FF15EED003176FB /* AdditiveWave.m */; };
+		5DBE636D0FF16545003176FB /* PolarToCartesian.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE636C0FF16545003176FB /* PolarToCartesian.m */; };
+		5DBE63700FF1658E003176FB /* Arctangent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE636F0FF1658E003176FB /* Arctangent.m */; };
+		5DBE64680FF17F70003176FB /* Milliseconds.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE64670FF17F70003176FB /* Milliseconds.m */; };
+		5DBE64760FF180D3003176FB /* Mouse1D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE64750FF180D3003176FB /* Mouse1D.m */; };
+		5DBE64860FF18256003176FB /* Mouse2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE64850FF18256003176FB /* Mouse2D.m */; };
+		5DBE64940FF183CF003176FB /* MouseFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE64930FF183CF003176FB /* MouseFunctions.m */; };
+		5DBE65250FF1934C003176FB /* PObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBE65230FF1934C003176FB /* PObject.h */; };
+		5DBE65260FF1934C003176FB /* PObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE65240FF1934C003176FB /* PObject.m */; };
+		5DBE658B0FF199F7003176FB /* MouseSignals.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBE65890FF199F7003176FB /* MouseSignals.h */; };
+		5DBE658C0FF199F7003176FB /* MouseSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE658A0FF199F7003176FB /* MouseSignals.m */; };
+		5DBE65900FF19B2B003176FB /* Reflection1.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBE658E0FF19B2B003176FB /* Reflection1.h */; };
+		5DBE65910FF19B2B003176FB /* Reflection1.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE658F0FF19B2B003176FB /* Reflection1.m */; };
 		5DD190D30FEA48FF006A7842 /* ProcessingTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DD190D10FEA48FF006A7842 /* ProcessingTestViewController.xib */; };
 		5DD190E10FEA4970006A7842 /* ProcessingTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD190E00FEA4970006A7842 /* ProcessingTestViewController.m */; };
 		5DD1912D0FEA67AD006A7842 /* Hue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD1912C0FEA67AD006A7842 /* Hue.m */; };
@@ -154,6 +175,42 @@
 		5DBE60D40FF05679003176FB /* BezierEllipse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BezierEllipse.m; sourceTree = "<group>"; };
 		5DBE60DA0FF059ED003176FB /* IncrementDecrement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncrementDecrement.h; sourceTree = "<group>"; };
 		5DBE60DB0FF059ED003176FB /* IncrementDecrement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncrementDecrement.m; sourceTree = "<group>"; };
+		5DBE61940FF0853B003176FB /* Modulo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Modulo.h; sourceTree = "<group>"; };
+		5DBE61950FF0853B003176FB /* Modulo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Modulo.m; sourceTree = "<group>"; };
+		5DBE62690FF111B7003176FB /* Bezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bezier.h; sourceTree = "<group>"; };
+		5DBE626A0FF111B7003176FB /* Bezier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bezier.m; sourceTree = "<group>"; };
+		5DBE62B60FF1478E003176FB /* Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rotate.h; sourceTree = "<group>"; };
+		5DBE62B70FF1478E003176FB /* Rotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rotate.m; sourceTree = "<group>"; };
+		5DBE62CB0FF1496A003176FB /* Translate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translate.h; sourceTree = "<group>"; };
+		5DBE62CC0FF1496A003176FB /* Translate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translate.m; sourceTree = "<group>"; };
+		5DBE62E60FF14BF6003176FB /* Distance1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Distance1D.h; sourceTree = "<group>"; };
+		5DBE62E70FF14BF6003176FB /* Distance1D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Distance1D.m; sourceTree = "<group>"; };
+		5DBE62FB0FF14E84003176FB /* Sine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sine.h; sourceTree = "<group>"; };
+		5DBE62FC0FF14E84003176FB /* Sine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sine.m; sourceTree = "<group>"; };
+		5DBE63010FF15315003176FB /* SineCosine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SineCosine.h; sourceTree = "<group>"; };
+		5DBE63020FF15315003176FB /* SineCosine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SineCosine.m; sourceTree = "<group>"; };
+		5DBE63080FF155D0003176FB /* SineWave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SineWave.h; sourceTree = "<group>"; };
+		5DBE63090FF155D0003176FB /* SineWave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SineWave.m; sourceTree = "<group>"; };
+		5DBE63570FF15EED003176FB /* AdditiveWave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdditiveWave.h; sourceTree = "<group>"; };
+		5DBE63580FF15EED003176FB /* AdditiveWave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdditiveWave.m; sourceTree = "<group>"; };
+		5DBE636B0FF16545003176FB /* PolarToCartesian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolarToCartesian.h; sourceTree = "<group>"; };
+		5DBE636C0FF16545003176FB /* PolarToCartesian.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolarToCartesian.m; sourceTree = "<group>"; };
+		5DBE636E0FF1658E003176FB /* Arctangent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arctangent.h; sourceTree = "<group>"; };
+		5DBE636F0FF1658E003176FB /* Arctangent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Arctangent.m; sourceTree = "<group>"; };
+		5DBE64660FF17F70003176FB /* Milliseconds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Milliseconds.h; sourceTree = "<group>"; };
+		5DBE64670FF17F70003176FB /* Milliseconds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Milliseconds.m; sourceTree = "<group>"; };
+		5DBE64740FF180D3003176FB /* Mouse1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse1D.h; sourceTree = "<group>"; };
+		5DBE64750FF180D3003176FB /* Mouse1D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mouse1D.m; sourceTree = "<group>"; };
+		5DBE64840FF18256003176FB /* Mouse2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse2D.h; sourceTree = "<group>"; };
+		5DBE64850FF18256003176FB /* Mouse2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mouse2D.m; sourceTree = "<group>"; };
+		5DBE64920FF183CF003176FB /* MouseFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseFunctions.h; sourceTree = "<group>"; };
+		5DBE64930FF183CF003176FB /* MouseFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseFunctions.m; sourceTree = "<group>"; };
+		5DBE65230FF1934C003176FB /* PObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PObject.h; sourceTree = "<group>"; };
+		5DBE65240FF1934C003176FB /* PObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PObject.m; sourceTree = "<group>"; };
+		5DBE65890FF199F7003176FB /* MouseSignals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseSignals.h; sourceTree = "<group>"; };
+		5DBE658A0FF199F7003176FB /* MouseSignals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseSignals.m; sourceTree = "<group>"; };
+		5DBE658E0FF19B2B003176FB /* Reflection1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reflection1.h; sourceTree = "<group>"; };
+		5DBE658F0FF19B2B003176FB /* Reflection1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reflection1.m; sourceTree = "<group>"; };
 		5DD190D10FEA48FF006A7842 /* ProcessingTestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProcessingTestViewController.xib; sourceTree = "<group>"; };
 		5DD190DF0FEA4970006A7842 /* ProcessingTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingTestViewController.h; sourceTree = "<group>"; };
 		5DD190E00FEA4970006A7842 /* ProcessingTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessingTestViewController.m; sourceTree = "<group>"; };
@@ -304,6 +361,8 @@
 				5DA3EF650FE6ED170028380E /* PGraphics.m */,
 				5DA3EF680FE6F2740028380E /* PGraphics3D.h */,
 				5DA3EF690FE6F2740028380E /* PGraphics3D.m */,
+				5DBE65230FF1934C003176FB /* PObject.h */,
+				5DBE65240FF1934C003176FB /* PObject.m */,
 				5DBE5DF10FF01A23003176FB /* README */,
 			);
 			path = Processing;
@@ -320,6 +379,16 @@
 				5DBE57E20FEDA785003176FB /* Easing.m */,
 				5DBE57E40FEDA86E003176FB /* StoringInput.h */,
 				5DBE57E50FEDA86E003176FB /* StoringInput.m */,
+				5DBE64660FF17F70003176FB /* Milliseconds.h */,
+				5DBE64670FF17F70003176FB /* Milliseconds.m */,
+				5DBE64740FF180D3003176FB /* Mouse1D.h */,
+				5DBE64750FF180D3003176FB /* Mouse1D.m */,
+				5DBE64840FF18256003176FB /* Mouse2D.h */,
+				5DBE64850FF18256003176FB /* Mouse2D.m */,
+				5DBE64920FF183CF003176FB /* MouseFunctions.h */,
+				5DBE64930FF183CF003176FB /* MouseFunctions.m */,
+				5DBE65890FF199F7003176FB /* MouseSignals.h */,
+				5DBE658A0FF199F7003176FB /* MouseSignals.m */,
 			);
 			name = Input;
 			sourceTree = "<group>";
@@ -331,6 +400,8 @@
 				5DBE5AB60FEED88A003176FB /* PieChart.m */,
 				5DBE60D30FF05679003176FB /* BezierEllipse.h */,
 				5DBE60D40FF05679003176FB /* BezierEllipse.m */,
+				5DBE62690FF111B7003176FB /* Bezier.h */,
+				5DBE626A0FF111B7003176FB /* Bezier.m */,
 			);
 			name = Form;
 			sourceTree = "<group>";
@@ -353,6 +424,15 @@
 				5DBE60A80FF05116003176FB /* Functions.m */,
 			);
 			name = Structure;
+			sourceTree = "<group>";
+		};
+		5DBE658D0FF19B17003176FB /* Motion */ = {
+			isa = PBXGroup;
+			children = (
+				5DBE658E0FF19B2B003176FB /* Reflection1.h */,
+				5DBE658F0FF19B2B003176FB /* Reflection1.m */,
+			);
+			name = Motion;
 			sourceTree = "<group>";
 		};
 		5DD190E80FEA49A9006A7842 /* Examples */ = {
@@ -408,6 +488,22 @@
 				5DD191600FEA8185006A7842 /* Distance2D.m */,
 				5DBE60DA0FF059ED003176FB /* IncrementDecrement.h */,
 				5DBE60DB0FF059ED003176FB /* IncrementDecrement.m */,
+				5DBE61940FF0853B003176FB /* Modulo.h */,
+				5DBE61950FF0853B003176FB /* Modulo.m */,
+				5DBE62E60FF14BF6003176FB /* Distance1D.h */,
+				5DBE62E70FF14BF6003176FB /* Distance1D.m */,
+				5DBE62FB0FF14E84003176FB /* Sine.h */,
+				5DBE62FC0FF14E84003176FB /* Sine.m */,
+				5DBE63010FF15315003176FB /* SineCosine.h */,
+				5DBE63020FF15315003176FB /* SineCosine.m */,
+				5DBE63080FF155D0003176FB /* SineWave.h */,
+				5DBE63090FF155D0003176FB /* SineWave.m */,
+				5DBE63570FF15EED003176FB /* AdditiveWave.h */,
+				5DBE63580FF15EED003176FB /* AdditiveWave.m */,
+				5DBE636B0FF16545003176FB /* PolarToCartesian.h */,
+				5DBE636C0FF16545003176FB /* PolarToCartesian.m */,
+				5DBE636E0FF1658E003176FB /* Arctangent.h */,
+				5DBE636F0FF1658E003176FB /* Arctangent.m */,
 			);
 			name = Math;
 			sourceTree = "<group>";
@@ -415,6 +511,7 @@
 		5DD191660FEA85A9006A7842 /* Topics */ = {
 			isa = PBXGroup;
 			children = (
+				5DBE658D0FF19B17003176FB /* Motion */,
 			);
 			name = Topics;
 			sourceTree = "<group>";
@@ -426,6 +523,10 @@
 				5DD191690FEA89F3006A7842 /* Arm.m */,
 				5DD1916B0FEA89FC006A7842 /* Scale.h */,
 				5DD1916C0FEA89FC006A7842 /* Scale.m */,
+				5DBE62B60FF1478E003176FB /* Rotate.h */,
+				5DBE62B70FF1478E003176FB /* Rotate.m */,
+				5DBE62CB0FF1496A003176FB /* Translate.h */,
+				5DBE62CC0FF1496A003176FB /* Translate.m */,
 			);
 			name = Transform;
 			sourceTree = "<group>";
@@ -451,6 +552,9 @@
 				5DA3EE080FE6AEEC0028380E /* Processing+core.h in Headers */,
 				5DA3EF660FE6ED170028380E /* PGraphics.h in Headers */,
 				5DA3EF6A0FE6F2740028380E /* PGraphics3D.h in Headers */,
+				5DBE65250FF1934C003176FB /* PObject.h in Headers */,
+				5DBE658B0FF199F7003176FB /* MouseSignals.h in Headers */,
+				5DBE65900FF19B2B003176FB /* Reflection1.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +659,21 @@
 				5DBE60A90FF05116003176FB /* Functions.m in Sources */,
 				5DBE60D50FF05679003176FB /* BezierEllipse.m in Sources */,
 				5DBE60DC0FF059ED003176FB /* IncrementDecrement.m in Sources */,
+				5DBE61960FF0853B003176FB /* Modulo.m in Sources */,
+				5DBE626B0FF111B7003176FB /* Bezier.m in Sources */,
+				5DBE62B80FF1478E003176FB /* Rotate.m in Sources */,
+				5DBE62CD0FF1496A003176FB /* Translate.m in Sources */,
+				5DBE62E80FF14BF6003176FB /* Distance1D.m in Sources */,
+				5DBE62FD0FF14E84003176FB /* Sine.m in Sources */,
+				5DBE63030FF15315003176FB /* SineCosine.m in Sources */,
+				5DBE630A0FF155D0003176FB /* SineWave.m in Sources */,
+				5DBE63590FF15EED003176FB /* AdditiveWave.m in Sources */,
+				5DBE636D0FF16545003176FB /* PolarToCartesian.m in Sources */,
+				5DBE63700FF1658E003176FB /* Arctangent.m in Sources */,
+				5DBE64680FF17F70003176FB /* Milliseconds.m in Sources */,
+				5DBE64760FF180D3003176FB /* Mouse1D.m in Sources */,
+				5DBE64860FF18256003176FB /* Mouse2D.m in Sources */,
+				5DBE64940FF183CF003176FB /* MouseFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +693,9 @@
 				5DA3EE070FE6AEEC0028380E /* PFont.m in Sources */,
 				5DA3EF670FE6ED170028380E /* PGraphics.m in Sources */,
 				5DA3EF6B0FE6F2740028380E /* PGraphics3D.m in Sources */,
+				5DBE65260FF1934C003176FB /* PObject.m in Sources */,
+				5DBE658C0FF199F7003176FB /* MouseSignals.m in Sources */,
+				5DBE65910FF19B2B003176FB /* Reflection1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
