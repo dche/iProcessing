@@ -8,7 +8,7 @@
 
 #import "Processing.h"
 
-#define FULL_ALPHA                      (colorRanges_[3])
+#define FULL_ALPHA                      (colorRanges_[A])
 #define BLACK                           0xFF000000
 
 static UInt8 colorValue(color clr, unsigned int component)
@@ -21,7 +21,7 @@ static UInt8 colorValue(color clr, unsigned int component)
 
 - (void)background:(color)clr
 {
-    if (clr <= 255) {
+    if (clr <= 0x1000000) {
         [self background:[self color:clr]];
     } else {
         float r, g, b, a;
@@ -92,7 +92,9 @@ static UInt8 colorValue(color clr, unsigned int component)
 
 - (void)fill:(color)clr
 {
-    if (clr <= 255) {
+    // ARGB, the order is important. Other wise we can't distinguish gray value
+    // and normal color value.
+    if (clr < 0x1000000) {
         [self fill:[self color:clr]];
     } else {
         float r, g, b, a;
@@ -134,7 +136,7 @@ static UInt8 colorValue(color clr, unsigned int component)
 
 - (void)stroke:(color)clr
 {
-    if (clr <= 255) {
+    if (clr < 0x1000000) {
         [self stroke:[self color:clr]];
     } else {
         float r, g, b, a;
@@ -206,8 +208,8 @@ static UInt8 colorValue(color clr, unsigned int component)
     UInt32 c;
     
     if (gray <= 0) c = 0;
-    if (gray >= 255) c = 255;   // For gray, color ranges of all components are not used.
-    else c = (UInt32)gray;
+    if (gray >= colorRanges_[G]) c = 255;   // For gray, the range of green/saturation is used.
+    else c = (UInt32)(gray * 255.0f / colorRanges_[G]);
     
     UInt32 a = [self normalizedColorComponent:alpha index:A];
     
