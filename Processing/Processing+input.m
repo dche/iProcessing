@@ -17,7 +17,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // mousePressed, mouseX, mouseY. mousePressed should be set to NO after event fired.
+    // mousePressed, mouseX, mouseY.
     UITouch *touch = [[event touchesForView:self.view] anyObject];
     
     mousePressed_ = YES;
@@ -27,6 +27,8 @@
     CGPoint pos = [touch locationInView:self.view];
     mouseX_ = [self constrain:pos.x :0 :[self width]];
     mouseY_ = [self constrain:pos.y :0 :[self height]];
+    
+    [self mousePressed];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -34,23 +36,26 @@
     // mouseDragged = YES and mouseMoved = YES
     UITouch *touch = [[event touchesForView:self.view] anyObject];
     
-    mouseDragged_ = mouseMoved_ = YES;
     pMouseX_ = mouseX_;
     pMouseY_ = mouseY_;
     
     CGPoint pos = [touch locationInView:self.view];
     mouseX_ = [self constrain:pos.x :0 :[self width]];
-    mouseY_ = [self constrain:pos.y :0 :[self height]];    
+    mouseY_ = [self constrain:pos.y :0 :[self height]];
+    
+    [self mouseMoved];
+    [self mouseDragged];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // mouseReleased and/or mouseClicked. Both should be set to NO after event fired.
-    mouseReleased_ = YES;
-    
     UITouch *touch = [[event touchesForView:self.view] anyObject];
     
-    mouseClicked_ = (touch.tapCount > 0);
+    mousePressed_ = NO;
+    [self mouseReleased];
+    if (touch.tapCount > 0) {
+        [self mouseClicked];
+    }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -155,7 +160,7 @@
 // Returns the milliseconds since the view loaded.
 - (int)millis
 {
-    NSTimeInterval ti = [startTime_ timeIntervalSinceNow];
+    NSTimeInterval ti = -[startTime_ timeIntervalSinceNow];
     return (int)floor(ti * 1000);
 }
 
