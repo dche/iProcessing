@@ -92,13 +92,37 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[IncrementDecrement class]];
     [examples setObject:demoController forKey:@"Increment/Decrement"];
     [demoController release];
+    /// Modulo
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Modulo class]];
+    [examples setObject:demoController forKey:@"Modulo"];
+    [demoController release];
     /// Random
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Random class]];
     [examples setObject:demoController forKey:@"Random"];
     [demoController release];
+    /// Distance1D
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Distance1D class]];
+    [examples setObject:demoController forKey:@"Distance1D"];
+    [demoController release];
     /// Distance2D
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Distance2D class]];
     [examples setObject:demoController forKey:@"Distance2D"];
+    [demoController release];
+    /// Sine
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Sine class]];
+    [examples setObject:demoController forKey:@"Sine"];
+    [demoController release];
+    /// SineCosine
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[SineCosine class]];
+    [examples setObject:demoController forKey:@"SineCosine"];
+    [demoController release];
+    /// SineWave
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[SineWave class]];
+    [examples setObject:demoController forKey:@"SineWave"];
+    [demoController release];
+    /// Arctangent
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Arctangent class]];
+    [examples setObject:demoController forKey:@"Arctangent"];
     [demoController release];
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
@@ -114,9 +138,17 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Arm class]];
     [examples setObject:demoController forKey:@"Arm"];
     [demoController release];    
+    /// Rotate
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Rotate class]];
+    [examples setObject:demoController forKey:@"Rotate"];
+    [demoController release];
     /// Scale
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Scale class]];
     [examples setObject:demoController forKey:@"Scale"];
+    [demoController release];
+    /// Translate
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Translate class]];
+    [examples setObject:demoController forKey:@"Translate"];
     [demoController release];
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
@@ -131,6 +163,10 @@
     /// PieChart
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[PieChart class]];
     [examples setObject:demoController forKey:@"PieChart"];
+    [demoController release];    
+    /// Bezier
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Bezier class]];
+    [examples setObject:demoController forKey:@"Bezier"];
     [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
@@ -158,6 +194,22 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[StoringInput class]];
     [examples setObject:demoController forKey:@"StoringInput"];
     [demoController release];
+    /// Mouse1D
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Mouse1D class]];
+    [examples setObject:demoController forKey:@"Mouse1D"];
+    [demoController release];
+    /// Mouse2D
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Mouse2D class]];
+    [examples setObject:demoController forKey:@"Mosue2D"];
+    [demoController release];
+    /// MouseFunctions
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[MouseFunctions class]];
+    [examples setObject:demoController forKey:@"MouseFunctions"];
+    [demoController release];
+    /// Milliseconds
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Milliseconds class]];
+    [examples setObject:demoController forKey:@"Milliseconds"];
+    [demoController release];
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
@@ -168,6 +220,24 @@
     
     [categoryList setObject:basicCategories forKey:@"Basic"];
     [basicCategories release];
+    
+    NSMutableDictionary *topicsCategories = [[NSMutableDictionary alloc] init];
+    // Topics - Motion
+    examples = [[NSMutableDictionary alloc] init];    
+    /// Reflection1
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Reflection1 class]];
+    [examples setObject:demoController forKey:@"Reflection1"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Motion";
+    [topicsCategories setObject:listController forKey:listController.title];
+    [listController release];
+    
+    [categoryList setObject:topicsCategories forKey:@"Topics"];
+    [topicsCategories release];    
 }
 
 /*
@@ -217,7 +287,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -239,7 +309,7 @@
     if (section == 0)
         categories = [categoryList objectForKey:@"Basic"];
     else if (section == 1) {
-        categories = [categoryList objectForKey:@"Topic"];
+        categories = [categoryList objectForKey:@"Topics"];
     } else {
         categories = [categoryList objectForKey:@"3D"];
     }
@@ -264,7 +334,7 @@
     if (indexPath.section == 0)
         categories = [[categoryList objectForKey:@"Basic"] allKeys];
     else if (indexPath.section == 1) {
-        categories = [[categoryList objectForKey:@"Topic"] allKeys];
+        categories = [[categoryList objectForKey:@"Topics"] allKeys];
     } else {
         categories = [[categoryList objectForKey:@"3D"] allKeys];
     }
@@ -289,7 +359,7 @@
      if (indexPath.section == 0)
          categories = [categoryList objectForKey:@"Basic"];
      else if (indexPath.section == 1) {
-         categories = [categoryList objectForKey:@"Topic"];
+         categories = [categoryList objectForKey:@"Topics"];
      } else {
          categories = [categoryList objectForKey:@"3D"];
      }

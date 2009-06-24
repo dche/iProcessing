@@ -24,18 +24,18 @@
 
 - (void)draw
 {
-    [self background:102 :255];
+    [self background:102];
     
     a = a + 0.04;
     s = [self cos:a]*2;
     
     [self translate:[self width]/2 :[self height]/2];
-    [self scale:s]; 
+    [self scale:s];
     [self fill:51];
     [self rect:0 :0 :50 :50]; 
     
     [self translate:75 :0];
-    [self fill:255 :255];
+    [self fill:255];
     [self scale:s];
     [self rect:0 :0 :50 :50];    
 }
