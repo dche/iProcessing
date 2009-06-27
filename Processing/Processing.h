@@ -1,6 +1,6 @@
 //
 //  Processing+core.h
-//  BubbleTalk
+//  Processing Touch
 //
 //  Created by Kenan Che on 09-06-05.
 //  Copyright 2009 campl software. All rights reserved.
@@ -12,5 +12,7 @@
 #import "Processing+shape.h"
 #import "Processing+input.h"
 #import "Processing+transformation.h"
+#import "Processing+image.h"
+#import "Processing+text.h"
 
 #import "PObject.h"

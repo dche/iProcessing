@@ -1,6 +1,6 @@
 //
 //  Processing+shape.h
-//  BubbleTalk
+//  Processing Touch
 //
 //  Created by Kenan Che on 09-06-05.
 //  Copyright 2009 campl software. All rights reserved.
@@ -96,7 +96,7 @@
                    :(float)d 
                    :(float)t;
 // bezierTangent()
-- (void)bezierTangent:(float)fa 
+- (void)bezierTangent:(float)a 
                      :(float)b 
                      :(float)c 
                      :(float)d 
@@ -125,14 +125,14 @@
 // curveDetail()
 - (void)curveDetail:(int)aInt;
 // curvePoint()
-- (void)curvePoint:(float)fa 
-                  :(float)fb 
-                  :(float)fc 
-                  :(float)fd 
+- (void)curvePoint:(float)a 
+                  :(float)b 
+                  :(float)c 
+                  :(float)d 
                   :(float)t;
 // curveTangent()
 - (void)curveTangent:(float)a 
-                    :(float)fb 
+                    :(float)b 
                     :(float)c 
                     :(float)d 
                     :(float)t;
@@ -177,7 +177,6 @@
 - (void)endShape:(int)mode;
 - (void)vertex:(float)x :(float)y;
 - (void)vertex:(float)x :(float)y :(float)z;
-- (void)vertexWithX;
 - (void)curveVertex:(float)x :(float)y;
 - (void)curveVertex:(float)x :(float)y :(float)z;
 - (void)bezierVertex:(float)cx1 

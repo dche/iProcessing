@@ -168,11 +168,37 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Bezier class]];
     [examples setObject:demoController forKey:@"Bezier"];
     [demoController release];    
+    /// ShapePrimitives
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[ShapePrimitives class]];
+    [examples setObject:demoController forKey:@"ShapePrimitives"];
+    [demoController release];    
+    /// TriangleStrip
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[TriangleStrip class]];
+    [examples setObject:demoController forKey:@"TriangleStrip"];
+    [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
     [examples release];
     listController.title = @"Form";
+    [basicCategories setObject:listController forKey:listController.title];
+    [listController release];
+    
+    // Basic - Typography
+    examples = [[NSMutableDictionary alloc] init];    
+    /// Words
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Words class]];
+    [examples setObject:demoController forKey:@"Words"];
+    [demoController release];    
+    /// Letters
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Letters class]];
+    [examples setObject:demoController forKey:@"Letters"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Typography";
     [basicCategories setObject:listController forKey:listController.title];
     [listController release];
     
@@ -295,7 +321,7 @@
     if (section == 0)
         return @"Basic";
     else if (section == 1) {
-        return @"Topic";
+        return @"Topics";
     } else {
         return @"3D";
     }

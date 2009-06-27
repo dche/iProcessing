@@ -10,6 +10,10 @@
 // Basic - Spec
 #import "ProcessingSpec.h"
 
+// Basic - Typography
+#import "Letters.h"
+#import "Words.h"
+
 // Basic - Color
 #import "Brightness.h"
 #import "Hue.h"
@@ -47,6 +51,9 @@
 // Basic - Form
 #import "PieChart.h"
 #import "Bezier.h"
+#import "Vertices.h"
+#import "ShapePrimitives.h"
+#import "TriangleStrip.h"
 
 // Basic - Structure
 #import "Redraw.h"

@@ -186,7 +186,7 @@ static const float ellipseSpeed = 3.5;
     
     // draw base
     [self fill:200];
-    // quad(baseX1, baseY1, baseX2, baseY2, baseX2, height, 0, height);
+    [self quad:baseX1 :baseY1 :baseX2 :baseY2 :baseX2 :[self height] :0 :[self height]];
     
     // calculate base top normal
     float baseDeltaX = (baseX2-baseX1)/baseLength;

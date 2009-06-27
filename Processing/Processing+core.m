@@ -10,9 +10,13 @@
 #import "PGraphics.h"
 #import "PGraphics3D.h"
 
+#define kFPSSampleRate                  3
+#define kDefaultVerticesArrayLength     30
+#define kDefaultFrameRate               30
+
 @interface Processing ()
 
-- (void)setDefaults;
+- (void)applyCurrentStyle;
 - (void)startLoop;
 - (void)stopLoop;
 - (void)drawView;
@@ -33,18 +37,20 @@
 {
     if (self = [super init]) {
         container_ = [containerView retain];
+        shapeBegan_ = NO;
         
         mode_ = P2D;
         loop_ = YES;
-        smooth_ = YES;
         frameRate_ = kDefaultFrameRate;
-        rectMode_ = CORNER;
-        ellipseMode_ = CENTER;
-
-        [self colorMode:RGB];        
-        startTime_ = [NSDate date];
-        
+        startTime_ = [[NSDate date] retain];        
         showFPS_ = YES;
+        
+        styleStack_ = [[NSMutableArray alloc] init];
+        curStyle_ = [[PStyle alloc] init];
+        
+        // init the vertex array, used by beginShape().
+        vertices_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength * sizeof(PVertex)];
+        indices_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength];
         
         [self setup];
     }
@@ -64,16 +70,26 @@
     [graphics_ release];
     [container_ release];
     [startTime_ release];
+    [curStyle_ release];
+    [styleStack_ release];
+    
+    [vertices_ release];
+    [indices_ release];
     
     [super dealloc];
 }
 
 - (void)drawView
 {
-    if (self.view) {
-        frameCount_ += 1;
-        [graphics_ draw];
-    }
+    frameCount_ += 1;    
+    [graphics_ draw];
+}
+
+- (void)guardedDraw
+{
+    [self pushMatrix];
+    [self draw];
+    [self popMatrix];
 }
 
 #pragma mark -
@@ -83,12 +99,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    visible_ = YES;
     [self startLoop];    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    visible_ = NO;
     [self stopLoop];
 }
 
@@ -116,22 +134,26 @@
 {}
 - (void)mousePressed
 {}
-- (void)mosueReleased
+- (void)mouseReleased
 {}
 
 - (void)startLoop
 {
-    if (loop_) {
+    if (loop_ && visible_ && loopTimer_ == nil) {
         loopTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0f/frameRate_ 
                                                       target:self 
                                                     selector:@selector(drawView) 
                                                     userInfo:nil 
                                                      repeats:YES];
-        fpsTimer_ = [NSTimer scheduledTimerWithTimeInterval:1 
-                                                     target:self 
-                                                   selector:@selector(drawFPS) 
-                                                   userInfo:nil 
-                                                    repeats:YES];
+        
+        if (showFPS_) {
+            fpsTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0f/kFPSSampleRate
+                                                         target:self 
+                                                       selector:@selector(drawFPS) 
+                                                       userInfo:nil 
+                                                        repeats:YES];
+            
+        }
     }
 }
 
@@ -139,34 +161,50 @@
 {
     if (loopTimer_) {
         [loopTimer_ invalidate];
-        loopTimer_ = nil;
-        
+        loopTimer_ = nil;        
+    }
+    
+    if (fpsTimer_) {
         [fpsTimer_ invalidate];
-        fpsTimer_ = nil;
+        fpsTimer_ = nil;        
     }
 }
 
-// Called in |size()| after the graphics object is created.
-- (void)setDefaults
+- (void)applyCurrentStyle
 {
     if (graphics_ == nil) return;
     
     // fill color, stroke color, stroke cap, join and weight
-    [self background:51];
-    [self fill:[self color:251]];
-    [self stroke:[self color:0]];
-    [self strokeCap:ROUND];
-    [self strokeJoin:MITER];
-    [self strokeWeight:1];    
+    BOOL doFill, doStroke, doTint;
+    
+    doFill = curStyle_.doFill;
+    doStroke = curStyle_.doStroke;
+    doTint = curStyle_.doTint;
+    
+    [self colorMode:RGB];
+    [self fill:curStyle_.fillColor];
+    [self stroke:curStyle_.strokeColor];
+    [self strokeCap:curStyle_.strokeCap];
+    [self strokeJoin:curStyle_.strokeJoin];
+    [self strokeWeight:curStyle_.strokeWeight];
+//    [self tint:curStyle_.tintColor];
+    
+    if (!doFill) [self noFill];
+    if (!doStroke) [self noStroke];
+//    if (!doTint) [self noTint];
+    
+    // font
+    [self textFont:curStyle_.curFont];
+    [self textAlign:curStyle_.textHorAlign :curStyle_.textVerAlign];
+    [self textLeading:curStyle_.textLeading];
+    [self textMode:curStyle_.textMode];
 }
 
 - (void)drawFPS
 {
     NSUInteger fps = frameCount_ - prevFrameCount_;
     prevFrameCount_ = frameCount_;
-    
-    // TODO: draw on the canvas after text support is done.
-    NSLog(@"FPS: %d", fps);
+    NSLog(@"FPS: %d", fps * kFPSSampleRate);
 }
 
 #pragma mark -
@@ -250,7 +288,14 @@
 
 // quit gracefully
 - (void)exit
-{}
+{
+    [self viewWillDisappear:NO];
+    [self.view removeFromSuperview];
+    [self viewDidDisappear:NO];
+    
+    self.view = nil;
+    graphics_ = nil;
+}
 
 // enable loop
 - (void)loop
@@ -271,20 +316,28 @@
 // restore original style
 - (void)popStyle
 {
+    if ([styleStack_ count] < 1) return;
+    [curStyle_ release];
+    curStyle_ = [styleStack_ objectAtIndex:[styleStack_ count] - 1];
+    [curStyle_ retain];
+    [styleStack_ removeLastObject];
     
+    [self applyCurrentStyle];
 }
 
 // save current style
 - (void)pushStyle
 {
-    
+    PStyle *style = [curStyle_ copy];
+    [styleStack_ addObject:style];
+    [style release];
 }
 
 // executes the code within draw() one time
 - (void)redraw
 {
     if (!loop_) {
-        [self draw];
+        [self drawView];
     }
 }
 
@@ -326,7 +379,13 @@
     
     self.view.userInteractionEnabled = YES;
     graphics_ = self.view;
-    [self setDefaults];    
+    
+    // Set the default background color, which is not part of style.
+    [self background:51];
+    // Disable smooth by default.
+    [self noSmooth];
+    // Apply default style.
+    [self applyCurrentStyle];    
 }
 
 @end

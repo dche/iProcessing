@@ -1,6 +1,6 @@
 //
 //  Processing+math+random.h
-//  BubbleTalk
+//  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
 //  Copyright 2009 campl software. All rights reserved.

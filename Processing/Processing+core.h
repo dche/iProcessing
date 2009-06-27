@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProcessingMacros.h"
 #import "ProcessingTypes.h"
 #import "PGraphics.h"
+#import "PStyle.h"
 
 @class Processing;
 
@@ -20,36 +22,30 @@
     UIView *container_;
     id<PGraphics> graphics_;
     
+    BOOL shapeBegan_;
+    int vertexMode_;
+    NSMutableData *vertices_;
+    NSMutableData *indices_;
+    
     // variables used to maintain status
     int mode_;
     BOOL loop_;
+    BOOL visible_;
     NSUInteger frameRate_;
-    BOOL smooth_;
-    int rectMode_;
-    int ellipseMode_;
-    int strokeCap_;
-    int strokeJoin_;
-    float strokeWeight_;
-    
-    int colorMode_;
-    float colorRanges_[4];
-    color backgroundColor_;
-    color fillColor_;
-    color strokeColor_;
-    
+
     /// Mouse input states
-    BOOL mouseMoved_;
     BOOL mousePressed_;
-    BOOL mouseReleased_;
-    BOOL mouseDragged_;
-    BOOL mouseClicked_;
     float mouseX_;
     float mouseY_;
     float pMouseX_;
     float pMouseY_;
     
-    NSDate *startTime_;
+    NSMutableArray *styleStack_;
+    PStyle *curStyle_;
     
+    /// For computing |milli|
+    NSDate *startTime_;
+    /// Loop and frameCount.
     NSTimer *loopTimer_;
     NSUInteger frameCount_;
     
@@ -59,13 +55,16 @@
     NSUInteger prevFrameCount_;
 }
 
+/// Control if measure the Frames per second.
 @property (assign) BOOL showFPS;
 
 - (id)initWithContainer:(UIView *)containerView;
 
-/// TODO: Execute a Processing code.
+/// Called by concrete PGraphics instance.
+- (void)guardedDraw;
+
+/// TODO: Execute raw Processing code.
 ///
-/// This method will create a subview in the containerView. 
 + (void)execute:(NSString *)code inContainer:(UIView *)containerView;
 
 #pragma mark -
@@ -79,7 +78,7 @@
 - (void)mouseMoved;
 - (void)mouseDragged;
 - (void)mousePressed;
-- (void)mosueReleased;
+- (void)mouseReleased;
 
 #pragma mark -
 #pragma mark Environment

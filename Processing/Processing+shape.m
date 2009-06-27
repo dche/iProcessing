@@ -1,6 +1,6 @@
 //
 //  Processing+shape.m
-//  BubbleTalk
+//  Processing Touch
 //
 //  Created by Kenan Che on 09-06-05.
 //  Copyright 2009 campl software. All rights reserved.
@@ -36,6 +36,48 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
     return CGRectMake(ox, oy, w, h);    
 }
 
+@interface Processing (Vertices)
+
+- (void)addVertex:(PVertex)v;
+- (void)addCurveVertex:(PVertex)v;
+- (void)addBezierVertices:(PVertex)cp1 :(PVertex)cp2 :(PVertex)p;
+- (void)resetVertices;
+
+@end
+
+@implementation Processing (Vertices)
+
+- (void)addVertex:(PVertex)v
+{
+    Byte vt = PVertexNormal;
+    [vertices_ appendBytes:&v length:sizeof(PVertex)];
+    [indices_ appendBytes:&vt length:1];
+}
+
+- (void)addCurveVertex:(PVertex)v
+{
+    Byte vt = PVertexCurve;
+    [vertices_ appendBytes:&v length:sizeof(PVertex)];
+    [indices_ appendBytes:&vt length:1];    
+}
+
+- (void)addBezierVertices:(PVertex)cp1 :(PVertex)cp2 :(PVertex)p
+{
+    Byte vt = PVertexBezier;
+    PVertex vs[] = { cp1, cp2, p };
+    [vertices_ appendBytes:vs length:sizeof(PVertex) * 3];
+    [indices_ appendBytes:&vt length:1];        
+}
+
+- (void)resetVertices
+{
+    [vertices_ setLength:0];
+    [indices_ setLength:0];
+}
+
+@end
+
+
 @implementation Processing (Shape)
 
 #pragma mark -
@@ -49,7 +91,9 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
            :(float)start 
            :(float)stop
 {
-    CGRect rect = normalizedRectangle(x, y, width, height, ellipseMode_);
+    if (shapeBegan_) return;
+    
+    CGRect rect = normalizedRectangle(x, y, width, height, curStyle_.ellipseMode);
     if (CGRectIsEmpty(rect) || CGRectIsNull(rect) || CGRectIsInfinite(rect))
         return;
     
@@ -68,7 +112,9 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
                :(float)x2 
                :(float)y2
 {
-    CGRect rect = normalizedRectangle(x1, y1, x2, y2, ellipseMode_);
+    if (shapeBegan_) return;
+    
+    CGRect rect = normalizedRectangle(x1, y1, x2, y2, curStyle_.ellipseMode);
     if (CGRectIsEmpty(rect) || CGRectIsNull(rect) || CGRectIsInfinite(rect))
         return;
     
@@ -94,7 +140,12 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
             :(float)y2 
             :(float)z2
 {
-    [graphics_ line:x1 :y1 :z1 :x2 :y2 :z2];
+    if (shapeBegan_) return;
+    
+    [self beginShape:LINES];
+    [self vertex:x1 :y1 :z1];
+    [self vertex:x2 :y2 :z2];
+    [self endShape];
 }
 
 // point()
@@ -108,7 +159,11 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
              :(float)y 
              :(float)z
 {
-    [graphics_ point:x :y :z];
+    if (shapeBegan_) return;
+    
+    [self beginShape:POINTS];
+    [self vertex:x :y :z];
+    [self endShape];
 }
 
 // quad()
@@ -121,18 +176,22 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
             :(float)x4 
             :(float)y4
 {
-    [self beginShape];
+    if (shapeBegan_) return;
+    
+    [self beginShape:QUADS];
     [self vertex:x1 :y1];
     [self vertex:x2 :y2];
     [self vertex:x3 :y3];
     [self vertex:x4 :y4];
-    [self endShape:CLOSE];
+    [self endShape];
 }
 
 // rect()
 - (void)rect:(float)x1 :(float)y1 :(float)x2 :(float)y2
 {
-    CGRect rect = normalizedRectangle(x1, y1, x2, y2, rectMode_);
+    if (shapeBegan_) return;
+    
+    CGRect rect = normalizedRectangle(x1, y1, x2, y2, curStyle_.rectMode);
     if (CGRectIsEmpty(rect) || CGRectIsNull(rect) || CGRectIsInfinite(rect))
         return;
     [graphics_ rect:CGRectGetMinX(rect) 
@@ -149,11 +208,13 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
                 :(float)x3 
                 :(float)y3
 {
-    [self beginShape];
+    if (shapeBegan_) return;
+    
+    [self beginShape:TRIANGLES];
     [self vertex:x1 :y1];
     [self vertex:x2 :y2];
     [self vertex:x3 :y3];
-    [self endShape:CLOSE];    
+    [self endShape];    
 }
 
 #pragma mark -
@@ -170,7 +231,7 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
               :(float)x2 
               :(float)y2
 {
-    
+    [self bezier:x1 :y1 :0 :cx1 :cy1 :0 :cx2 :cy2 :0 :x2 :y2 :0];
 }
 
 - (void)bezier:(float)x1 
@@ -186,7 +247,12 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
               :(float)y2 
               :(float)z2
 {
+    if (shapeBegan_) return;
     
+    [self beginShape:PATH];
+    [self vertex:x1 :y1 :z1];
+    [self bezierVertex:cx1 :cy1 :cz1 :cx2 :cy2 :cz2 :x2 :y2 :z2];
+    [self endShape];
 }
 
 // bezierDetail()
@@ -206,7 +272,7 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
 }
 
 // bezierTangent()
-- (void)bezierTangent:(float)fa 
+- (void)bezierTangent:(float)a 
                      :(float)b 
                      :(float)c 
                      :(float)d 
@@ -225,7 +291,7 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
              :(float)x4 
              :(float)y4
 {
-    
+    [self curve:x1 :y1 :0 :x2 :y2 :0 :x3 :y3 :0 :x4 :y4 :0];
 }
 
 - (void)curve:(float)x1
@@ -241,7 +307,14 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
              :(float)y4
              :(float)z4
 {
+    if (shapeBegan_) return;
     
+    [self beginShape:PATH];
+    [self curveVertex:x1 :y1 :z1];
+    [self curveVertex:x2 :y2 :z2];
+    [self curveVertex:x3 :y3 :z3];
+    [self curveVertex:x4 :y4 :z4];
+    [self endShape];
 }
 
 // curveDetail()
@@ -251,10 +324,10 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
 }
 
 // curvePoint()
-- (void)curvePoint:(float)fa 
-                  :(float)fb 
-                  :(float)fc 
-                  :(float)fd 
+- (void)curvePoint:(float)a 
+                  :(float)b 
+                  :(float)c 
+                  :(float)d 
                   :(float)t
 {
     
@@ -262,7 +335,7 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
 
 // curveTangent()
 - (void)curveTangent:(float)a 
-                    :(float)fb 
+                    :(float)b 
                     :(float)c 
                     :(float)d 
                     :(float)t
@@ -321,7 +394,7 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
         case CORNER:
         case RADIUS:
         case CORNERS:
-            ellipseMode_ = mode;
+            curStyle_.ellipseMode = mode;
             break;
         default:
             break;
@@ -335,7 +408,7 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
         case CORNER:
         case RADIUS:
         case CORNERS:
-            rectMode_ = mode;
+            curStyle_.rectMode = mode;
             break;
         default:
             break;
@@ -345,19 +418,27 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
 
 - (void)smooth
 {
-    smooth_ = YES;
+    if ([graphics_ respondsToSelector:@selector(smooth)]) {
+        [graphics_ smooth];
+    }
 }
 
 - (void)noSmooth
-{}
+{
+    if ([graphics_ respondsToSelector:@selector(noSmooth)]) {
+        [graphics_ noSmooth];
+    }
+}
 
 - (void)strokeCap:(int)mode
 {
+    if (shapeBegan_) return;
+    
     switch (mode) {
         case SQUARE:
         case PROJECT:
         case ROUND:
-            strokeCap_ = mode;
+            curStyle_.strokeCap = mode;
             [graphics_ strokeCap:mode];
             break;
         default:
@@ -367,11 +448,13 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
 
 - (void)strokeJoin:(int)mode
 {
+    if (shapeBegan_) return;
+    
     switch (mode) {
         case MITER:
         case BEVEL:
         case ROUND:
-            strokeJoin_ = mode;
+            curStyle_.strokeJoin = mode;
             [graphics_ strokeJoin:mode];
             break;
         default:
@@ -382,7 +465,9 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
 // stroke width in pixel
 - (void)strokeWeight:(NSUInteger)pixel
 {
-    strokeWeight_ = pixel;
+    if (shapeBegan_) return;
+    
+    curStyle_.strokeWeight = pixel;
     [graphics_ strokeWeight:pixel];
 }
 
@@ -392,48 +477,71 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
 
 - (void)beginShape
 {
-    
+    [self beginShape:PATH];
 }
 
 - (void)beginShape:(int)mode
 {
+    if (shapeBegan_) return;
     
+    switch (mode) {
+        case PATH:
+        case POINTS:
+        case LINES:
+        case TRIANGLES:
+        case TRIANGLE_FAN:
+        case TRIANGLE_STRIP:
+        case QUADS:
+        case QUAD_STRIP:
+            shapeBegan_ = YES;
+            vertexMode_ = mode;
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)endShape
 {
-    
+    [self endShape:OPEN];
 }
 
 - (void)endShape:(int)mode
 {
+    if (!shapeBegan_) return;
     
+    if (mode != OPEN && mode != CLOSE) return;
+    
+    [graphics_ drawShapeWithVertices:[vertices_ bytes] 
+                             indices:[indices_ bytes]
+                        vertexNumber:[indices_ length]
+                                mode:vertexMode_ 
+                               close:(mode == CLOSE)];
+    [self resetVertices];
+    shapeBegan_ = NO;
 }
 
 // vertex()
 - (void)vertex:(float)x :(float)y
 {
-    
+    [self vertex:x :y :0];
 }
 
 - (void)vertex:(float)x :(float)y :(float)z
 {
-    
-}
-
-- (void)vertexWithX
-{
-    
+    if (!shapeBegan_) return;
+    [self addVertex:PVertexMake(x, y, z)];
 }
 
 - (void)curveVertex:(float)x :(float)y
 {
-    
+    [self curveVertex:x :y :0];
 }
 
 - (void)curveVertex:(float)x :(float)y :(float)z
 {
-    
+    if (!shapeBegan_ || vertexMode_ != PATH) return;
+    [self addCurveVertex:PVertexMake(x, y, z)];
 }
 
 - (void)bezierVertex:(float)cx1 
@@ -443,7 +551,7 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
                     :(float)x 
                     :(float)y
 {
-    
+    [self bezierVertex:cx1 :cy1 :0 :cx2 :cy2 :0 :x :y :0];
 }
 
 - (void)bezierVertex:(float)cx1 
@@ -456,7 +564,10 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
                     :(float)y 
                     :(float)z
 {
-    
+    if (!shapeBegan_ || vertexMode_ != PATH) return;
+    [self addBezierVertices:PVertexMake(cx1, cy1, cz1) 
+                           :PVertexMake(cx2, cy2, cz2) 
+                           :PVertexMake(x, y, z)];
 }
 
 @end

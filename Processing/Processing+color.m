@@ -1,6 +1,6 @@
 //
 //  Processing+color.m
-//  BubbleTalk
+//  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
 //  Copyright 2009 campl software. All rights reserved.
@@ -8,14 +8,11 @@
 
 #import "Processing.h"
 
-#define FULL_ALPHA                      (colorRanges_[A])
+#define FULL_ALPHA                      (curStyle_.alphaRange)
+#define FULL_RED                        (curStyle_.redRange)
+#define FULL_BLUE                       (curStyle_.blueRange)
+#define FULL_GREEN                      (curStyle_.greenRange)
 #define BLACK                           0xFF000000
-
-static UInt8 colorValue(color clr, unsigned int component)
-{
-    if (component > 3) return 0;
-    return (clr >> ((3 - component) * 8) & 0xFF);
-}
 
 @implementation Processing (Color)
 
@@ -24,15 +21,9 @@ static UInt8 colorValue(color clr, unsigned int component)
     if (clr <= 0x1000000) {
         [self background:[self color:clr]];
     } else {
-        float r, g, b, a;
+        PColor pc = PColorMake(clr);
         
-        r = [self norm:colorValue(clr, R) :0.0f :255.0f];
-        g = [self norm:colorValue(clr, G) :0.0f :255.0f];
-        b = [self norm:colorValue(clr, B) :0.0f :255.0f];
-        a = [self norm:colorValue(clr, A) :0.0f :255.0f];
-        
-        [graphics_ background:r :g :b :a];
-        backgroundColor_ = clr;        
+        [graphics_ background:pc.red :pc.green :pc.blue :pc.alpha];
     }
 }
 
@@ -79,11 +70,11 @@ static UInt8 colorValue(color clr, unsigned int component)
     switch (mode) {
         case HSB:
         case RGB:
-            colorMode_ = mode;
-            colorRanges_[0] = range1;
-            colorRanges_[1] = range2;
-            colorRanges_[2] = range3;
-            colorRanges_[3] = range4;
+            curStyle_.colorMode = mode;
+            curStyle_.redRange = range1;
+            curStyle_.greenRange = range2;
+            curStyle_.blueRange = range3;
+            curStyle_.alphaRange = range4;
             break;
         default:
             break;
@@ -97,15 +88,11 @@ static UInt8 colorValue(color clr, unsigned int component)
     if (clr < 0x1000000) {
         [self fill:[self color:clr]];
     } else {
-        float r, g, b, a;
+        PColor pc = PColorMake(clr);
         
-        r = [self norm:colorValue(clr, R) :0.0f :255.0f];
-        g = [self norm:colorValue(clr, G) :0.0f :255.0f];
-        b = [self norm:colorValue(clr, B) :0.0f :255.0f];
-        a = [self norm:colorValue(clr, A) :0.0f :255.0f];
-        
-        [graphics_ fill:r :g :b :a];
-        fillColor_ = clr;        
+        [graphics_ fill:pc.red :pc.green :pc.blue :pc.alpha];
+        curStyle_.fillColor = clr;
+        curStyle_.doFill = YES;
     }
 }
 
@@ -127,11 +114,13 @@ static UInt8 colorValue(color clr, unsigned int component)
 - (void)noFill
 {
     [graphics_ noFill];
+    curStyle_.doFill = NO;
 }
 
 - (void)noStroke
 {
     [graphics_ noStroke];
+    curStyle_.doStroke = NO;
 }
 
 - (void)stroke:(color)clr
@@ -139,15 +128,11 @@ static UInt8 colorValue(color clr, unsigned int component)
     if (clr < 0x1000000) {
         [self stroke:[self color:clr]];
     } else {
-        float r, g, b, a;
+        PColor pc = PColorMake(clr);
         
-        r = [self norm:colorValue(clr, R) :0.0f :255.0f];
-        g = [self norm:colorValue(clr, G) :0.0f :255.0f];
-        b = [self norm:colorValue(clr, B) :0.0f :255.0f];
-        a = [self norm:colorValue(clr, A) :0.0f :255.0f];
-        
-        [graphics_ stroke:r :g :b :a];
-        strokeColor_ = clr;        
+        [graphics_ stroke:pc.red :pc.green :pc.blue :pc.alpha];
+        curStyle_.strokeColor = clr; 
+        curStyle_.doStroke = YES;
     }
 }
 
@@ -189,12 +174,12 @@ static UInt8 colorValue(color clr, unsigned int component)
 {
     float max = [self max:colorValue(clr, R) :colorValue(clr, G) :colorValue(clr, B)];
 
-    int cm = colorMode_;    
-    colorMode_ = HSB;
+    int cm = curStyle_.colorMode;    
+    curStyle_.colorMode = HSB;
     
     color c = [self color:max];
     
-    colorMode_ = cm;
+    curStyle_.colorMode = cm;
     return c;    
 }
 
@@ -208,10 +193,10 @@ static UInt8 colorValue(color clr, unsigned int component)
     UInt32 c;
     
     if (gray <= 0) c = 0;
-    if (gray >= colorRanges_[G]) c = 255;   // For gray, the range of green/saturation is used.
-    else c = (UInt32)(gray * 255.0f / colorRanges_[G]);
+    if (gray >= FULL_GREEN) c = 255;   // For gray, the range of green/saturation is used.
+    else c = (UInt32)(gray * 255.0f / FULL_GREEN);
     
-    UInt32 a = [self normalizedColorComponent:alpha index:A];
+    UInt32 a = [self normalizedColorComponent:alpha range:FULL_ALPHA];
     
     return c ^ (c << 8) ^ (c << 16) ^ (a << 24);    
 }
@@ -221,27 +206,27 @@ static UInt8 colorValue(color clr, unsigned int component)
     return [self color:val1 :val2 :val3 :FULL_ALPHA];
 }
 
-- (UInt8)normalizedColorComponent:(float)val index:(int)i
+- (UInt8)normalizedColorComponent:(float)val range:(float)r
 {
     UInt32 c;
-    if (val <= 0)
+    if (val <= EPSILON)
         c = 0;
-    else if (val >= colorRanges_[i])
+    else if (val >= r)
         c = 255;
     else
-        c = (UInt32)(val / colorRanges_[i] * 255);
+        c = (UInt32)(val * 255.0f / r);
     return c;
 }
 
 - (color)color:(float)val1 :(float)val2 :(float)val3 :(float)val4
 {
-    UInt8 v1 = [self normalizedColorComponent:val1 index:R];
-    UInt8 v2 = [self normalizedColorComponent:val2 index:G];
-    UInt8 v3 = [self normalizedColorComponent:val3 index:B];
-    UInt8 alpha = [self normalizedColorComponent:val4 index:A];
+    UInt8 v1 = [self normalizedColorComponent:val1 range:FULL_RED];
+    UInt8 v2 = [self normalizedColorComponent:val2 range:FULL_GREEN];
+    UInt8 v3 = [self normalizedColorComponent:val3 range:FULL_BLUE];
+    UInt8 alpha = [self normalizedColorComponent:val4 range:FULL_ALPHA];
     
     UInt8 r, g, b;
-    if (colorMode_ == HSB) {
+    if (curStyle_.colorMode == HSB) {
         float h, s, v, f, p, q, t;
         h = v1 * 360.0f / 255; s = v2; v = v3;
         
@@ -303,8 +288,8 @@ static UInt8 colorValue(color clr, unsigned int component)
     max = [self max:r :g :b];
     min = [self min:r :g :b];
     
-    int cm = colorMode_;    
-    colorMode_ = HSB;
+    int cm = curStyle_.colorMode;    
+    curStyle_.colorMode = HSB;
 
     float h;
     if (max == min) {
@@ -319,7 +304,7 @@ static UInt8 colorValue(color clr, unsigned int component)
     h = h * 255.0f / 360.0f;
     c = [self color:h];
         
-    colorMode_ = cm;
+    curStyle_.colorMode = cm;
     return c;    
 }
 
@@ -343,8 +328,8 @@ static UInt8 colorValue(color clr, unsigned int component)
     color max = [self max:r :g :b];
     color min = [self min:r :g :b];
     
-    int cm = colorMode_;    
-    colorMode_ = HSB;
+    int cm = curStyle_.colorMode;    
+    curStyle_.colorMode = HSB;
     
     color c;
     if (max == 0) {
@@ -355,7 +340,7 @@ static UInt8 colorValue(color clr, unsigned int component)
         c = [self color:(1 - min / max) * 255.0f];
     }
     
-    colorMode_ = cm;    
+    curStyle_.colorMode = cm;    
     return c;    
 }
 

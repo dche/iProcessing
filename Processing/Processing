@@ -191,7 +191,7 @@
 +endShape()
 ?texture()
 ?textureMode()
-?vertex()
++vertex()
 
 === Loading & Displaying
 
@@ -358,28 +358,28 @@
 
 == Image
 
-?PImage
-?createImage()
++PImage
++createImage()
 
 === Loading & Displaying
 
-?image()
-?imageMode()
-?loadImage()
-?noTint()
-?requestImage()
-?tint()
++image()
++imageMode()
++loadImage()
++noTint()
++requestImage()
++tint()
 
 === Pixels
 
-?blend()
-?copy()
-?filter()
-?get()
-?loadPixels()
-?pixels[]
-?set()
-?updatePixels()
++blend()
++copy()
++filter()
++get()
++loadPixels()
++pixels[]
++set()
++updatePixels()
 
 == Rendering
 
@@ -389,26 +389,26 @@
 
 == Typography
 
-?PFont
+-PFont
 
 === Loading & Displaying
 
-?createFont()
-?loadFont()
-?text()
-?textFont()
+-createFont()
+-loadFont()
++text()
++textFont()
 
 === Attributes
 
-?textAlign()
-?textLeading()
-?textMode()
-?textSize()
-?textWidth()
++textAlign()
++textLeading()
++textMode()
++textSize()
++textWidth()
 
 === Metrics
-?textAscent()
-?textDescent()
++textAscent()
++textDescent()
 
 == Math
 

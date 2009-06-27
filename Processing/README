@@ -13,4 +13,6 @@ Specification mismatch
 
 1. When using the QUARTZ2D (P2D) mode, the |arc| method will draw a line
    frome the center of the circle to the end point of the arc.
-   
+2. PFont type is not used. Use UIFont instead. Hence the loadFont method is
+   not supported.
+3. Text mode SHAPE is not supported.
