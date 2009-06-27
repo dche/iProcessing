@@ -53,6 +53,7 @@
     BOOL showFPS_;
     NSTimer *fpsTimer_;
     NSUInteger prevFrameCount_;
+    NSUInteger curFPS_;
 }
 
 /// Control if measure the Frames per second.

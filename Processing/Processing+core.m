@@ -12,7 +12,7 @@
 
 #define kFPSSampleRate                  3
 #define kDefaultVerticesArrayLength     30
-#define kDefaultFrameRate               30
+#define kDefaultFrameRate               60
 
 @interface Processing ()
 
@@ -21,7 +21,7 @@
 - (void)stopLoop;
 - (void)drawView;
 
-- (void)drawFPS;
+- (void)sampleFPS;
 
 @end
 
@@ -88,8 +88,17 @@
 - (void)guardedDraw
 {
     [self pushMatrix];
-    [self draw];
+    [self draw];    
+    // BUG: if user code pushMatrix but did not pop it, we got a wrong matrix.            
     [self popMatrix];
+    
+    if (showFPS_) {
+        [self pushStyle];
+        [self textFont:[UIFont boldSystemFontOfSize:16]];
+        [self fill:255 :200 :0];
+        [self text:[NSString stringWithFormat:@"%d", curFPS_] :10 :[self height] - 10];
+        [self popStyle];
+    }    
 }
 
 #pragma mark -
@@ -149,7 +158,7 @@
         if (showFPS_) {
             fpsTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0f/kFPSSampleRate
                                                          target:self 
-                                                       selector:@selector(drawFPS) 
+                                                       selector:@selector(sampleFPS) 
                                                        userInfo:nil 
                                                         repeats:YES];
             
@@ -174,6 +183,8 @@
 {
     if (graphics_ == nil) return;
     
+    // Only apply styles that affect state of graphics_.
+    
     // fill color, stroke color, stroke cap, join and weight
     BOOL doFill, doStroke, doTint;
     
@@ -181,7 +192,6 @@
     doStroke = curStyle_.doStroke;
     doTint = curStyle_.doTint;
     
-    [self colorMode:RGB];
     [self fill:curStyle_.fillColor];
     [self stroke:curStyle_.strokeColor];
     [self strokeCap:curStyle_.strokeCap];
@@ -195,16 +205,12 @@
     
     // font
     [self textFont:curStyle_.curFont];
-    [self textAlign:curStyle_.textHorAlign :curStyle_.textVerAlign];
-    [self textLeading:curStyle_.textLeading];
-    [self textMode:curStyle_.textMode];
 }
 
-- (void)drawFPS
+- (void)sampleFPS
 {
-    NSUInteger fps = frameCount_ - prevFrameCount_;
+    curFPS_ = (frameCount_ - prevFrameCount_) * kFPSSampleRate;
     prevFrameCount_ = frameCount_;
-    NSLog(@"FPS: %d", fps * kFPSSampleRate);
 }
 
 #pragma mark -
