@@ -98,12 +98,12 @@ void mouseReleased() {
         [self mouseY] > by-bs && [self mouseY] < by+bs) {
         bover = YES;  
         if(!locked) { 
-            [self stroke:255 :255]; 
-            [self fill:153 :255];
+            [self stroke:[self color:255]]; 
+            [self fill:[self color:153]];
         } 
     } else {
-        [self stroke:153 :255];
-        [self fill:153 :255];
+        [self stroke:[self color:153]];
+        [self fill:[self color:153]];
         bover = NO;
     }
     

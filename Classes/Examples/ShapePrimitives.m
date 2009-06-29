@@ -39,7 +39,7 @@ triangle(160, 10, 195, 200, 160, 200);
     [self noLoop];
     [self background:[self color:0]];
     [self noStroke];
-    [self fill:226 :255];
+    [self fill:[self color:226]];
     [self triangle:10 :10 :10 :200 :45 :200];
     [self rect:45 :45 :35 :35];
     [self quad:105 :10 :120 :10 :120 :200 :80 :200];

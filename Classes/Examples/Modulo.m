@@ -40,7 +40,7 @@ static const int num = 20;
 - (void)setup
 {
     [self size:200 :200];
-    [self fill:255 :255];
+    [self fill:[self color:255]];
     [self frameRate:30];
 }
 

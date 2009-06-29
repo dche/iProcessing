@@ -37,9 +37,9 @@ static const int box = 30;
     float distance = esize * 2;
     mx = [self constrain:mx :box+distance :[self width]-box-distance];
     my = [self constrain:my :box+distance :[self height]-box-distance];
-    [self fill:76 :255];
+    [self fill:[self color:76]];
     [self rect:box+esize :box+esize :box*3 :box*3];
-    [self fill:255 :255];
+    [self fill:[self color:255]];
     [self ellipse:mx :my :esize :esize];
 }
 

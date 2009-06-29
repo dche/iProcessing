@@ -146,7 +146,7 @@ static const float ellipseSpeed = 3.5;
 {
     [self size:320 :320];
     [self frameRate:30];
-    [self fill:128 :255];
+    [self fill:[self color:128]];
     [self smooth];
     baseX1 = 0;
     baseY1 = [self height]-150;
@@ -185,7 +185,7 @@ static const float ellipseSpeed = 3.5;
     }
     
     // draw base
-    [self fill:200 :255];
+    [self fill:[self color:200]];
     [self quad:baseX1 :baseY1 :baseX2 :baseY2 :baseX2 :[self height] :0 :[self height]];
     
     // calculate base top normal
@@ -196,7 +196,7 @@ static const float ellipseSpeed = 3.5;
     
     // draw ellipse
     [self noStroke];
-    [self fill:255 :255];
+    [self fill:[self color:255]];
     [self ellipse:ellipseX :ellipseY :ellipseRadius*2 :ellipseRadius*2];
     
     // calculate ellipse velocity

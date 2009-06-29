@@ -31,7 +31,7 @@
 
 - (void)draw
 {
-    [self background:226 :255];
+    [self background:[self color:226]];
     
     angle1 = ([self mouseX]/([self width]) - 0.5) * -PI;
     angle2 = ([self mouseY]/([self height]) - 0.5) * PI;

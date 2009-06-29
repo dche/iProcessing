@@ -73,11 +73,11 @@ static const int rad_points = 90;
     
     [self translate:130 :65];
     
-    [self fill:255 :255];
+    [self fill:[self color:255]];
     [self ellipse:0 :0 :16 :16];
     
     angle_rot = 0;
-    [self fill:51 :255];
+    [self fill:[self color:51]];
     
     for(int i=0; i<5; i++) {
         [self pushMatrix];

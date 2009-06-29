@@ -74,13 +74,13 @@ static const int x = 30;
 - (void)draw
 {
     // Use fill() to change the value or color of the text
-    [self fill:0 :255];
+    [self fill:[self color:0]];
     [self text:@"ichi" :x :60];
-    [self fill:51 :255];
+    [self fill:[self color:51]];
     [self text:@"ni" :x :95];
-    [self fill:204 :255];
+    [self fill:[self color:204]];
     [self text:@"san" :x :130];
-    [self fill:255 :255];
+    [self fill:[self color:255]];
     [self text:@"shi" :x :165];    
 }
 

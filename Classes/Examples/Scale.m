@@ -31,11 +31,11 @@
     
     [self translate:[self width]/2 :[self height]/2];
     [self scale:s];
-    [self fill:51 :255];
+    [self fill:[self color:51]];
     [self rect:0 :0 :50 :50]; 
     
     [self translate:75 :0];
-    [self fill:255 :255];
+    [self fill:[self color:255]];
     [self scale:s];
     [self rect:0 :0 :50 :50];    
 }

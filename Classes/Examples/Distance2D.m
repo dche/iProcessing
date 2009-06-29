@@ -21,7 +21,7 @@
 
 - (void)draw
 {
-    [self background:51 :255];
+    [self background:[self color:51]];
     for(int i = 0; i <= [self width]; i += 20) {
         for(int j = 0; j <= [self height]; j += 20) {
             float size = [self dist:[self mouseX] :[self mouseY] :i :j];

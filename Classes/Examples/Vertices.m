@@ -65,7 +65,7 @@ endShape();
     [self noFill];
     [self noLoop];
     
-    [self stroke:102 :255];
+    [self stroke:[self color:102]];
     [self beginShape];
     [self curveVertex:168 :182];
     [self curveVertex:168 :182];

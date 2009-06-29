@@ -105,7 +105,7 @@ void draw()
 - (void)draw
 {
     // Set the gray value of the letters
-    [self fill:255 :255];
+    [self fill:[self color:255]];
     
     // Set the left and top margin
     int margin = 6;
@@ -127,11 +127,11 @@ void draw()
                     [self fill:204 :204 :0];
                 } 
                 else {
-                    [self fill:255 :255];
+                    [self fill:[self color:255]];
                 }
             } 
             else {
-                [self fill:153 :255];
+                [self fill:[self color:153]];
                 letter = 48+counter;
             }
             
