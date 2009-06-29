@@ -12,19 +12,13 @@
 #define FULL_RED                        (curStyle_.redRange)
 #define FULL_BLUE                       (curStyle_.blueRange)
 #define FULL_GREEN                      (curStyle_.greenRange)
-#define BLACK                           0xFF000000
 
 @implementation Processing (Color)
 
 - (void)background:(color)clr
 {
-    if (clr <= 0x1000000) {
-        [self background:[self color:clr]];
-    } else {
-        PColor pc = PColorMake(clr);
-        
-        [graphics_ background:pc.red :pc.green :pc.blue :pc.alpha];
-    }
+    PColor pc = PColorMake(clr);
+    [graphics_ background:pc.red :pc.green :pc.blue :pc.alpha];
 }
 
 - (void)background:(float)gray :(float)alpha
@@ -83,17 +77,11 @@
 
 - (void)fill:(color)clr
 {
-    // ARGB, the order is important. Other wise we can't distinguish gray value
-    // and normal color value.
-    if (clr < 0x1000000) {
-        [self fill:[self color:clr]];
-    } else {
-        PColor pc = PColorMake(clr);
-        
-        [graphics_ fill:pc.red :pc.green :pc.blue :pc.alpha];
-        curStyle_.fillColor = clr;
-        curStyle_.doFill = YES;
-    }
+    PColor pc = PColorMake(clr);
+    
+    [graphics_ fill:pc.red :pc.green :pc.blue :pc.alpha];
+    curStyle_.fillColor = clr;
+    curStyle_.doFill = YES;
 }
 
 - (void)fill:(float)gray :(float)alpha
@@ -125,15 +113,11 @@
 
 - (void)stroke:(color)clr
 {
-    if (clr < 0x1000000) {
-        [self stroke:[self color:clr]];
-    } else {
-        PColor pc = PColorMake(clr);
-        
-        [graphics_ stroke:pc.red :pc.green :pc.blue :pc.alpha];
-        curStyle_.strokeColor = clr; 
-        curStyle_.doStroke = YES;
-    }
+    PColor pc = PColorMake(clr);
+    
+    [graphics_ stroke:pc.red :pc.green :pc.blue :pc.alpha];
+    curStyle_.strokeColor = clr; 
+    curStyle_.doStroke = YES;
 }
 
 - (void)stroke:(float)gray :(float)alpha
@@ -198,7 +182,7 @@
     
     UInt32 a = [self normalizedColorComponent:alpha range:FULL_ALPHA];
     
-    return c ^ (c << 8) ^ (c << 16) ^ (a << 24);    
+    return a ^ (c << 8) ^ (c << 16) ^ (c << 24);    
 }
 
 - (color)color:(float)val1 :(float)val2 :(float)val3
@@ -265,10 +249,10 @@
         r = v1; g = v2; b = v3;
     }
     
-    color c = alpha << 24;
-    c ^= r << 16;
-    c ^= g << 8;
-    c ^= b;
+    color c = alpha;
+    c ^= r << 24;
+    c ^= g << 16;
+    c ^= b << 8;
     
     return c;
 }

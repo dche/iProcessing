@@ -90,7 +90,7 @@ static const int xspacing = 8.0f;   // How far apart should each horizontal loca
 
 - (void)draw
 {
-    [self background:0];
+    [self background:[self color:0]];
     [self calcWave];
     [self renderWave];    
 }

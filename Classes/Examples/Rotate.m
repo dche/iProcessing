@@ -54,13 +54,13 @@ void draw()
 {
     [self size:200 :200];
     [self noStroke];
-    [self fill:255];
+    [self fill:[self color:255]];
     [self frameRate:30];    
 }
 
 - (void)draw
 {
-    [self background:102];
+    [self background:[self color:102]];
     
     if([self second]%2 == 0){
         jitter = ([self random:-0.1 :0.1]);

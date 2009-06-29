@@ -50,7 +50,7 @@ endShape();
 - (void)setup
 {
     [self size:200 :200];
-    [self background:204];
+    [self background:[self color:204]];
     [self smooth];
     [self noLoop];
     

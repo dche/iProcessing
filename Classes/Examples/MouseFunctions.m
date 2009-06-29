@@ -91,19 +91,19 @@ void mouseReleased() {
 
 -(void)draw 
 { 
-    [self background:0];
+    [self background:[self color:0]];
     
     // Test if the cursor is over the box 
     if ([self mouseX] > bx-bs && [self mouseX] < bx+bs && 
         [self mouseY] > by-bs && [self mouseY] < by+bs) {
         bover = YES;  
         if(!locked) { 
-            [self stroke:255]; 
-            [self fill:153];
+            [self stroke:255 :255]; 
+            [self fill:153 :255];
         } 
     } else {
-        [self stroke:153];
-        [self fill:153];
+        [self stroke:153 :255];
+        [self fill:153 :255];
         bover = NO;
     }
     

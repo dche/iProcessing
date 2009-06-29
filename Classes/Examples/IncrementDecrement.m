@@ -78,9 +78,9 @@ void draw()
         direction = !direction;
     }
     if(direction == YES){
-        [self stroke:a];
+        [self stroke:[self color:a]];
     } else {
-        [self stroke:[self width]-a];
+        [self stroke:[self color:[self width]-a]];
     }
     [self line:a :0 :a :[self height]/2];
     
@@ -89,9 +89,9 @@ void draw()
         b = [self width];
     }
     if(direction == YES) {
-        [self stroke:[self width]-b];
+        [self stroke:[self color:[self width]-b]];
     } else {
-        [self stroke:b];
+        [self stroke:[self color:b]];
     }
     [self line:b :[self height]/2+1 :b :[self height]];
 }

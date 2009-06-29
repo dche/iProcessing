@@ -22,7 +22,7 @@
         doFill = YES;
         fillColor = 0xFFFFFFFF;
         doStroke = YES;
-        strokeColor = 0xFF000000;
+        strokeColor = 0x000000FF;
         doTint = NO;
         tintColor = 0;
         

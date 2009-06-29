@@ -80,7 +80,7 @@ void update(int x)
 
 - (void)draw 
 {
-    [self background:0.0];
+    [self background:[self color:0.0]];
     [self update:[self mouseX]]; 
     [self fill:0.0 :leftColor + 0.4 :leftColor + 0.6]; 
     [self rect:[self width]/4-gx :[self width]/2-gx :gx*2 :gx*2]; 

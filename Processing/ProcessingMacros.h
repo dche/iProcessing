@@ -12,10 +12,10 @@
 /// color type. It is not a macro, but it is user visible. So defined here.
 typedef UInt32 color;
 
-#define A  (0)
-#define R  (1)
-#define G  (2)
-#define B  (3)
+#define R  (0)
+#define G  (1)
+#define B  (2)
+#define A  (3)
 
 #define H  (1)
 #define S  (2)
@@ -84,10 +84,10 @@ typedef UInt32 color;
 
 // colour component bitmasks
 
-#define ALPHA_MASK  (0xff000000)
-#define RED_MASK    (0x00ff0000)
-#define GREEN_MASK  (0x0000ff00)
-#define BLUE_MASK   (0x000000ff)
+#define RED_MASK    (0xff000000)
+#define GREEN_MASK  (0x00ff0000)
+#define BLUE_MASK   (0x0000ff00)
+#define ALPHA_MASK  (0x000000ff)
 
 
 // types of projection matrices

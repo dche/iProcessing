@@ -20,7 +20,7 @@
 
 - (void)draw
 {
-    [self background:0];
+    [self background:[self color:0]];
     [self fill:[self color:80]];
     [self noStroke];
     // Angles for sin() and cos() start at 3 o'clock;

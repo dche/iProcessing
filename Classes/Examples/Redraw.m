@@ -51,7 +51,7 @@ void mousePressed()
 - (void)setup
 {
     [self size:200 :200];  // Size should be the first statement
-    [self stroke:255];     // Set line drawing color to white
+    [self stroke:[self color:255]];     // Set line drawing color to white
     [self noLoop];
 
     y = 100.0f;
@@ -59,7 +59,7 @@ void mousePressed()
 
 - (void)draw
 {
-    [self background:0];   // Set the background to black
+    [self background:[self color:0]];   // Set the background to black
     y = y - 1; 
     if (y < 0) { y = [self height]; } 
     [self line:0 :y :[self width] :y];    

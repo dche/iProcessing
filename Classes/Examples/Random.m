@@ -15,7 +15,7 @@
 {
     [self size:200 :200];
     [self smooth];
-    [self background:0];
+    [self background:[self color:0]];
     [self strokeWeight:10];
     [self noLoop];
 }

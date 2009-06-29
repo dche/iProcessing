@@ -49,7 +49,7 @@ void draw()
 {
     for(int i=0; i<scale; i++) {
         [self colorMode:RGB :(i+1) * scale * 10];
-        [self fill:fmodf([self millis], (i+1) * scale * 10)];
+        [self fill:[self color:fmodf([self millis], (i+1) * scale * 10)]];
         [self rect:i*scale :0 :scale :[self height]];
     }    
 }

@@ -63,7 +63,7 @@ static const float size = 40.0;
 
 - (void)draw
 {
-    [self background:102];
+    [self background:[self color:102]];
     
     x = x + 0.8;
     
@@ -72,7 +72,7 @@ static const float size = 40.0;
     } 
     
     [self translate:x :[self height]/2-size/2];
-    [self fill:255];
+    [self fill:[self color:255]];
     [self rect:-size/2 :-size/2 :size :size];
     
     // Transforms accumulate.
@@ -80,7 +80,7 @@ static const float size = 40.0;
     // as fast as the other, but it has
     // the same parameter for the x-axis value
     [self translate:x :size];
-    [self fill:0];
+    [self fill:[self color:0]];
     [self rect:-size/2 :-size/2 :size :size];    
 }
 

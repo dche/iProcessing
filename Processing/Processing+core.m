@@ -95,8 +95,10 @@
     if (showFPS_) {
         [self pushStyle];
         [self textFont:[UIFont boldSystemFontOfSize:16]];
-        [self fill:255 :200 :0];
-        [self text:[NSString stringWithFormat:@"%d", curFPS_] :10 :[self height] - 10];
+        [self textAlign:LEFT :BASELINE];
+        [self colorMode:RGB];
+        [self fill:246 :184 :45];
+        [self text:[NSString stringWithFormat:@"%d/%d", curFPS_, frameRate_] :10 :[self height] - 10];
         [self popStyle];
     }    
 }
@@ -350,7 +352,7 @@
 // set the size.
 - (void)size:(float)width :(float)height
 {
-    [self size:width :height :QUARTZ2D];
+    [self size:width :height :P2D];
 }
 
 - (void)size:(float)width :(float)height :(int)mode
@@ -387,7 +389,7 @@
     graphics_ = self.view;
     
     // Set the default background color, which is not part of style.
-    [self background:51];
+    [self background:[self color:51]];
     // Disable smooth by default.
     [self noSmooth];
     // Apply default style.

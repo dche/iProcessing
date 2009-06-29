@@ -46,7 +46,7 @@ void draw()
 
 - (void)draw 
 {   
-    [self background:51]; 
+    [self background:[self color:51]]; 
     [self fill:255 :80];
     [self rect:[self mouseX] :[self height]/2.0f :[self mouseY]/2.0f+10 :[self mouseY]/2.0f+10];
     [self fill:255 :80];

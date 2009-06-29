@@ -75,7 +75,7 @@
 - (void)draw
 {
     int index = [self frameCount] % NSPEC;    
-    [self background:151];
+    [self background:[self color:151]];
     [self pushStyle];
     [self performSelector:specs[index]];
     [self popStyle];
@@ -115,9 +115,9 @@
     [self line:30 :20 :85 :75];
     
     [self line:30 :20 :85 :20];
-    [self stroke:126];
+    [self stroke:[self color:126]];
     [self line:85 :20 :85 :75];
-    [self stroke:255];
+    [self stroke:[self color:255]];
     [self line:85 :75 :30 :75];
     
     // TODO: 3D spec.

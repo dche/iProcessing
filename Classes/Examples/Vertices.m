@@ -61,11 +61,11 @@ endShape();
 - (void)setup
 {
     [self size:200 :200];
-    [self background:0];
+    [self background:[self color:0]];
     [self noFill];
     [self noLoop];
     
-    [self stroke:102];
+    [self stroke:102 :255];
     [self beginShape];
     [self curveVertex:168 :182];
     [self curveVertex:168 :182];
@@ -75,7 +75,7 @@ endShape();
     [self curveVertex:64 :200];
     [self endShape];
     
-    [self stroke:51];
+    [self stroke:[self color:51]];
     [self beginShape:LINES];
     [self vertex:60 :40];
     [self vertex:160 :10];
@@ -83,13 +83,13 @@ endShape();
     [self vertex:60 :150];
     [self endShape];
     
-    [self stroke:126];
+    [self stroke:[self color:126]];
     [self beginShape];
     [self vertex:60 :40];
     [self bezierVertex:160 :10 :170 :150 :60 :150];
     [self endShape];
     
-    [self stroke:255];
+    [self stroke:[self color:255]];
     [self beginShape:POINTS];
     [self vertex:60 :40];
     [self vertex:160 :10];

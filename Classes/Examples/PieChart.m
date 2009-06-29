@@ -22,7 +22,7 @@
 - (void)setup
 {
     [self size:200 :200];
-    [self background:100];
+    [self background:[self color:100]];
     [self smooth];
     [self noStroke];
     [self noLoop];
@@ -36,7 +36,7 @@
     
     [self noStroke];
     for (int i = 0; i < 8; i++){
-        [self fill:angs[i] * 3.0];
+        [self fill:[self color:angs[i] * 3.0]];
         [self arc:[self width]/2 :[self height]/2 :diameter :diameter :lastAng :lastAng+[self radians:angs[i]]];
         lastAng += [self radians:angs[i]];  
     }    

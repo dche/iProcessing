@@ -90,7 +90,7 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
                                      8,
                                      bitmapBytesPerRow,
                                      colorSpace,
-                                     kCGImageAlphaPremultipliedFirst);
+                                     kCGImageAlphaPremultipliedLast);
     
     CGColorSpaceRelease( colorSpace );
     return context;
@@ -310,6 +310,9 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 {
     if (n < 4) return;
     
+    // 0---2---4
+    // |   |   |
+    // 1---3---5    
     const PVertex *p1, *p2, *p3, *p4;
     for (int i = 0; i < n - 3; i += 2) {
         p1 = v + i; p2 = p1 + 1; p3 = p1 + 3; p4 = p1 + 2;

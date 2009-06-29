@@ -40,17 +40,17 @@ static const int num = 20;
 - (void)setup
 {
     [self size:200 :200];
-    [self fill:255];
+    [self fill:255 :255];
     [self frameRate:30];
 }
 
 - (void)draw
 {
-    [self background:0];
+    [self background:[self color:0]];
     c+=0.1;
     for(int i=1; i<[self height]/num; i++) { 
         float x = fmodf(c, i)*i*i;
-        [self stroke:102];
+        [self stroke:[self color:102]];
         [self line:0 :i*num :x :i*num];
         [self noStroke];
         [self rect:x :i*num-num/2 :8 :num];

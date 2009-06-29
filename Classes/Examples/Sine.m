@@ -69,15 +69,15 @@ static const int rad_points = 90;
 
 - (void)draw
 {
-    [self background:153];
+    [self background:[self color:153]];
     
     [self translate:130 :65];
     
-    [self fill:255];
+    [self fill:255 :255];
     [self ellipse:0 :0 :16 :16];
     
     angle_rot = 0;
-    [self fill:51];
+    [self fill:51 :255];
     
     for(int i=0; i<5; i++) {
         [self pushMatrix];

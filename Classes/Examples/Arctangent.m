@@ -99,7 +99,7 @@ class Eye
 
 - (void)draw
 {
-    [self background:102];
+    [self background:[self color:102]];
     
     [e1 update:[self mouseX] :[self mouseY]];
     [e2 update:[self mouseX] :[self mouseY]];
@@ -149,10 +149,10 @@ class Eye
     
     [self.p pushMatrix];
     [self.p translate:ex :ey];
-    [self.p fill:255];
+    [self.p fill:255 :255];
     [self.p ellipse:0 :0 :size :size];
     [self.p rotate:angle];
-    [self.p fill:153];
+    [self.p fill:153 :255];
     [self.p ellipse:size/4.0f :0 :size/2.0f :size/2.0f];
     [self.p popMatrix];    
 }

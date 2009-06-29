@@ -21,7 +21,7 @@ static const float easing = 0.05;
 
 - (void)draw
 {
-    [self background:51];
+    [self background:[self color:51]];
     
     targetX = [self mouseX];
     float dx = [self mouseX] - x;

@@ -132,7 +132,7 @@ static const color anchorPtCol = 0xFFBBBBBB;
 
 - (void)draw
 {
-    [self background:145];
+    [self background:[self color:145]];
     [self drawEllipse];
     [self setEllipse:(int)[self random:3 :12] 
                     :[self random:-100 :150] 

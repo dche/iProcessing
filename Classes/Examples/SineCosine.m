@@ -82,21 +82,21 @@ static int sc = 40;
 
 - (void)draw
 {
-    [self background:0];
+    [self background:[self color:0]];
     
-    [self fill:51];
+    [self fill:51 :255];
     [self rect:60 :60 :80 :80];
     
-    [self fill:255];
+    [self fill:255 :255];
     [self ellipse:pos1 :36 :32 :32];
     
-    [self fill:153];
+    [self fill:153 :255];
     [self ellipse:36 :pos2 :32 :32];
     
-    [self fill:255];
+    [self fill:255 :255];
     [self ellipse:pos3 :164 :32 :32];
     
-    [self fill:153];
+    [self fill:153 :255];
     [self ellipse:164 :pos4 :32 :32];
     
     i += 3;

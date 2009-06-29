@@ -77,17 +77,17 @@ static int thick = 36;
 
 - (void)draw
 {
-    [self background:0];
+    [self background:[self color:0]];
     
     float mx = [self mouseX] * 0.4 - [self width]/5.0;
     
-    [self fill:102];
+    [self fill:[self color:102]];
     [self rect:xpos2 :0 :thick :[self height]/2];
-    [self fill:204];
+    [self fill:[self color:204]];
     [self rect:xpos1 :0 :thin :[self height]/2];
-    [self fill:102];
+    [self fill:[self color:102]];
     [self rect:xpos4 :[self height]/2 :thick :[self height]/2];
-    [self fill:204];
+    [self fill:[self color:204]];
     [self rect:xpos3 :[self height]/2 :thin :[self height]/2];
 	
     xpos1 += mx/16;

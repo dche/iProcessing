@@ -86,7 +86,7 @@ void draw()
 - (void)setup
 {
     [self size:200 :200];
-    [self background:0];
+    [self background:[self color:0]];
     [self smooth];
     // Load the font. Fonts must be placed within the data 
     // directory of your sketch. A font must first be created
@@ -105,7 +105,7 @@ void draw()
 - (void)draw
 {
     // Set the gray value of the letters
-    [self fill:255];
+    [self fill:255 :255];
     
     // Set the left and top margin
     int margin = 6;
@@ -127,11 +127,11 @@ void draw()
                     [self fill:204 :204 :0];
                 } 
                 else {
-                    [self fill:255];
+                    [self fill:255 :255];
                 }
             } 
             else {
-                [self fill:153];
+                [self fill:153 :255];
                 letter = 48+counter;
             }
             

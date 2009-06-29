@@ -55,7 +55,7 @@ void drawTarget(int xloc, int yloc, int size, int num)
 - (void)setup
 {
     [self size:200 :200];
-    [self background:51];
+    [self background:[self color:51]];
     [self noStroke];
     [self smooth];
     [self noLoop];    
@@ -73,7 +73,7 @@ void drawTarget(int xloc, int yloc, int size, int num)
     float grayvalues = 255/num;
     float steps = size/num;
     for(int i=0; i<num; i++) {
-        [self fill:i*grayvalues];
+        [self fill:[self color:i*grayvalues]];
         [self ellipse:xloc :yloc :size-i*steps :size-i*steps];
     }    
 }

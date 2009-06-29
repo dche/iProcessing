@@ -79,6 +79,8 @@
 - (void)bezierDetail:(int)res;
 - (void)curveDetail:(int)aInt;
 
+// 3D
+
 @end
 
 @interface PGraphics2D : UIView <PGraphics> {

@@ -55,7 +55,7 @@ static const int x = 30;
 - (void)setup
 {
     [self size:200 :200];
-    [self background:102];
+    [self background:[self color:102]];
     
     // Load the font. Fonts must be placed within the data 
     // directory of your sketch. Use Tools > Create Font 
@@ -74,13 +74,13 @@ static const int x = 30;
 - (void)draw
 {
     // Use fill() to change the value or color of the text
-    [self fill:0];
+    [self fill:0 :255];
     [self text:@"ichi" :x :60];
-    [self fill:51];
+    [self fill:51 :255];
     [self text:@"ni" :x :95];
-    [self fill:204];
+    [self fill:204 :255];
     [self text:@"san" :x :130];
-    [self fill:255];
+    [self fill:255 :255];
     [self text:@"shi" :x :165];    
 }
 

@@ -25,7 +25,7 @@ static const int box = 30;
 
 - (void)draw
 {
-    [self background:51];
+    [self background:[self color:51]];
     
     if([self abs:[self mouseX] - mx] > 0.1) {
         mx = mx + ([self mouseX] - mx) * easing;
@@ -37,9 +37,9 @@ static const int box = 30;
     float distance = esize * 2;
     mx = [self constrain:mx :box+distance :[self width]-box-distance];
     my = [self constrain:my :box+distance :[self height]-box-distance];
-    [self fill:76];
+    [self fill:76 :255];
     [self rect:box+esize :box+esize :box*3 :box*3];
-    [self fill:255];
+    [self fill:255 :255];
     [self ellipse:mx :my :esize :esize];
 }
 

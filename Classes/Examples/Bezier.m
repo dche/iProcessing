@@ -35,8 +35,8 @@ for(int i = 0; i < 100; i += 20) {
 - (void)setup
 {
     [self size:200 :200];
-    [self background:0];
-    [self stroke:255];
+    [self background:[self color:0]];
+    [self stroke:[self color:255]];
     [self noFill];
     [self smooth];
     
