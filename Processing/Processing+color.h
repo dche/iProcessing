@@ -52,14 +52,14 @@
 
 - (UInt8)normalizedColorComponent:(float)val range:(float)r;
 
-- (color)alpha:(color)clr;
+- (float)alpha:(color)clr;
 - (color)blendColor:(color)c1 :(color)c2 :(int)mode;
-- (color)blue:(color)clr;
-- (color)brightness:(color)clr;
-- (color)green:(color)clr;
-- (color)hue:(color)clr;
+- (float)blue:(color)clr;
+- (float)brightness:(color)clr;
+- (float)green:(color)clr;
+- (float)hue:(color)clr;
 - (color)lerpColor:(color)c1 :(color)c2 :(float)amt;
-- (color)red:(color)clr;
-- (color)saturation:(color)clr;
+- (float)red:(color)clr;
+- (float)saturation:(color)clr;
 
 @end

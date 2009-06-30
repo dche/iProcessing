@@ -139,9 +139,9 @@
 #pragma mark Color - Creating & Reading
 #pragma mark -
 
-- (color)alpha:(color)clr
+- (float)alpha:(color)clr
 {
-    return clr & ALPHA_MASK;
+    return originalColorValue(clr, A, curStyle_.alphaRange);    
 }
 
 - (color)blendColor:(color)c1 :(color)c2 :(int)mode
@@ -149,22 +149,15 @@
     return 0;    
 }
 
-- (color)blue:(color)clr
+- (float)blue:(color)clr
 {
-    return [self color:(clr & BLUE_MASK)];    
+    return originalColorValue(clr, B, curStyle_.blueRange);    
 }
 
-- (color)brightness:(color)clr
+- (float)brightness:(color)clr
 {
-    float max = [self max:colorValue(clr, R) :colorValue(clr, G) :colorValue(clr, B)];
-
-    int cm = curStyle_.colorMode;    
-    curStyle_.colorMode = HSB;
-    
-    color c = [self color:max];
-    
-    curStyle_.colorMode = cm;
-    return c;    
+    float max = [self max:[self red:clr] :[self green:clr] :[self blue:clr]];
+    return max;    
 }
 
 - (color)color:(float)gray
@@ -217,11 +210,11 @@
         if (s == 0) {
             r = g = b = v;
         } else {
-            f = h / 60.0f - roundf(h / 60.0f);
+            f = h / 60.0f - floorf(h / 60.0f);
             p = v * (255 - s) / 255.0f;
             q = v * (255 - f * s) / 255.0f;
             t = v * (255 - (1 - f) * s) / 255.0f;
-            switch ((int)roundf(h / 60.0f) % 6) {
+            switch ((int)floorf(h / 60.0f) % 6) {
                 case 0:
                     r = v; g = t; b = p;
                     break;
@@ -257,14 +250,14 @@
     return c;
 }
 
-- (color)green:(color)clr
+- (float)green:(color)clr
 {
-    return [self color:((clr & GREEN_MASK) >> 8)];    
+    return originalColorValue(clr, G, curStyle_.greenRange);    
 }
 
-- (color)hue:(color)clr
+- (float)hue:(color)clr
 {
-    color c, r, g, b, min, max;
+    color r, g, b, min, max;
     r = colorValue(clr, R);
     g = colorValue(clr, G);
     b = colorValue(clr, B);
@@ -272,9 +265,6 @@
     max = [self max:r :g :b];
     min = [self min:r :g :b];
     
-    int cm = curStyle_.colorMode;    
-    curStyle_.colorMode = HSB;
-
     float h;
     if (max == min) {
         h = 0;
@@ -285,11 +275,9 @@
     } else {
         h = 60.0f * (r - g) / (max - min) + 240;
     }
-    h = h * 255.0f / 360.0f;
-    c = [self color:h];
+    h = h * curStyle_.redRange / 360.0f;
         
-    curStyle_.colorMode = cm;
-    return c;    
+    return h;    
 }
 
 - (color)lerpColor:(color)c1 :(color)c2 :(float)amt
@@ -297,12 +285,12 @@
     return 0;    
 }
 
-- (color)red:(color)clr
+- (float)red:(color)clr
 {
-    return [self color:((clr & RED_MASK) >> 16)];    
+    return originalColorValue(clr, R, curStyle_.redRange);    
 }
 
-- (color)saturation:(color)clr
+- (float)saturation:(color)clr
 {
     float r, g, b;
     r = colorValue(clr, R);
@@ -312,19 +300,14 @@
     color max = [self max:r :g :b];
     color min = [self min:r :g :b];
     
-    int cm = curStyle_.colorMode;    
-    curStyle_.colorMode = HSB;
-    
-    color c;
+    float c;
     if (max == 0) {
-        c = [self color:0];
+        c = 0;
     } else if (max - min < EPSILON) {
-        c = [self color:255];
+        c = curStyle_.greenRange;
     } else {
-        c = [self color:(1 - min / max) * 255.0f];
+        c = (1 - min / max) * curStyle_.greenRange;
     }
-    
-    curStyle_.colorMode = cm;    
     return c;    
 }
 

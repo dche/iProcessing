@@ -59,9 +59,9 @@ static const int X_AXIS = 2;
 - (void)setGradient:(int)x :(int)y :(float)w :(float)h :(color)c1 :(color)c2 :(int)axis
 {
     // calculate differences between color components 
-//    float deltaR = [self red:c2]-[self red:c1];
-//    float deltaG = [self green:c2]-[self green:c1];
-//    float deltaB = [self blue:c2]-[self blue:c1];
+    float deltaR = [self red:c2]-[self red:c1];
+    float deltaG = [self green:c2]-[self green:c1];
+    float deltaB = [self blue:c2]-[self blue:c1];
     
     // choose axis
     if(axis == Y_AXIS){
@@ -71,10 +71,10 @@ static const int X_AXIS = 2;
         for (int i=x; i<=(x+w); i++){
             // row
             for (int j = y; j<=(y+h); j++){
-//                color c = [self color:([self red:c1]+(j-y)*(deltaR/h))
-//                                     :([self green:c1]+(j-y)*(deltaG/h))
-//                                     :([self blue:c1]+(j-y)*(deltaB/h))];
-//                [self set:i :j :c];
+                color c = [self color:([self red:c1]+(j-y)*(deltaR/h))
+                                     :([self green:c1]+(j-y)*(deltaG/h))
+                                     :([self blue:c1]+(j-y)*(deltaB/h))];
+                [self set:i :j :c];
             }
         }  
     }  
@@ -83,10 +83,10 @@ static const int X_AXIS = 2;
         for (int i=y; i<=(y+h); i++){
             // row
             for (int j = x; j<=(x+w); j++){
-//                color c = [self color:([self red:c1]+(j-x)*(deltaR/h))
-//                                     :([self green:c1]+(j-x)*(deltaG/h))
-//                                     :([self blue:c1]+(j-x)*(deltaB/h))];
-//                [self set:j :i :c];
+                color c = [self color:([self red:c1]+(j-x)*(deltaR/h))
+                                     :([self green:c1]+(j-x)*(deltaG/h))
+                                     :([self blue:c1]+(j-x)*(deltaB/h))];
+                [self set:j :i :c];
             }
         }  
     }
