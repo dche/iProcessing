@@ -10,7 +10,7 @@
 #import "ProcessingMacros.h"
 
 #pragma mark -
-#pragma mark ColorManipulation
+#pragma mark Color Manipulation
 #pragma mark -
 
 typedef struct {
@@ -24,6 +24,12 @@ static inline UInt8 colorValue(color clr, unsigned int component)
 {
     if (component > 3) return 0;
     return (clr >> ((3 - component) * 8) & 0xFF);
+}
+
+static inline float originalRGBValue(color clr, unsigned int component, float range)
+{
+    if (component > 3) return 0;
+    return colorValue(clr, component) * range / 255.0f;
 }
 
 static inline float PColorNorm(color clr, unsigned int component)
