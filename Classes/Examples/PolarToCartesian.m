@@ -61,5 +61,38 @@ void draw() {
 
 
 @implementation PolarToCartesian
+- (void)setup 
+{
+    [self size:200 :200];
+    [self frameRate:30];
+    [self smooth];
+    
+    // Initialize all values
+    r = 50.0f;
+    theta = 0.0f;
+    theta_vel = 0.0f;
+    theta_acc = 0.0001f;
+}
 
+- (void)draw
+{
+    [self background:[self color:0]];
+    // Translate the origin point to the center of the screen
+    [self translate:[self width]/2 :[self height]/2];
+    
+    // Convert polar to cartesian
+    float x = r * [self cos:theta];
+    float y = r * [self sin:theta];
+    
+    // Draw the ellipse at the cartesian coordinate
+    [self ellipseMode:CENTER];
+    [self noStroke];
+    [self fill:[self color:200]];
+    [self ellipse:x :y :16 :16];
+    
+    // Apply acceleration and velocity to angle (r remains static in this example)
+    theta_vel += theta_acc;
+    theta += theta_vel;
+    
+}
 @end

@@ -20,6 +20,7 @@
 #import "Saturation.h"
 #import "ColorWheel.h"
 #import "Creating.h"
+#import "LinearGradient.h"
 
 // Basic - Math
 #import "Random.h"
@@ -31,6 +32,7 @@
 #import "SineCosine.h"
 #import "SineWave.h"
 #import "Arctangent.h"
+#import "PolarToCartesian.h"
 
 // Basic - Transform
 #import "Arm.h"
@@ -54,6 +56,7 @@
 #import "Vertices.h"
 #import "ShapePrimitives.h"
 #import "TriangleStrip.h"
+#import "BezierEllipse.h"
 
 // Basic - Structure
 #import "Redraw.h"
@@ -61,4 +64,10 @@
 
 // Topics - Motion
 #import "Reflection1.h"
+
+// Topics - Drawing
+#import "ContinuousLines.h"
+
+
+// Topics - Effects
 

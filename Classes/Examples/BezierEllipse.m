@@ -115,10 +115,17 @@ void setEllipse(int points, float radius, float controlRadius){
 #import "BezierEllipse.h"
 
 // global variable-points in ellipse
-static const int pts = 4;
 
-static const color controlPtCol = 0xFF222222;
-static const color anchorPtCol = 0xFFBBBBBB;
+static const color controlPtCol = 0x222222FF;
+static const color anchorPtCol = 0xBBBBBBFF;
+
+@interface BezierEllipse ()
+
+- (void)drawEllipse;
+- (void)setEllipse:(int)points :(float)radius :(float)controlRadius;
+
+@end
+
 
 @implementation BezierEllipse
 
@@ -127,7 +134,8 @@ static const color anchorPtCol = 0xFFBBBBBB;
     [self size:200 :200];
     [self smooth];
     [self setEllipse:pts :65 :65];
-    [self frameRate:1];    
+    [self frameRate:1];
+    pts = 4;
 }
 
 - (void)draw
@@ -141,12 +149,82 @@ static const color anchorPtCol = 0xFFBBBBBB;
 
 - (void)drawEllipse
 {
+    [self strokeWeight:1.125];
+    [self stroke:[self color:255]];
+    [self noFill];
+    // create ellipse
+    for (int i=0; i<pts; i++){
+        if (i==pts-1) {
+            [self bezier:px[i] :py[i] :cx[i] :cy[i] :cx2[i] :cy2[i] :px[0] :py[0]];
+        }
+        else{
+            [self bezier:px[i] :py[i] :cx[i] :cy[i] :cx2[i] :cy2[i] :px[i+1] :py[i+1]];
+        }
+    }
+    [self strokeWeight:0.75];
+    [self stroke:[self color:0]];
+    [self rectMode:CENTER];
     
+    // control handles and tangent lines
+    for ( int i=0; i< pts; i++){
+        if (i==pts-1){  // last loop iteration-close path
+            [self line:px[0] :py[0] :cx2[i] :cy2[i]];
+        }
+        if (i>0){
+            [self line:px[i] :py[i] :cx2[i-1] :cy2[i-1]];
+        }
+        [self line:px[i] :py[i] :cx[i] :cy[i]];
+    }
+    
+    for ( int i=0; i< pts; i++){
+        [self fill:controlPtCol];
+        [self noStroke];
+        //control handles
+        [self ellipse:cx[i] :cy[i] :4 :4];
+        [self ellipse:cx2[i] :cy2[i] :4 :4];
+        
+        [self fill:anchorPtCol];
+        [self stroke:[self color:0]];
+        //anchor points
+        [self rect:px[i] :py[i] :5 :5];
+    }
+    
+}
+
+- (void)dealloc
+{
+    free(px); free(py); free(cx); free(cy); free(cx2); free(cy2);
+    [super dealloc];
 }
 
 - (void)setEllipse:(int)points :(float)radius :(float)controlRadius
 {
-    
+    pts = points;
+    free(px); free(py); free(cx); free(cy); free(cx2); free(cy2);
+    px = (float *)malloc(points * sizeof(float));
+    py = (float *)malloc(points * sizeof(float));
+    cx = (float *)malloc(points * sizeof(float));
+    cy = (float *)malloc(points * sizeof(float));
+    cx2 = (float *)malloc(points * sizeof(float));
+    cy2 = (float *)malloc(points * sizeof(float));
+    float angle = 360.0/points;
+    float controlAngle1 = angle/3.0;
+    float controlAngle2 = controlAngle1*2.0;
+    for ( int i=0; i<points; i++){
+        px[i] = [self width]/2+[self cos:[self radians:angle]]*radius;
+        py[i] = [self height]/2+[self sin:[self radians:angle]]*radius;
+        cx[i] = [self width]/2+[self cos:[self radians:angle+controlAngle1]]*
+        controlRadius/[self cos:[self radians:controlAngle1]];
+        cy[i] = [self height]/2+[self sin:[self radians:angle+controlAngle1]]*
+        controlRadius/[self cos:[self radians:controlAngle1]];
+        cx2[i] = [self width]/2+[self cos:[self radians:angle+controlAngle2]]*
+        controlRadius/[self cos:[self radians:controlAngle1]];
+        cy2[i] = [self height]/2+[self sin:[self radians:angle+controlAngle2]]*
+        controlRadius/[self cos:[self radians:controlAngle1]];
+        
+        //increment angle so trig functions keep chugging along
+        angle+=360.0/points;
+    }    
 }
 
 @end

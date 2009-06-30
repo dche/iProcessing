@@ -10,7 +10,12 @@
 #import "Processing.h"
 
 @interface PolarToCartesian : Processing {
-
+    float r;
+    
+    // Angle and angular velocity, accleration
+    float theta;
+    float theta_vel;
+    float theta_acc;    
 }
 
 @end

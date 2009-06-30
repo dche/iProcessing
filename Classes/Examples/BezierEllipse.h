@@ -10,7 +10,8 @@
 #import "Processing.h"
 
 @interface BezierEllipse : Processing {
-
+    float *px, *py, *cx, *cy, *cx2, *cy2;
+    int pts;
 }
 
 @end

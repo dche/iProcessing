@@ -78,6 +78,10 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Saturation class]];
     [examples setObject:demoController forKey:@"Saturation"];
     [demoController release];
+    /// LinearGradient
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[LinearGradient class]];
+    [examples setObject:demoController forKey:@"LinearGradient"];
+    [demoController release];
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
@@ -123,6 +127,10 @@
     /// Arctangent
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Arctangent class]];
     [examples setObject:demoController forKey:@"Arctangent"];
+    [demoController release];
+    /// PolarToCartesian
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[PolarToCartesian class]];
+    [examples setObject:demoController forKey:@"PolarToCartesian"];
     [demoController release];
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
@@ -175,6 +183,10 @@
     /// TriangleStrip
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[TriangleStrip class]];
     [examples setObject:demoController forKey:@"TriangleStrip"];
+    [demoController release];    
+    /// BezierEllipse
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[BezierEllipse class]];
+    [examples setObject:demoController forKey:@"BezierEllipse"];
     [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
@@ -259,6 +271,20 @@
     listController.examples = examples;
     [examples release];
     listController.title = @"Motion";
+    [topicsCategories setObject:listController forKey:listController.title];
+    [listController release];
+    
+    // Topics - Drawing
+    examples = [[NSMutableDictionary alloc] init];    
+    /// ContinuousLines
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[ContinuousLines class]];
+    [examples setObject:demoController forKey:@"ContinuousLines"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Drawing";
     [topicsCategories setObject:listController forKey:listController.title];
     [listController release];
     
