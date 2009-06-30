@@ -463,12 +463,12 @@ static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int m
 }
 
 // stroke width in pixel
-- (void)strokeWeight:(NSUInteger)pixel
+- (void)strokeWeight:(float)w
 {
-    if (shapeBegan_) return;
+    if (shapeBegan_ || w < EPSILON) return;
     
-    curStyle_.strokeWeight = pixel;
-    [graphics_ strokeWeight:pixel];
+    curStyle_.strokeWeight = w;
+    [graphics_ strokeWeight:w];
 }
 
 #pragma mark -

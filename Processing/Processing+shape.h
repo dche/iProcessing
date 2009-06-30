@@ -165,7 +165,7 @@
 - (void)strokeCap:(int)mode;    // no effect at OPENGL
 - (void)strokeJoin:(int)mode;   // no effect at OPENGL
 // stroke width in pixel
-- (void)strokeWeight:(NSUInteger)pixel;
+- (void)strokeWeight:(float)w;
 
 #pragma mark -
 #pragma mark Shape - Vertex

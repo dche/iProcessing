@@ -20,7 +20,7 @@
     BOOL doTint;
     color tintColor;
     
-    NSUInteger strokeWeight;
+    float strokeWeight;
     int strokeCap;
     int strokeJoin;
     
@@ -52,7 +52,7 @@
 @property (assign) BOOL doTint;
 @property (assign) color tintColor;
 
-@property (assign) NSUInteger strokeWeight;
+@property (assign) float strokeWeight;
 @property (assign) int strokeCap;
 @property (assign) int strokeJoin;
 

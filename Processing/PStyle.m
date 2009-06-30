@@ -28,7 +28,7 @@
         
         strokeCap = ROUND;
         strokeJoin = MITER;
-        strokeWeight = 1;
+        strokeWeight = 1.0f;
         
         ellipseMode = CENTER;
         rectMode = CORNER;
