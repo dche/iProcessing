@@ -8,7 +8,7 @@
 
 #import "ProcessingSpec.h"
 
-#define NSPEC   20
+#define NSPEC   22
 
 @interface ProcessingSpec ()
 
@@ -38,13 +38,17 @@
 - (void)textAlign;
 - (void)text_ascent;
 
+// Image
+- (void)resize;
+- (void)copy;
+
 @end
 
 @implementation ProcessingSpec
 
 - (void)setup
 {
-    [self size:120 :100];    
+    [self size:200 :200];    
     SEL selectors[] = {
         @selector(arc),
         @selector(ellipse),
@@ -66,6 +70,8 @@
         @selector(textWidth),
         @selector(textAlign),
         @selector(text_ascent),
+        @selector(resize),
+        @selector(copy),
     };
     specs = (SEL *)malloc(NSPEC * sizeof(SEL));
     memcpy(specs, selectors, sizeof(selectors));
@@ -332,6 +338,25 @@
     ascent = [self textAscent];
     [self text:@"dp" :35 :70];
     [self line:35 :70-ascent :100 :70-ascent];
+}
+
+#pragma mark -
+#pragma mark Image
+#pragma mark -
+
+- (void)resize
+{
+    PImage *img = [self loadImage:@"jelly.jpg"];
+    [self image:img :0 :0];
+    [img resize:100 :50];
+    [self image:img :0 :0];
+}
+
+- (void)copy
+{
+    PImage *img = [self loadImage:@"jelly.jpg"];
+    [img copy:100 :100 :100 :100 :0 :0 :50 :50]; 
+    [self image:img :0 :0];
 }
 
 @end

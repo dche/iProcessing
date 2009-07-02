@@ -41,4 +41,30 @@ void draw()
 
 @implementation Pointillism
 
+- (void)setup
+{
+    a = [self loadImage:@"dche.jpg"];
+    [a retain];
+    [self size:200 :150];
+    [self noStroke];
+    [self background:[self color:255]];
+    [self smooth];
+}
+
+- (void)draw
+{ 
+    float pointillize = [self map:[self mouseX] :0 :[self width] :2 :18];
+    int x = (int)[self random:a.width];
+    int y = (int)[self random:a.height];
+    color pix = [a get:x :y];
+    [self fill:[self red:pix] :[self green:pix] :[self blue:pix] :126];
+    [self ellipse:x :y :pointillize :pointillize];
+}
+
+- (void)dealloc
+{
+    [a release];
+    [super dealloc];
+}
+
 @end

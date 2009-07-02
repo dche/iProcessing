@@ -56,6 +56,40 @@
     [basicCategories setObject:listController forKey:listController.title];
     [listController release];
     
+    // Basic - Image
+    examples = [[NSMutableDictionary alloc] init];
+    /// Pointillism
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Pointillism class]];
+    [examples setObject:demoController forKey:@"Pointillism"];
+    [demoController release];        
+    /// CreateImage
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[CreateImage class]];
+    [examples setObject:demoController forKey:@"CreateImage"];
+    [demoController release];        
+    /// LoadDisplayImage
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[LoadDisplayImage class]];
+    [examples setObject:demoController forKey:@"LoadDisplayImage"];
+    [demoController release];        
+    /// Transparency
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Transparency class]];
+    [examples setObject:demoController forKey:@"Transparency"];
+    [demoController release];        
+    /// Sprite
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Sprite class]];
+    [examples setObject:demoController forKey:@"Sprite"];
+    [demoController release];        
+    /// AlphaMask
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[AlphaMask class]];
+    [examples setObject:demoController forKey:@"AlphaMask"];
+    [demoController release];        
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Image";
+    [basicCategories setObject:listController forKey:listController.title];
+    [listController release];
+    
     // Basic - Color
     examples = [[NSMutableDictionary alloc] init];
     /// Brightness
@@ -280,11 +314,47 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[ContinuousLines class]];
     [examples setObject:demoController forKey:@"ContinuousLines"];
     [demoController release];    
+    /// Pattern
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Pattern class]];
+    [examples setObject:demoController forKey:@"Pattern"];
+    [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
     [examples release];
     listController.title = @"Drawing";
+    [topicsCategories setObject:listController forKey:listController.title];
+    [listController release];
+    
+    // Topics - Image Processing
+    examples = [[NSMutableDictionary alloc] init];    
+    /// Histogram
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Histogram class]];
+    [examples setObject:demoController forKey:@"Histogram"];
+    [demoController release];    
+    /// Blur
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Blur class]];
+    [examples setObject:demoController forKey:@"Blur"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Image Processing";
+    [topicsCategories setObject:listController forKey:listController.title];
+    [listController release];
+    
+    // Topics - Fractals and L-systems
+    examples = [[NSMutableDictionary alloc] init];    
+    /// Tree
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Tree class]];
+    [examples setObject:demoController forKey:@"Tree"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Fractals and L-systems";
     [topicsCategories setObject:listController forKey:listController.title];
     [listController release];
     

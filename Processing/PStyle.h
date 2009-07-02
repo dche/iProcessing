@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ProcessingMacros.h"
 #import "ProcessingTypes.h"
 
 @interface PStyle : NSObject<NSCopying> {

@@ -16,3 +16,18 @@ Specification mismatch
 2. PFont type is not used. Use UIFont instead. Hence the loadFont method is
    not supported.
 3. Text mode SHAPE is not supported.
+4. You can't use tint(255, alpha) to make a image transparency.
+5. Following methods are not supported:
+    background(gray)
+    fill(gray)
+    stroke(gray)
+    tint(gray)
+    background(hex, alpha)
+    fill(hex, alpha)
+    stroke(hex, alpha)
+    tint(hex, alpha)
+    
+TODO
+----
+
+1. Curve

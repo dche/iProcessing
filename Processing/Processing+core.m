@@ -7,7 +7,7 @@
 //
 
 #import "Processing.h"
-#import "PGraphics.h"
+#import "PGraphics2D.h"
 #import "PGraphics3D.h"
 
 #define kFPSSampleRate                  3
@@ -28,6 +28,8 @@
 @implementation Processing
 
 @synthesize showFPS = showFPS_;
+@synthesize pixels = pixels_;
+@dynamic width, height;
 
 #pragma mark -
 #pragma mark GLViewController methods
@@ -199,11 +201,11 @@
     [self strokeCap:curStyle_.strokeCap];
     [self strokeJoin:curStyle_.strokeJoin];
     [self strokeWeight:curStyle_.strokeWeight];
-//    [self tint:curStyle_.tintColor];
+    [self tint:curStyle_.tintColor];
     
     if (!doFill) [self noFill];
     if (!doStroke) [self noStroke];
-//    if (!doTint) [self noTint];
+    if (!doTint) [self noTint];
     
     // font
     [self textFont:curStyle_.curFont];
@@ -382,8 +384,8 @@
     [container_ addSubview:self.view];
 
     // put mouse in the center of the view;
-    mouseX_ = w / 2.0f;
-    mouseY_ = h / 2.0f;
+    mouseX_ = pMouseX_ = w / 2.0f;
+    mouseY_ = pMouseY_ = h / 2.0f;
     
     self.view.userInteractionEnabled = YES;
     graphics_ = self.view;

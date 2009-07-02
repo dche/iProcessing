@@ -15,7 +15,7 @@
 - (void)setup
 {
     [self size:200 :200];
-    [self background:[self color:255]];
+    [self background:255];
     [self colorMode:HSB :360 :[self height] :[self height]];
     
     hue = (int *)malloc([self width]/barWidth * sizeof(int));

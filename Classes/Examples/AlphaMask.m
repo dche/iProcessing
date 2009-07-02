@@ -42,14 +42,23 @@ void draw()
     [self size:200 :200];
     img = [self loadImage:@"test.jpg"];
     maskImg = [self loadImage:@"mask.jpg"];
+    [img retain];
+    [maskImg retain];
     [img mask:maskImg];
 }
 
 - (void)draw 
 {
-    [self background:([self mouseX]+[self mouseY])/1.5];
+    [self background:[self color:([self mouseX]+[self mouseY])/1.5]];
     [self image:img :50 :50];
     [self image:img :[self mouseX]-50 :[self mouseY]-50];
+}
+
+- (void)dealloc
+{
+    [img release];
+    [maskImg release];
+    [super dealloc];
 }
 
 @end

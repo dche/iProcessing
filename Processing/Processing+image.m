@@ -13,17 +13,22 @@
 
 - (PImage *)createImage:(int)width :(int)height :(int)mode
 {
-    return nil;
+    PImage *img = [[PImage alloc] initWithWidth:width height:height mode:mode];
+    return [img autorelease];
 }
 
 - (void)image:(PImage *)img :(float)x :(float)y
 {
-    
+    CGImageRef cgImg = [img CGImage];
+    [graphics_ drawImage:cgImg atPoint:CGPointMake(x, y)];
+    CGImageRelease(cgImg);
 }
 
 - (void)image:(PImage *)img :(float)x :(float)y :(float)width :(float)height
 {
-    
+    CGImageRef cgImg = [img CGImage];
+    [graphics_ drawImage:cgImg inRect:normalizedRectangle(x, y, width, height, curStyle_.imageMode)];
+    CGImageRelease(cgImg);
 }
 
 - (void)imageMode:(int)mode
@@ -41,7 +46,14 @@
 
 - (PImage *)loadImage:(NSString *)name
 {
-    return nil;
+    UIImage *img = [UIImage imageNamed:name];
+    if (nil == img) return nil;
+    
+    CGImageRef cgImg = img.CGImage;
+    PImage *pImg = [[PImage alloc] initWithCGImage:cgImg];
+    
+    [img release];    
+    return [pImg autorelease];
 }
 
 - (void)noTint
@@ -57,15 +69,11 @@
 
 - (void)tint:(color)clr
 {
-    if (clr < 0x1000000) {
-        [self tint:[self color:clr]];
-    } else {
-        PColor pc = PColorMake(clr);
-        
-        [graphics_ tint:pc.red :pc.green :pc.blue :pc.alpha];
-        curStyle_.tintColor = clr;
-        curStyle_.doTint = YES;
-    }
+    PColor pc = PColorMake(clr);
+    
+    [graphics_ tint:pc.red :pc.green :pc.blue :pc.alpha];
+    curStyle_.tintColor = clr;
+    curStyle_.doTint = YES;
 }
 
 - (void)tint:(float)gray :(float)alpha
@@ -123,7 +131,7 @@
 
 - (color)get:(int)x :(int)y
 {
-    return 0;
+    return [graphics_ getPixelAtPoint:CGPointMake(x, y)];
 }
 
 - (PImage *)get
@@ -137,18 +145,14 @@
 }
 
 - (void)loadPixels
-{
-    
-}
+{}
 
 - (void)set:(int)x :(int)y :(color)clr
 {
-    
+    [graphics_ setPixel:clr atPoint:CGPointMake(x, y)];
 }
 
 - (void)updatePixels
-{
-    
-}
+{}
 
 @end

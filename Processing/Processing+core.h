@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ProcessingMacros.h"
-#import "ProcessingTypes.h"
-#import "PGraphics.h"
+#import "ProcessingFunctions.h"
+#import "PGraphicsProtocol.h"
 #import "PStyle.h"
 
-@class Processing;
+@class PGraphics;
 
 /// A Processing implementation for Cocoa Touch.
 ///  
@@ -22,16 +21,20 @@
     UIView *container_;
     id<PGraphics> graphics_;
     
+    color *pixels_;
+    
     BOOL shapeBegan_;
     int vertexMode_;
     NSMutableData *vertices_;
     NSMutableData *indices_;
     
-    // variables used to maintain status
     int mode_;
+    /// Loop and frameRate
     BOOL loop_;
     BOOL visible_;
     NSUInteger frameRate_;
+    NSTimer *loopTimer_;
+    NSUInteger frameCount_;
 
     /// Mouse input states
     BOOL mousePressed_;
@@ -45,9 +48,6 @@
     
     /// For computing |milli|
     NSDate *startTime_;
-    /// Loop and frameCount.
-    NSTimer *loopTimer_;
-    NSUInteger frameCount_;
     
     /// For debugging FPS.
     BOOL showFPS_;
@@ -56,8 +56,11 @@
     NSUInteger curFPS_;
 }
 
-/// Control if measure the Frames per second.
+/// Control if measure real Frames per second.
 @property (assign) BOOL showFPS;
+@property (readonly) float width;
+@property (readonly) float height;
+@property (readonly) color *pixels;
 
 - (id)initWithContainer:(UIView *)containerView;
 

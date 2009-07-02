@@ -20,9 +20,9 @@
 {
     if (self = [super init]) {
         doFill = YES;
-        fillColor = 0xFFFFFFFF;
+        fillColor = PWhiteColor;
         doStroke = YES;
-        strokeColor = 0x000000FF;
+        strokeColor = PBlackColor;
         doTint = NO;
         tintColor = 0;
         

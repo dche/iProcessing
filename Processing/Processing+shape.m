@@ -8,34 +8,6 @@
 
 #import "Processing+shape.h"
 
-static CGRect normalizedRectangle(float x1, float y1, float x2, float y2 , int mode)
-{
-    float ox, oy, w, h;
-    switch (mode) {
-        case CENTER:
-            ox = x1 - x2 / 2.0f;
-            oy = y1 - y2 / 2.0f;
-            w = x2; h = y2;
-            break;
-        case RADIUS:
-            ox = x1 - x2;
-            oy = y1 - y2;
-            w = x2 * 2.0f;
-            h = y2 * 2.0f;
-            break;
-        case CORNERS:
-            ox = x1; oy = y1;
-            w = x2 - x1; h = y2 - y1;
-            break;
-        case CORNER:
-            ox = x1; oy = y1;
-            w = x2; h = y2;
-        default:
-            break;
-    }
-    return CGRectMake(ox, oy, w, h);    
-}
-
 @interface Processing (Vertices)
 
 - (void)addVertex:(PVertex)v;

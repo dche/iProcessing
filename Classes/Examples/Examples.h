@@ -62,12 +62,28 @@
 #import "Redraw.h"
 #import "Functions.h"
 
+// Basic - Image
+#import "Pointillism.h"
+#import "CreateImage.h"
+#import "LoadDisplayImage.h"
+#import "Transparency.h"
+#import "Sprite.h"
+#import "AlphaMask.h"
+
 // Topics - Motion
 #import "Reflection1.h"
 
 // Topics - Drawing
 #import "ContinuousLines.h"
-
+#import "Pattern.h"
 
 // Topics - Effects
+
+// Topics - Image Processing
+#import "Histogram.h"
+#import "Blur.h"
+#import "ImageBrightness.h"
+
+// Topics - Fractals and L-systems
+#import "Tree.h"
 

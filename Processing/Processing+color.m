@@ -13,17 +13,23 @@
 #define FULL_BLUE                       (curStyle_.blueRange)
 #define FULL_GREEN                      (curStyle_.greenRange)
 
+static inline float originalRGBValue(color clr, unsigned int component, float range)
+{
+    if (component > 3) return 0;
+    return colorValue(clr, component) * range / 255.0f;
+}
+
 @implementation Processing (Color)
 
 - (void)background:(color)clr
 {
     PColor pc = PColorMake(clr);
-    [graphics_ background:pc.red :pc.green :pc.blue :pc.alpha];
+    [graphics_ background:pc.red :pc.green :pc.blue :pc.alpha];        
 }
 
 - (void)background:(float)gray :(float)alpha
 {
-    [self background:[self color:gray :alpha]];
+    [self background:[self color:gray :alpha]];        
 }
 
 - (void)background:(float)val1 :(float)val2 :(float)val3
@@ -141,7 +147,7 @@
 
 - (float)alpha:(color)clr
 {
-    return originalColorValue(clr, A, curStyle_.alphaRange);    
+    return originalRGBValue(clr, A, curStyle_.alphaRange);    
 }
 
 - (color)blendColor:(color)c1 :(color)c2 :(int)mode
@@ -151,7 +157,7 @@
 
 - (float)blue:(color)clr
 {
-    return originalColorValue(clr, B, curStyle_.blueRange);    
+    return originalRGBValue(clr, B, curStyle_.blueRange);    
 }
 
 - (float)brightness:(color)clr
@@ -169,13 +175,13 @@
 {
     UInt32 c;
     
+    // CHECK: This funciton depends on the order of color components.
     if (gray <= 0) c = 0;
-    if (gray >= FULL_GREEN) c = 255;   // For gray, the range of green/saturation is used.
+    else if (gray >= FULL_GREEN) c = 255;
     else c = (UInt32)(gray * 255.0f / FULL_GREEN);
     
-    UInt32 a = [self normalizedColorComponent:alpha range:FULL_ALPHA];
-    
-    return a ^ (c << 8) ^ (c << 16) ^ (c << 24);    
+    UInt32 a = [self normalizedColorComponent:alpha range:FULL_ALPHA];    
+    return c ^ (c << 8) ^ (c << 16) ^ (a << 24);    
 }
 
 - (color)color:(float)val1 :(float)val2 :(float)val3
@@ -242,17 +248,17 @@
         r = v1; g = v2; b = v3;
     }
     
-    color c = alpha;
-    c ^= r << 24;
-    c ^= g << 16;
-    c ^= b << 8;
+    color c = r;
+    c ^= g << 8;
+    c ^= b << 16;
+    c ^= alpha << 24;
     
     return c;
 }
 
 - (float)green:(color)clr
 {
-    return originalColorValue(clr, G, curStyle_.greenRange);    
+    return originalRGBValue(clr, G, curStyle_.greenRange);    
 }
 
 - (float)hue:(color)clr
@@ -282,12 +288,12 @@
 
 - (color)lerpColor:(color)c1 :(color)c2 :(float)amt
 {
-    return 0;    
+    return 0; 
 }
 
 - (float)red:(color)clr
 {
-    return originalColorValue(clr, R, curStyle_.redRange);    
+    return originalRGBValue(clr, R, curStyle_.redRange);    
 }
 
 - (float)saturation:(color)clr

@@ -16,3 +16,5 @@
 #import "Processing+text.h"
 
 #import "PObject.h"
+#import "PImage.h"
+#import "PGraphics.h"

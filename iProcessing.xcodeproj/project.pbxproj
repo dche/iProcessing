@@ -33,14 +33,12 @@
 		5DA3EE010FE6AEEC0028380E /* Processing+core.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE50FE6AEEC0028380E /* Processing+core.m */; };
 		5DA3EE020FE6AEEC0028380E /* ProcessingMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */; };
 		5DA3EE030FE6AEEC0028380E /* Processing+math.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE70FE6AEEC0028380E /* Processing+math.h */; };
-		5DA3EE040FE6AEEC0028380E /* PImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE80FE6AEEC0028380E /* PImage.h */; };
-		5DA3EE050FE6AEEC0028380E /* PImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE90FE6AEEC0028380E /* PImage.m */; };
 		5DA3EE080FE6AEEC0028380E /* Processing+core.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDED0FE6AEEC0028380E /* Processing+core.h */; };
 		5DA3EE260FE6B35F0028380E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3EE250FE6B35E0028380E /* OpenGLES.framework */; };
 		5DA3EE420FE6B36F0028380E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3EE410FE6B36F0028380E /* QuartzCore.framework */; };
 		5DA3EF1D0FE6DBA70028380E /* libProcessing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3EDC40FE69D4F0028380E /* libProcessing.a */; };
-		5DA3EF660FE6ED170028380E /* PGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EF640FE6ED170028380E /* PGraphics.h */; };
-		5DA3EF670FE6ED170028380E /* PGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EF650FE6ED170028380E /* PGraphics.m */; };
+		5DA3EF660FE6ED170028380E /* PGraphics2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EF640FE6ED170028380E /* PGraphics2D.h */; };
+		5DA3EF670FE6ED170028380E /* PGraphics2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EF650FE6ED170028380E /* PGraphics2D.m */; };
 		5DA3EF6A0FE6F2740028380E /* PGraphics3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EF680FE6F2740028380E /* PGraphics3D.h */; };
 		5DA3EF6B0FE6F2740028380E /* PGraphics3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EF690FE6F2740028380E /* PGraphics3D.m */; };
 		5DBE57AA0FEDA2A9003176FB /* Clock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE57A90FEDA2A9003176FB /* Clock.m */; };
@@ -75,6 +73,17 @@
 		5DBE64940FF183CF003176FB /* MouseFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE64930FF183CF003176FB /* MouseFunctions.m */; };
 		5DBE65250FF1934C003176FB /* PObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBE65230FF1934C003176FB /* PObject.h */; };
 		5DBE65260FF1934C003176FB /* PObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE65240FF1934C003176FB /* PObject.m */; };
+		5DCE9AD20FFB327B00A5E7DE /* construct.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5DCE9AD00FFB327B00A5E7DE /* construct.jpg */; };
+		5DCE9AD30FFB327B00A5E7DE /* wash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5DCE9AD10FFB327B00A5E7DE /* wash.jpg */; };
+		5DCE9C750FFC17D000A5E7DE /* teddy.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5DCE9C740FFC17D000A5E7DE /* teddy.gif */; };
+		5DCE9C780FFC17DF00A5E7DE /* Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE9C770FFC17DF00A5E7DE /* Sprite.m */; };
+		5DCE9D1A0FFC298D00A5E7DE /* Histogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE9D190FFC298D00A5E7DE /* Histogram.m */; };
+		5DCE9D400FFC2FBF00A5E7DE /* Mandelbrot.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE9D3F0FFC2FBF00A5E7DE /* Mandelbrot.m */; };
+		5DCE9D450FFC38F800A5E7DE /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE9D440FFC38F800A5E7DE /* Tree.m */; };
+		5DCE9D800FFC535F00A5E7DE /* Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE9D7F0FFC535F00A5E7DE /* Blur.m */; };
+		5DCE9D9E0FFC63E700A5E7DE /* trees.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5DCE9D9D0FFC63E700A5E7DE /* trees.jpg */; };
+		5DCE9DD50FFCB3B900A5E7DE /* ProcessingFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DCE9DD40FFCB3B900A5E7DE /* ProcessingFunctions.h */; };
+		5DCE9E7C0FFCD4D200A5E7DE /* ImageBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE9E7B0FFCD4D200A5E7DE /* ImageBrightness.m */; };
 		5DD190D30FEA48FF006A7842 /* ProcessingTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DD190D10FEA48FF006A7842 /* ProcessingTestViewController.xib */; };
 		5DD190E10FEA4970006A7842 /* ProcessingTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD190E00FEA4970006A7842 /* ProcessingTestViewController.m */; };
 		5DD1912D0FEA67AD006A7842 /* Hue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD1912C0FEA67AD006A7842 /* Hue.m */; };
@@ -94,6 +103,14 @@
 		5DD623240FF395E60056B47C /* Letters.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD623230FF395E60056B47C /* Letters.m */; };
 		5DD623270FF3963F0056B47C /* Words.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD623260FF3963F0056B47C /* Words.m */; };
 		5DD626CE0FF59F480056B47C /* ProcessingTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD626CD0FF59F480056B47C /* ProcessingTypes.h */; };
+		5DF1000A0FFAA46700B7AFBE /* PImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF100080FFAA46700B7AFBE /* PImage.m */; };
+		5DF1000B0FFAA46700B7AFBE /* PImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF100090FFAA46700B7AFBE /* PImage.h */; };
+		5DF100FC0FFAC2AC00B7AFBE /* eames.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5DF100FB0FFAC2AC00B7AFBE /* eames.jpg */; };
+		5DF101A70FFAD07000B7AFBE /* Pattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF101A60FFAD07000B7AFBE /* Pattern.m */; };
+		5DF101CC0FFAD70400B7AFBE /* CreateImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF101CB0FFAD70400B7AFBE /* CreateImage.m */; };
+		5DF103370FFB26F400B7AFBE /* LoadDisplayImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF103360FFB26F400B7AFBE /* LoadDisplayImage.m */; };
+		5DF103390FFB27E900B7AFBE /* jelly.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5DF103380FFB27E900B7AFBE /* jelly.jpg */; };
+		5DF1037A0FFB2D6B00B7AFBE /* Transparency.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF103790FFB2D6B00B7AFBE /* Transparency.m */; };
 		5DF1FB140FF8027700B7AFBE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3EE250FE6B35E0028380E /* OpenGLES.framework */; };
 		5DF1FB150FF8027700B7AFBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3EE410FE6B36F0028380E /* QuartzCore.framework */; };
 		5DF1FB170FF8031300B7AFBE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -103,6 +120,9 @@
 		5DF1FEEB0FF9D2E400B7AFBE /* Pointillism.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF1FEEA0FF9D2E400B7AFBE /* Pointillism.m */; };
 		5DF1FF2B0FF9DC3F00B7AFBE /* Plasma.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF1FF2A0FF9DC3F00B7AFBE /* Plasma.m */; };
 		5DF1FF2F0FF9DCC500B7AFBE /* ContinuousLines.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF1FF2E0FF9DCC500B7AFBE /* ContinuousLines.m */; };
+		5DF1FFF50FFA1D7700B7AFBE /* PGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */; };
+		5DF1FFF60FFA1D7700B7AFBE /* PGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */; };
+		5DF1FFF80FFA1DBF00B7AFBE /* PGraphicsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF1FFF70FFA1DBF00B7AFBE /* PGraphicsProtocol.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,14 +170,12 @@
 		5DA3EDE50FE6AEEC0028380E /* Processing+core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+core.m"; sourceTree = "<group>"; };
 		5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingMacros.h; sourceTree = "<group>"; };
 		5DA3EDE70FE6AEEC0028380E /* Processing+math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+math.h"; sourceTree = "<group>"; };
-		5DA3EDE80FE6AEEC0028380E /* PImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PImage.h; sourceTree = "<group>"; };
-		5DA3EDE90FE6AEEC0028380E /* PImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PImage.m; sourceTree = "<group>"; };
 		5DA3EDEC0FE6AEEC0028380E /* Processing */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Processing; sourceTree = "<group>"; };
 		5DA3EDED0FE6AEEC0028380E /* Processing+core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+core.h"; sourceTree = "<group>"; };
 		5DA3EE250FE6B35E0028380E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		5DA3EE410FE6B36F0028380E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		5DA3EF640FE6ED170028380E /* PGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGraphics.h; sourceTree = "<group>"; };
-		5DA3EF650FE6ED170028380E /* PGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGraphics.m; sourceTree = "<group>"; };
+		5DA3EF640FE6ED170028380E /* PGraphics2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGraphics2D.h; sourceTree = "<group>"; };
+		5DA3EF650FE6ED170028380E /* PGraphics2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGraphics2D.m; sourceTree = "<group>"; };
 		5DA3EF680FE6F2740028380E /* PGraphics3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGraphics3D.h; sourceTree = "<group>"; };
 		5DA3EF690FE6F2740028380E /* PGraphics3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGraphics3D.m; sourceTree = "<group>"; };
 		5DBE55500FEC3500003176FB /* Examples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Examples.h; sourceTree = "<group>"; };
@@ -228,6 +246,23 @@
 		5DBE658A0FF199F7003176FB /* MouseSignals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseSignals.m; sourceTree = "<group>"; };
 		5DBE658E0FF19B2B003176FB /* Reflection1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reflection1.h; sourceTree = "<group>"; };
 		5DBE658F0FF19B2B003176FB /* Reflection1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reflection1.m; sourceTree = "<group>"; };
+		5DCE9AD00FFB327B00A5E7DE /* construct.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = construct.jpg; sourceTree = "<group>"; };
+		5DCE9AD10FFB327B00A5E7DE /* wash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wash.jpg; sourceTree = "<group>"; };
+		5DCE9C740FFC17D000A5E7DE /* teddy.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = teddy.gif; sourceTree = "<group>"; };
+		5DCE9C760FFC17DF00A5E7DE /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
+		5DCE9C770FFC17DF00A5E7DE /* Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sprite.m; sourceTree = "<group>"; };
+		5DCE9D180FFC298D00A5E7DE /* Histogram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Histogram.h; sourceTree = "<group>"; };
+		5DCE9D190FFC298D00A5E7DE /* Histogram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Histogram.m; sourceTree = "<group>"; };
+		5DCE9D3E0FFC2FBF00A5E7DE /* Mandelbrot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mandelbrot.h; sourceTree = "<group>"; };
+		5DCE9D3F0FFC2FBF00A5E7DE /* Mandelbrot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mandelbrot.m; sourceTree = "<group>"; };
+		5DCE9D430FFC38F800A5E7DE /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		5DCE9D440FFC38F800A5E7DE /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
+		5DCE9D7E0FFC535F00A5E7DE /* Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blur.h; sourceTree = "<group>"; };
+		5DCE9D7F0FFC535F00A5E7DE /* Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Blur.m; sourceTree = "<group>"; };
+		5DCE9D9D0FFC63E700A5E7DE /* trees.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = trees.jpg; sourceTree = "<group>"; };
+		5DCE9DD40FFCB3B900A5E7DE /* ProcessingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingFunctions.h; sourceTree = "<group>"; };
+		5DCE9E7A0FFCD4D200A5E7DE /* ImageBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrightness.h; sourceTree = "<group>"; };
+		5DCE9E7B0FFCD4D200A5E7DE /* ImageBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrightness.m; sourceTree = "<group>"; };
 		5DD190D10FEA48FF006A7842 /* ProcessingTestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProcessingTestViewController.xib; sourceTree = "<group>"; };
 		5DD190DF0FEA4970006A7842 /* ProcessingTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingTestViewController.h; sourceTree = "<group>"; };
 		5DD190E00FEA4970006A7842 /* ProcessingTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessingTestViewController.m; sourceTree = "<group>"; };
@@ -256,6 +291,18 @@
 		5DD623250FF3963F0056B47C /* Words.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Words.h; sourceTree = "<group>"; };
 		5DD623260FF3963F0056B47C /* Words.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Words.m; sourceTree = "<group>"; };
 		5DD626CD0FF59F480056B47C /* ProcessingTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingTypes.h; sourceTree = "<group>"; };
+		5DF100080FFAA46700B7AFBE /* PImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PImage.m; sourceTree = "<group>"; };
+		5DF100090FFAA46700B7AFBE /* PImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PImage.h; sourceTree = "<group>"; };
+		5DF100FB0FFAC2AC00B7AFBE /* eames.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eames.jpg; sourceTree = "<group>"; };
+		5DF101A50FFAD07000B7AFBE /* Pattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pattern.h; sourceTree = "<group>"; };
+		5DF101A60FFAD07000B7AFBE /* Pattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pattern.m; sourceTree = "<group>"; };
+		5DF101CA0FFAD70400B7AFBE /* CreateImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateImage.h; sourceTree = "<group>"; };
+		5DF101CB0FFAD70400B7AFBE /* CreateImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateImage.m; sourceTree = "<group>"; };
+		5DF103350FFB26F400B7AFBE /* LoadDisplayImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadDisplayImage.h; sourceTree = "<group>"; };
+		5DF103360FFB26F400B7AFBE /* LoadDisplayImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadDisplayImage.m; sourceTree = "<group>"; };
+		5DF103380FFB27E900B7AFBE /* jelly.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jelly.jpg; sourceTree = "<group>"; };
+		5DF103780FFB2D6B00B7AFBE /* Transparency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transparency.h; sourceTree = "<group>"; };
+		5DF103790FFB2D6B00B7AFBE /* Transparency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transparency.m; sourceTree = "<group>"; };
 		5DF1FDA30FF9838F00B7AFBE /* AlphaMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaMask.h; sourceTree = "<group>"; };
 		5DF1FDA40FF9838F00B7AFBE /* AlphaMask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlphaMask.m; sourceTree = "<group>"; };
 		5DF1FDAA0FF9856400B7AFBE /* mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mask.jpg; sourceTree = "<group>"; };
@@ -266,6 +313,9 @@
 		5DF1FF2A0FF9DC3F00B7AFBE /* Plasma.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plasma.m; sourceTree = "<group>"; };
 		5DF1FF2D0FF9DCC500B7AFBE /* ContinuousLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinuousLines.h; sourceTree = "<group>"; };
 		5DF1FF2E0FF9DCC500B7AFBE /* ContinuousLines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinuousLines.m; sourceTree = "<group>"; };
+		5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGraphics.h; sourceTree = "<group>"; };
+		5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGraphics.m; sourceTree = "<group>"; };
+		5DF1FFF70FFA1DBF00B7AFBE /* PGraphicsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGraphicsProtocol.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* iProcessing-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iProcessing-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -346,6 +396,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5DCE9D9D0FFC63E700A5E7DE /* trees.jpg */,
+				5DCE9C740FFC17D000A5E7DE /* teddy.gif */,
+				5DCE9AD00FFB327B00A5E7DE /* construct.jpg */,
+				5DCE9AD10FFB327B00A5E7DE /* wash.jpg */,
+				5DF103380FFB27E900B7AFBE /* jelly.jpg */,
+				5DF100FB0FFAC2AC00B7AFBE /* eames.jpg */,
 				5DF1FDAA0FF9856400B7AFBE /* mask.jpg */,
 				5DF1FDAB0FF9856400B7AFBE /* test.jpg */,
 				5DD622D10FF302AA0056B47C /* dche.jpg */,
@@ -395,17 +451,21 @@
 				5DA3EDED0FE6AEEC0028380E /* Processing+core.h */,
 				5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */,
 				5DD626CD0FF59F480056B47C /* ProcessingTypes.h */,
-				5DA3EDE80FE6AEEC0028380E /* PImage.h */,
-				5DA3EDE90FE6AEEC0028380E /* PImage.m */,
-				5DA3EF640FE6ED170028380E /* PGraphics.h */,
-				5DA3EF650FE6ED170028380E /* PGraphics.m */,
+				5DCE9DD40FFCB3B900A5E7DE /* ProcessingFunctions.h */,
+				5DF1FFF70FFA1DBF00B7AFBE /* PGraphicsProtocol.h */,
+				5DA3EF640FE6ED170028380E /* PGraphics2D.h */,
+				5DA3EF650FE6ED170028380E /* PGraphics2D.m */,
 				5DA3EF680FE6F2740028380E /* PGraphics3D.h */,
 				5DA3EF690FE6F2740028380E /* PGraphics3D.m */,
+				5DF100080FFAA46700B7AFBE /* PImage.m */,
+				5DF100090FFAA46700B7AFBE /* PImage.h */,
 				5DD621AB0FF2C6F80056B47C /* PStyle.h */,
 				5DD621AC0FF2C6F80056B47C /* PStyle.m */,
 				5DBE65230FF1934C003176FB /* PObject.h */,
 				5DBE65240FF1934C003176FB /* PObject.m */,
 				5DBE5DF10FF01A23003176FB /* README */,
+				5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */,
+				5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */,
 			);
 			path = Processing;
 			sourceTree = "<group>";
@@ -481,6 +541,30 @@
 				5DBE658F0FF19B2B003176FB /* Reflection1.m */,
 			);
 			name = Motion;
+			sourceTree = "<group>";
+		};
+		5DCE9D170FFC297500A5E7DE /* Image Processing */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE9D180FFC298D00A5E7DE /* Histogram.h */,
+				5DCE9D190FFC298D00A5E7DE /* Histogram.m */,
+				5DCE9D7E0FFC535F00A5E7DE /* Blur.h */,
+				5DCE9D7F0FFC535F00A5E7DE /* Blur.m */,
+				5DCE9E7A0FFCD4D200A5E7DE /* ImageBrightness.h */,
+				5DCE9E7B0FFCD4D200A5E7DE /* ImageBrightness.m */,
+			);
+			name = "Image Processing";
+			sourceTree = "<group>";
+		};
+		5DCE9D3C0FFC2F9F00A5E7DE /* Fractals and L-Systems */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE9D3E0FFC2FBF00A5E7DE /* Mandelbrot.h */,
+				5DCE9D3F0FFC2FBF00A5E7DE /* Mandelbrot.m */,
+				5DCE9D430FFC38F800A5E7DE /* Tree.h */,
+				5DCE9D440FFC38F800A5E7DE /* Tree.m */,
+			);
+			name = "Fractals and L-Systems";
 			sourceTree = "<group>";
 		};
 		5DD190E80FEA49A9006A7842 /* Examples */ = {
@@ -561,6 +645,8 @@
 		5DD191660FEA85A9006A7842 /* Topics */ = {
 			isa = PBXGroup;
 			children = (
+				5DCE9D3C0FFC2F9F00A5E7DE /* Fractals and L-Systems */,
+				5DCE9D170FFC297500A5E7DE /* Image Processing */,
 				5DF1FF2C0FF9DC9E00B7AFBE /* Drawing */,
 				5DF1FF280FF9DC2F00B7AFBE /* Effects */,
 				5DBE658D0FF19B17003176FB /* Motion */,
@@ -601,6 +687,14 @@
 				5DF1FDA40FF9838F00B7AFBE /* AlphaMask.m */,
 				5DF1FEE90FF9D2E400B7AFBE /* Pointillism.h */,
 				5DF1FEEA0FF9D2E400B7AFBE /* Pointillism.m */,
+				5DF101CA0FFAD70400B7AFBE /* CreateImage.h */,
+				5DF101CB0FFAD70400B7AFBE /* CreateImage.m */,
+				5DF103350FFB26F400B7AFBE /* LoadDisplayImage.h */,
+				5DF103360FFB26F400B7AFBE /* LoadDisplayImage.m */,
+				5DF103780FFB2D6B00B7AFBE /* Transparency.h */,
+				5DF103790FFB2D6B00B7AFBE /* Transparency.m */,
+				5DCE9C760FFC17DF00A5E7DE /* Sprite.h */,
+				5DCE9C770FFC17DF00A5E7DE /* Sprite.m */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -619,6 +713,8 @@
 			children = (
 				5DF1FF2D0FF9DCC500B7AFBE /* ContinuousLines.h */,
 				5DF1FF2E0FF9DCC500B7AFBE /* ContinuousLines.m */,
+				5DF101A50FFAD07000B7AFBE /* Pattern.h */,
+				5DF101A60FFAD07000B7AFBE /* Pattern.m */,
 			);
 			name = Drawing;
 			sourceTree = "<group>";
@@ -639,13 +735,16 @@
 				5DA3EDFD0FE6AEEC0028380E /* Processing+shape.h in Headers */,
 				5DA3EE020FE6AEEC0028380E /* ProcessingMacros.h in Headers */,
 				5DA3EE030FE6AEEC0028380E /* Processing+math.h in Headers */,
-				5DA3EE040FE6AEEC0028380E /* PImage.h in Headers */,
 				5DA3EE080FE6AEEC0028380E /* Processing+core.h in Headers */,
-				5DA3EF660FE6ED170028380E /* PGraphics.h in Headers */,
+				5DA3EF660FE6ED170028380E /* PGraphics2D.h in Headers */,
 				5DA3EF6A0FE6F2740028380E /* PGraphics3D.h in Headers */,
 				5DBE65250FF1934C003176FB /* PObject.h in Headers */,
 				5DD621AD0FF2C6F80056B47C /* PStyle.h in Headers */,
 				5DD626CE0FF59F480056B47C /* ProcessingTypes.h in Headers */,
+				5DF1FFF50FFA1D7700B7AFBE /* PGraphics.h in Headers */,
+				5DF1FFF80FFA1DBF00B7AFBE /* PGraphicsProtocol.h in Headers */,
+				5DF1000B0FFAA46700B7AFBE /* PImage.h in Headers */,
+				5DCE9DD50FFCB3B900A5E7DE /* ProcessingFunctions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,6 +817,12 @@
 				5DD622D20FF302AA0056B47C /* dche.jpg in Resources */,
 				5DF1FDAC0FF9856400B7AFBE /* mask.jpg in Resources */,
 				5DF1FDAD0FF9856400B7AFBE /* test.jpg in Resources */,
+				5DF100FC0FFAC2AC00B7AFBE /* eames.jpg in Resources */,
+				5DF103390FFB27E900B7AFBE /* jelly.jpg in Resources */,
+				5DCE9AD20FFB327B00A5E7DE /* construct.jpg in Resources */,
+				5DCE9AD30FFB327B00A5E7DE /* wash.jpg in Resources */,
+				5DCE9C750FFC17D000A5E7DE /* teddy.gif in Resources */,
+				5DCE9D9E0FFC63E700A5E7DE /* trees.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,6 +883,16 @@
 				5DF1FEEB0FF9D2E400B7AFBE /* Pointillism.m in Sources */,
 				5DF1FF2B0FF9DC3F00B7AFBE /* Plasma.m in Sources */,
 				5DF1FF2F0FF9DCC500B7AFBE /* ContinuousLines.m in Sources */,
+				5DF101A70FFAD07000B7AFBE /* Pattern.m in Sources */,
+				5DF101CC0FFAD70400B7AFBE /* CreateImage.m in Sources */,
+				5DF103370FFB26F400B7AFBE /* LoadDisplayImage.m in Sources */,
+				5DF1037A0FFB2D6B00B7AFBE /* Transparency.m in Sources */,
+				5DCE9C780FFC17DF00A5E7DE /* Sprite.m in Sources */,
+				5DCE9D1A0FFC298D00A5E7DE /* Histogram.m in Sources */,
+				5DCE9D400FFC2FBF00A5E7DE /* Mandelbrot.m in Sources */,
+				5DCE9D450FFC38F800A5E7DE /* Tree.m in Sources */,
+				5DCE9D800FFC535F00A5E7DE /* Blur.m in Sources */,
+				5DCE9E7C0FFCD4D200A5E7DE /* ImageBrightness.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,11 +908,12 @@
 				5DA3EDFC0FE6AEEC0028380E /* Processing+color.m in Sources */,
 				5DA3EDFE0FE6AEEC0028380E /* Processing+shape.m in Sources */,
 				5DA3EE010FE6AEEC0028380E /* Processing+core.m in Sources */,
-				5DA3EE050FE6AEEC0028380E /* PImage.m in Sources */,
-				5DA3EF670FE6ED170028380E /* PGraphics.m in Sources */,
+				5DA3EF670FE6ED170028380E /* PGraphics2D.m in Sources */,
 				5DA3EF6B0FE6F2740028380E /* PGraphics3D.m in Sources */,
 				5DBE65260FF1934C003176FB /* PObject.m in Sources */,
 				5DD621AE0FF2C6F80056B47C /* PStyle.m in Sources */,
+				5DF1FFF60FFA1D7700B7AFBE /* PGraphics.m in Sources */,
+				5DF1000A0FFAA46700B7AFBE /* PImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

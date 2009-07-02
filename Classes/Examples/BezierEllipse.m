@@ -116,8 +116,8 @@ void setEllipse(int points, float radius, float controlRadius){
 
 // global variable-points in ellipse
 
-static const color controlPtCol = 0x222222FF;
-static const color anchorPtCol = 0xBBBBBBFF;
+static const color controlPtCol = 0xFF222222;
+static const color anchorPtCol = 0xFFBBBBBB;
 
 @interface BezierEllipse ()
 

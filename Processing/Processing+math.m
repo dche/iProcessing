@@ -23,7 +23,7 @@
 
 - (float)abs:(float)x
 {
-    return fabsf(x);
+    return (x < 0) ? (-x) : (x);
 }
 
 - (float)ceil:(float)x

@@ -12,10 +12,10 @@
 /// color type. It is not a macro, but it is user visible. So defined here.
 typedef UInt32 color;
 
-#define R  (0)
-#define G  (1)
-#define B  (2)
-#define A  (3)
+#define R  (3)
+#define G  (2)
+#define B  (1)
+#define A  (0)
 
 #define H  (1)
 #define S  (2)
@@ -38,6 +38,7 @@ typedef UInt32 color;
 
 #define RGB    (1)  // image & color
 #define ARGB   (2)  // image
+#define RGBA   (2)
 #define HSB    (3)  // color
 #define ALPHA  (4)  // image
 #define CMYK   (5)  // image & color (someday)
@@ -64,7 +65,6 @@ typedef UInt32 color;
 
 
 // blend mode keyword definitions
-// @see processing.core.PImage#blendColor(int,int,int)
 
 #define REPLACE     (0)
 #define BLEND       (1 << 0)
@@ -84,11 +84,15 @@ typedef UInt32 color;
 
 // colour component bitmasks
 
-#define RED_MASK    (0xff000000)
-#define GREEN_MASK  (0x00ff0000)
-#define BLUE_MASK   (0x0000ff00)
-#define ALPHA_MASK  (0x000000ff)
+#define RED_SHIFT   ((3 - R) * 8)
+#define GREEN_SHIFT ((3 - G) * 8)
+#define BLUE_SHIFT  ((3 - B) * 8)
+#define ALPHA_SHIFT ((3 - A) * 8)
 
+#define RED_MASK    (0xff << RED_SHIFT)
+#define GREEN_MASK  (0xff << GREEN_SHIFT)
+#define BLUE_MASK   (0xff << BLUE_SHIFT)
+#define ALPHA_MASK  (0xff << ALPHA_SHIFT)
 
 // types of projection matrices
 
