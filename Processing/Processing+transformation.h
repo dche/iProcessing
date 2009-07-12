@@ -27,5 +27,6 @@
 - (void)scale:(float)x :(float)y :(float)z;
 - (void)translate:(float)x :(float)y;
 - (void)translate:(float)x :(float)y :(float)z;
+- (void)printMatrix;
 
 @end

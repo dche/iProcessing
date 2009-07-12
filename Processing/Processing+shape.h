@@ -90,13 +90,13 @@
 // bezierDetail()
 - (void)bezierDetail:(int)res;
 // bezierPoint()
-- (void)bezierPoint:(float)a 
+- (float)bezierPoint:(float)a 
                    :(float)b 
                    :(float)c 
                    :(float)d 
                    :(float)t;
 // bezierTangent()
-- (void)bezierTangent:(float)a 
+- (float)bezierTangent:(float)a 
                      :(float)b 
                      :(float)c 
                      :(float)d 
@@ -125,13 +125,13 @@
 // curveDetail()
 - (void)curveDetail:(int)aInt;
 // curvePoint()
-- (void)curvePoint:(float)a 
+- (float)curvePoint:(float)a 
                   :(float)b 
                   :(float)c 
                   :(float)d 
                   :(float)t;
 // curveTangent()
-- (void)curveTangent:(float)a 
+- (float)curveTangent:(float)a 
                     :(float)b 
                     :(float)c 
                     :(float)d 
@@ -196,8 +196,8 @@
                     :(float)z;
 
 #pragma mark -
-#pragma mark Shape - Loading & Displaying
-#pragma mark Not supported
+#pragma mark Shape - Loading & Displaying SVG.
+#pragma mark Not supported yet.
 #pragma mark -
 
 @end

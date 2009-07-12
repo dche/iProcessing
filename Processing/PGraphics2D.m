@@ -41,15 +41,15 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 
 @implementation PGraphics2D
 
-
-- (id)initWithController:(Processing *)p width:(NSUInteger)w height:(NSUInteger)h
+- (id)initWithFrame:(CGRect)frame controller:(Processing *)p
 {
-    if (self = [super init]) {
+    if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];    // No background color.
         p_ = p;
-        ctx = [self createBitmapCGContextWithWidth:w height:h];
+        ctx = [self createBitmapCGContextWithWidth:frame.size.width height:frame.size.height];
     }
     return self;
+    
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -185,9 +185,9 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     CGContextSetLineJoin(ctx, lj);
 }
 
-- (void)strokeWeight:(float)pixel
+- (void)strokeWeight:(float)w
 {
-    CGContextSetLineWidth(ctx, pixel);
+    CGContextSetLineWidth(ctx, w);
 }
 
 - (void)drawShapeWithVertices:(const PVertex *)v 
@@ -356,7 +356,7 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
             }
             p += 3;
         } else {
-            
+            // TODO: draw curve.
         }
     }
 }
@@ -419,7 +419,7 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 
 - (void)popMatrix
 {
-    // BUG:
+    // BUG: ditto.
     CGContextRestoreGState(ctx);
 }
 

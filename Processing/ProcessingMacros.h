@@ -230,4 +230,4 @@ typedef UInt32 color;
 #define OPENGL      0
 #define P3D         OPENGL
 #define QUARTZ2D    1
-#define P2D         QUARTZ2D
+#define P2D         2

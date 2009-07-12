@@ -281,7 +281,7 @@
 
 +applyMatrix()
 +popMatrix()
--printMatrix()
++printMatrix()
 +pushMatrix()
 +resetMatrix()
 +rotate()
@@ -295,26 +295,26 @@
 
 === Lights
 
-?ambientLight()
-?directionalLight()
-?lightFalloff()
-?lightSpecular()
-?lights()
-?noLights()
-?normal()
-?pointLight()
-?spotLight()
++ambientLight()
++directionalLight()
++lightFalloff()
++lightSpecular()
++lights()
++noLights()
++normal()
++pointLight()
++spotLight()
 
 === Camera
 
-?beginCamera()
-?camera()
-?endCamera()
-?frustum()
-?ortho()
-?perspective()
-?printCamera()
-?printProjection()
++beginCamera()
++camera()
++endCamera()
++frustum()
++ortho()
++perspective()
++printCamera()
++printProjection()
 
 === Coordinates
 

@@ -23,9 +23,12 @@
 - (void)stroke:(float)red :(float)green :(float)blue :(float)alpha;
 - (void)strokeCap:(int)mode;
 - (void)strokeJoin:(int)mode;
-- (void)strokeWeight:(float)pixel;
+- (void)strokeWeight:(float)w;
 - (void)noTint;
 - (void)tint:(float)red :(float)green :(float)blue :(float)alpha;
+
+- (void)smooth;
+- (void)noSmooth;
 
 /// 2D drawing
 - (void)arc:(float)ox 
@@ -69,7 +72,7 @@
 /// Called by associated Processing.
 - (void)draw;
 
-- (id)initWithController:(Processing *)p width:(NSUInteger)w height:(NSUInteger)h;
+- (id)initWithFrame:(CGRect)frame controller:(Processing *)p;
 
 /// Pixel data
 - (color)getPixelAtPoint:(CGPoint)p;
@@ -81,12 +84,25 @@
 
 @optional
 
-// Shape
-- (void)smooth;
-- (void)noSmooth;
+// Shape - N/A in 3D mode.
 - (void)bezierDetail:(int)res;
 - (void)curveDetail:(int)aInt;
 
-// 3D
+#pragma mark -
+#pragma mark 3D specific methods
+#pragma mark -
+
+- (void)swapBuffer;
+
+- (void)addAmbientLightWithColor:(PColor)pc;
+- (void)addAmbientLightWithColor:(PColor)pc atPosition:(PVector)pos;
+- (void)addDirectionalLightWithColor:(PColor)pc toDirection:(PVector)dir;
+- (void)addPointLightWithColor:(PColor)pc atPosition:(PVector)pos;
+- (void)addSpotLightWithColor:(PColor)pc angle:(float)a concentration:(float)c atPosition:(PVector)pos toDirection:(PVector)dir;
+
+- (void)noLights;
+
+- (void)lightAttenuationConst:(float)c linear:(float)l quardratic:(float)q;
+- (void)lightSpecular:(PColor)pc;
 
 @end

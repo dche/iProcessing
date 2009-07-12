@@ -43,24 +43,27 @@
 - (void)rotate:(float)angle
 {
     if (shapeBegan_) return;
-    [graphics_ rotate:angle :1 :1 :1];
+    
+    if (self.mode == P2D) {
+        [self rotateZ:angle];
+    } else {
+        // FIXME: which anix should rotate around?
+        [graphics_ rotate:angle :1 :1 :1];        
+    }
 }
 
 - (void)rotateX:(float)angle
 {
-    if (shapeBegan_) return;
     [graphics_ rotate:angle :1 :0 :0];
 }
 
 - (void)rotateY:(float)angle
 {
-    if (shapeBegan_) return;
     [graphics_ rotate:angle :0 :1 :0];
 }
 
 - (void)rotateZ:(float)angle
 {
-    if (shapeBegan_) return;
     [graphics_ rotate:angle :0 :0 :1];
 }
 

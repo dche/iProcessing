@@ -63,8 +63,7 @@ static inline UInt32 premultiplyColor(color clr)
     UInt8 g = (a * colorValue(clr, G)) >> 8;
     UInt8 b = (a * colorValue(clr, B)) >> 8;
     
-    // TODO: Remove the component order dependency.
-    return (a << 24) ^ (b << 16) ^ (g << 8) ^ r;
+    return (a << ALPHA_SHIFT) ^ (b << BLUE_SHIFT) ^ (g << GREEN_SHIFT) ^ (r << RED_SHIFT);
 }
 
 static inline color dePremultiplyColor(UInt32 clr)
@@ -77,8 +76,7 @@ static inline color dePremultiplyColor(UInt32 clr)
     UInt8 g = ia * colorValue(clr, G);
     UInt8 b = ia * colorValue(clr, B);
     
-    // TODO: Remove the component order dependency.
-    return (a << 24) ^ (b << 16) ^ (g << 8) ^ r;
+    return (a << ALPHA_SHIFT) ^ (b << BLUE_SHIFT) ^ (g << GREEN_SHIFT) ^ (r << RED_SHIFT);
 }
 
 #pragma mark -

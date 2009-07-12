@@ -15,6 +15,8 @@
 - (void)addBezierVertices:(PVertex)cp1 :(PVertex)cp2 :(PVertex)p;
 - (void)resetVertices;
 
+- (void)addVertexColor;
+
 @end
 
 @implementation Processing (Vertices)
@@ -39,6 +41,15 @@
     PVertex vs[] = { cp1, cp2, p };
     [vertices_ appendBytes:vs length:sizeof(PVertex) * 3];
     [indices_ appendBytes:&vt length:1];        
+}
+
+- (void)addVertexColor
+{
+    if (mode_ != P3D) return;
+    
+    // Get last vertex color
+    // Has fillColor or strokeColor changed? If both, use fillColor.
+    
 }
 
 - (void)resetVertices
@@ -234,23 +245,24 @@
 }
 
 // bezierPoint()
-- (void)bezierPoint:(float)a 
+- (float)bezierPoint:(float)a 
                    :(float)b 
                    :(float)c 
                    :(float)d 
                    :(float)t
 {
-    
+    float t1 = 1.0f - t;
+    return a * t1 * t1 * t1 + 3 * b * t * t1 * t1 + 3 * c * t * t * t1 + d * t * t * t;
 }
 
 // bezierTangent()
-- (void)bezierTangent:(float)a 
+- (float)bezierTangent:(float)a 
                      :(float)b 
                      :(float)c 
                      :(float)d 
                      :(float)t
 {
-    
+    return 3 * t * t * (-a + 3 * b - 3 * c + d) + 6 * t * (a - 2 * b + c) + 3 * (-a + b);
 }
 
 // curve()
@@ -296,62 +308,27 @@
 }
 
 // curvePoint()
-- (void)curvePoint:(float)a 
+- (float)curvePoint:(float)a 
                   :(float)b 
                   :(float)c 
                   :(float)d 
                   :(float)t
 {
-    
+    return 0;
 }
 
 // curveTangent()
-- (void)curveTangent:(float)a 
+- (float)curveTangent:(float)a 
                     :(float)b 
                     :(float)c 
                     :(float)d 
                     :(float)t
 {
-    
+    return 0;
 }
 
 // curveTightness()
 - (void)curveTightness:(float)squishy
-{
-    
-}
-
-#pragma mark -
-#pragma mark Shape - 3D primitives
-#pragma mark -
-
-// box()
-- (void)box:(float)size
-{
-    
-}
-
-- (void)box:(float)width 
-           :(float)height 
-           :(float)depth
-{
-    
-}
-
-// sphere()
-- (void)sphere:(float)radius
-{
-    
-}
-
-// sphereDetail()
-- (void)sphereDetail:(float)res
-{
-    
-}
-
-- (void)sphereDetail:(float)ures 
-                    :(float)vres
 {
     
 }

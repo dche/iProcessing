@@ -16,6 +16,10 @@
 typedef enum {
     PBlackColor = ALPHA_MASK,
     PWhiteColor = 0xFFFFFFFF,
+    PRedColor = ALPHA_MASK | RED_MASK,
+    PGreenColor = ALPHA_MASK | GREEN_MASK,
+    PBlueColor = ALPHA_MASK | BLUE_MASK,
+    PGrayColor = 0xFF808080,
 } PColorConstants;
 
 typedef struct {
@@ -65,6 +69,8 @@ typedef struct {
     float z;
 } PVertex;
 
+typedef PVertex PVector;
+
 static inline PVertex PVertexMake(float fx, float fy, float fz)
 {
 	PVertex pv;
@@ -78,9 +84,20 @@ typedef enum {
     kPVertextNormal = 0,
     kPVertextBezier,
     kPVertextCurve,
+    kPVectorNormal,
+    kPColorFill,
+    kPColorStroke,
 } PVertexType;
 
 #define PVertexNormal       kPVertextNormal
 #define PVertexBezier       kPVertextBezier
 #define PVertexCurve        kPVertextCurve
+#define PVectorNormal       kPVectorNormal
+#define PColorFill          kPColorFill
+#define PColorStroke        kPColorStroke
 
+#pragma mark -
+#pragma mark Matrix3D
+#pragma mark -
+
+typedef float Matrix3D[16];
