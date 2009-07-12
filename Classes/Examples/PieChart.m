@@ -34,7 +34,6 @@
     int angs[] = {30, 10, 45, 35, 60, 38, 75, 67};
     float lastAng = 0;
     
-    [self noStroke];
     for (int i = 0; i < 8; i++){
         [self fill:[self color:angs[i] * 3.0]];
         [self arc:[self width]/2 :[self height]/2 :diameter :diameter :lastAng :lastAng+[self radians:angs[i]]];

@@ -61,7 +61,6 @@ for (int i=0; i<width; i+=2) {
 {
     [self size:200 :200];
     [self colorMode:RGB :[self width]];
-    [self noLoop];
     
     int *hist = (int *)calloc([self width], sizeof(int));
     

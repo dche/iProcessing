@@ -87,3 +87,10 @@
 // Topics - Fractals and L-systems
 #import "Tree.h"
 
+// 3D - Form
+#import "RGBCube.h"
+#import "CubicGrid.h"
+
+// 3D - Transform
+#import "Rotate1.h"
+#import "Rotate2.h"

@@ -59,7 +59,6 @@ image(edgeImg, 100, 0); // Draw the new image
 - (void)setup
 {
     [self size:200 :200]; 
-    [self noLoop];
     
     PImage *a;  // Declare variable "a" of type PImage 
     a = [self loadImage:@"trees.jpg"]; // Load the images into the program 

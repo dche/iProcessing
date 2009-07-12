@@ -63,7 +63,6 @@ endShape();
     [self size:200 :200];
     [self background:[self color:0]];
     [self noFill];
-    [self noLoop];
     
     [self stroke:[self color:102]];
     [self beginShape];

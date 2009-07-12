@@ -52,7 +52,6 @@ endShape();
     [self size:200 :200];
     [self background:[self color:204]];
     [self smooth];
-    [self noLoop];
     
     int x = [self width]/2;
     int y = [self height]/2;

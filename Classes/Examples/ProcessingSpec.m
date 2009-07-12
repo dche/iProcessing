@@ -8,7 +8,7 @@
 
 #import "ProcessingSpec.h"
 
-#define NSPEC   22
+#define NSPEC   24
 
 @interface ProcessingSpec ()
 
@@ -32,6 +32,8 @@
 - (void)rotate;
 - (void)scale;
 - (void)translate;
+- (void)rotateX;
+- (void)rotateY;
 
 // Typography
 - (void)textWidth;
@@ -67,6 +69,8 @@
         @selector(rotate),
         @selector(translate),
         @selector(scale),
+        @selector(rotateX),
+        @selector(rotateY),
         @selector(textWidth),
         @selector(textAlign),
         @selector(text_ascent),
@@ -284,6 +288,20 @@
     [self rect:0 :0 :55 :55];
     [self translate:14 :14];
     [self rect:0 :0 :55 :55];
+}
+
+- (void)rotateX
+{
+    [self translate:self.width/2 :self.height/2];
+    [self rotateX:PI/3.0];
+    [self rect:-26 :-26 :52 :52];
+}
+
+- (void)rotateY
+{
+    [self translate:self.width/2 :self.height/2];
+    [self rotateY:[self radians:60]];
+    [self rect:-26 :-26 :52 :52];
 }
 
 #pragma mark -
