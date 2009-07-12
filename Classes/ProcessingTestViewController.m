@@ -360,6 +360,47 @@
     
     [categoryList setObject:topicsCategories forKey:@"Topics"];
     [topicsCategories release];    
+
+    NSMutableDictionary *threeDCategories = [[NSMutableDictionary alloc] init];
+    // 3D - Form
+    examples = [[NSMutableDictionary alloc] init];    
+    /// RGBCube
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[RGBCube class]];
+    [examples setObject:demoController forKey:@"RGBCube"];
+    [demoController release];    
+    /// CubicGrid
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[CubicGrid class]];
+    [examples setObject:demoController forKey:@"CubicGrid"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Form";
+    [threeDCategories setObject:listController forKey:listController.title];
+    [listController release];
+                
+    // 3D - Transform
+    examples = [[NSMutableDictionary alloc] init];    
+    /// Rotate1
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Rotate1 class]];
+    [examples setObject:demoController forKey:@"Rotate1"];
+    [demoController release];    
+    /// Rotate2
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Rotate2 class]];
+    [examples setObject:demoController forKey:@"Rotate2"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Transform";
+    [threeDCategories setObject:listController forKey:listController.title];
+    [listController release];
+
+    [categoryList setObject:threeDCategories forKey:@"3D"];
+    [threeDCategories release];    
+    
 }
 
 /*
@@ -409,7 +450,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
