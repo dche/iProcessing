@@ -21,20 +21,49 @@
     UIView *container_;
     id<PGraphics> graphics_;
     
-    color *pixels_;
-    
-    BOOL shapeBegan_;
-    int vertexMode_;
-    NSMutableData *vertices_;
-    NSMutableData *indices_;
-    
+    /// QUARTZ2D, P2D or P3D (OPENGL)
     int mode_;
-    /// Loop and frameRate
+    /// Loop flag.
     BOOL loop_;
+    /// If the associated view is visible. Changed by viewWillAppear and viewWillDisappear.
     BOOL visible_;
+    /// Current frameRate
     NSUInteger frameRate_;
     NSTimer *loopTimer_;
+    /// Number of frames since setup() is called.
     NSUInteger frameCount_;
+    
+    //..........................
+    //  Image
+    //..........................
+    
+    /// The pixels array
+    color *pixels_;
+    
+    //..........................
+    //  Shape
+    //..........................
+
+    /// Flag between beginShape() and endShape()
+    BOOL shapeBegan_;
+    /// Current vertex mode. Because bezierVertex and curveVertex can be
+    /// used in PATH mode only.
+    int vertexMode_;
+    /// The vertex list.
+    NSMutableData *vertices_;
+    /// The index list, contains vertex types.
+    NSMutableData *indices_;
+    
+    //..........................
+    //  3D
+    //..........................
+    
+    /// YES if perspective projection is used, o.w., ortho projection. Default is YES.
+    BOOL perspective_;
+        
+    //..........................
+    //  Mouse Input
+    //..........................
 
     /// Mouse input states
     BOOL mousePressed_;
@@ -46,7 +75,7 @@
     NSMutableArray *styleStack_;
     PStyle *curStyle_;
     
-    /// For computing |milli|
+    /// For computing |millis|
     NSDate *startTime_;
     
     /// For debugging FPS.
@@ -58,9 +87,11 @@
 
 /// Control if measure real Frames per second.
 @property (assign) BOOL showFPS;
+
+@property (readonly) color *pixels;
+@property (readonly) int mode;
 @property (readonly) float width;
 @property (readonly) float height;
-@property (readonly) color *pixels;
 
 - (id)initWithContainer:(UIView *)containerView;
 
@@ -131,17 +162,41 @@
 - (void)size:(float)width :(float)height;
 - (void)size:(float)width :(float)height :(int)mode;
 
-#pragma mark Lights
+#pragma mark -
+#pragma mark Input - Mouse
+#pragma mark -
 
-#pragma mark Camera
+- (int)mouseButton;
+- (BOOL)isMousePressed;
 
-#pragma mark Coordinates
-
-#pragma mark Material properties
+@property (readonly) float mouseX;
+@property (readonly) float mouseY;
+@property (readonly) float pmouseX;
+@property (readonly) float pmouseY;
 
 #pragma mark -
-#pragma mark Rendering
+#pragma mark Input - Keyboard
+#pragma mark Not implemented
 #pragma mark -
+#pragma mark Input - Web
+#pragma mark Not implemented
+#pragma mark -
+#pragma mark Input - File
+#pragma mark -
+
+- (NSData *)loadBytes:(NSURL*)url;
+- (NSArray *)loadStrings:(NSURL*)url;
+
+#pragma mark Input - Time
+
+@property (readonly) int day;
+@property (readonly) int month;
+@property (readonly) int year;
+@property (readonly) int hour;
+@property (readonly) int minute;
+@property (readonly) int second;
+/// Returns the milliseconds since the ViewController is initialized.
+@property (readonly) int millis;
 
 @end
 

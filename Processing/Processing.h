@@ -10,10 +10,10 @@
 #import "Processing+math.h"
 #import "Processing+color.h"
 #import "Processing+shape.h"
-#import "Processing+input.h"
 #import "Processing+transformation.h"
 #import "Processing+image.h"
 #import "Processing+text.h"
+#import "Processing+p3d.h"
 
 #import "PObject.h"
 #import "PImage.h"

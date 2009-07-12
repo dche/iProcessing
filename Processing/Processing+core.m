@@ -10,11 +10,15 @@
 #import "PGraphics2D.h"
 #import "PGraphics3D.h"
 
+#import <objc/objc-class.h>
+
 #define kFPSSampleRate                  3
 #define kDefaultVerticesArrayLength     30
 #define kDefaultFrameRate               60
 
 @interface Processing ()
+
+- (BOOL)overridedMethod:(SEL)meth;
 
 - (void)applyCurrentStyle;
 - (void)startLoop;
@@ -28,8 +32,13 @@
 @implementation Processing
 
 @synthesize showFPS = showFPS_;
+
+@synthesize mode = mode_;
 @synthesize pixels = pixels_;
 @dynamic width, height;
+
+@synthesize mouseX = mouseX_, mouseY = mouseY_, pmouseX = pMouseX_, pmouseY = pMouseY_;
+@dynamic day, month, year, hour, minute, second, millis;
 
 #pragma mark -
 #pragma mark GLViewController methods
@@ -45,7 +54,7 @@
         loop_ = YES;
         frameRate_ = kDefaultFrameRate;
         startTime_ = [[NSDate date] retain];        
-        showFPS_ = YES;
+        showFPS_ = NO;
         
         styleStack_ = [[NSMutableArray alloc] init];
         curStyle_ = [[PStyle alloc] init];
@@ -55,13 +64,30 @@
         indices_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength];
         
         [self setup];
+        
+        if (nil == graphics_) {
+            [self release];
+            return nil;
+        } else {
+            if ([graphics_ respondsToSelector:@selector(swapBuffer)]) {
+                // +setup()+ might contain arbitrary drawing code.
+                // call +swapBuffer+ to show the first frame if the render need this step.
+                [graphics_ swapBuffer];
+            }
+            // TODO: save current ctm.  
+            
+            if (!loop_ && [self overridedMethod:@selector(draw)]) {
+                // Call +draw()+ at least once.
+                // The QUARTZ2D render can perform this automatically. OPENGL render can't.
+                [self drawView];    // TODO: DO NOT call this if render is QUARTZ2D.
+            }
+        }
     }
     return self;
 }
 
 /// Execute a Processing code.
 ///
-/// This method will create a subview in the containerView. 
 + (void)execute:(NSString *)code inContainer:(UIView *)containerView
 {
     // TBD.
@@ -150,9 +176,17 @@
 - (void)mouseReleased
 {}
 
+- (BOOL)overridedMethod:(SEL)meth
+{
+    IMP superImp = class_getMethodImplementation_stret([Processing class], meth);
+    IMP selfImp = class_getMethodImplementation_stret([self class], meth);
+    
+    return (selfImp != superImp);
+}
+
 - (void)startLoop
 {
-    if (loop_ && visible_ && loopTimer_ == nil) {
+    if (loop_ && visible_ && loopTimer_ == nil && [self overridedMethod:@selector(draw)]) {
         loopTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0f/frameRate_ 
                                                       target:self 
                                                     selector:@selector(drawView) 
@@ -296,16 +330,9 @@
     }
 }
 
-// quit gracefully
+// quit gracefully. Do nothing.
 - (void)exit
-{
-    [self viewWillDisappear:NO];
-    [self.view removeFromSuperview];
-    [self viewDidDisappear:NO];
-    
-    self.view = nil;
-    graphics_ = nil;
-}
+{}
 
 // enable loop
 - (void)loop
@@ -335,7 +362,7 @@
     [self applyCurrentStyle];
 }
 
-// save current style
+/// save current style
 - (void)pushStyle
 {
     PStyle *style = [curStyle_ copy];
@@ -343,7 +370,7 @@
     [style release];
 }
 
-// executes the code within draw() one time
+/// executes the code within draw() one time
 - (void)redraw
 {
     if (!loop_) {
@@ -359,33 +386,31 @@
 
 - (void)size:(float)width :(float)height :(int)mode
 {
+    // TODO: parameter sanity check.
+    
     mode_ = mode;
     
+    float cw, ch;    
+    cw = container_.bounds.size.width;
+    ch = container_.bounds.size.height;    
+    CGRect frame = CGRectMake(0, 0, width, height);
+    frame = CGRectOffset(frame, (cw-width)/2.0f, (ch-height)/2.0f);
+    
     switch (mode_) {
-        case OPENGL:
-            self.view = [[PGraphics3D alloc] initWithController:self width:width height:height];
-            break;
         case QUARTZ2D:
-            self.view = [[PGraphics2D alloc] initWithController:self width:width height:height];
+            self.view = [[PGraphics2D alloc] initWithFrame:frame controller:self];
             break;
+        case OPENGL:
+        case P2D:
         default:
+            self.view = [[PGraphics3D alloc] initWithFrame:frame controller:self];
             break;
     }
-    float cw, ch, w, h;
-    
-    cw = container_.bounds.size.width;
-    ch = container_.bounds.size.height;
-    w = [self constrain:width :0 :cw];
-    h = [self constrain:height :0 :ch];
-    
-    CGRect frame = CGRectMake(0, 0, w, h);
-    frame = CGRectOffset(frame, (cw-w)/2.0f, (ch-h)/2.0f);
-    self.view.frame = frame;
     [container_ addSubview:self.view];
 
     // put mouse in the center of the view;
-    mouseX_ = pMouseX_ = w / 2.0f;
-    mouseY_ = pMouseY_ = h / 2.0f;
+    mouseX_ = pMouseX_ = width / 2.0f;
+    mouseY_ = pMouseY_ = height / 2.0f;
     
     self.view.userInteractionEnabled = YES;
     graphics_ = self.view;
@@ -396,6 +421,139 @@
     [self noSmooth];
     // Apply default style.
     [self applyCurrentStyle];    
+}
+
+#pragma mark -
+#pragma mark Touch
+#pragma mark -
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // mousePressed, mouseX, mouseY.
+    UITouch *touch = [[event touchesForView:self.view] anyObject];
+    
+    mousePressed_ = YES;
+    pMouseX_ = mouseX_;
+    pMouseY_ = mouseY_;
+    
+    CGPoint pos = [touch locationInView:self.view];
+    mouseX_ = [self constrain:pos.x :0 :[self width]];
+    mouseY_ = [self constrain:pos.y :0 :[self height]];
+    
+    [self mousePressed];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // mouseDragged = YES and mouseMoved = YES
+    UITouch *touch = [[event touchesForView:self.view] anyObject];
+    
+    pMouseX_ = mouseX_;
+    pMouseY_ = mouseY_;
+    
+    CGPoint pos = [touch locationInView:self.view];
+    mouseX_ = [self constrain:pos.x :0 :[self width]];
+    mouseY_ = [self constrain:pos.y :0 :[self height]];
+    
+    [self mouseMoved];
+    [self mouseDragged];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event touchesForView:self.view] anyObject];
+    
+    mousePressed_ = NO;
+    [self mouseReleased];
+    if (touch.tapCount > 0) {
+        [self mouseClicked];
+    }
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{}
+
+#pragma mark -
+#pragma mark Input - Mouse
+#pragma mark -
+
+// Does nothing.
+- (int)mouseButton
+{
+    return 0;
+}
+
+- (BOOL)isMousePressed
+{
+    return mousePressed_; 
+}
+
+#pragma mark -
+#pragma mark Input - File
+#pragma mark -
+
+// TODO: Input - File
+- (NSData *)loadBytes:(NSURL*)url
+{
+    return nil;
+}
+
+- (NSArray *)loadStrings:(NSURL*)url
+{
+    return nil;
+}
+
+#pragma mark -
+#pragma mark Input - Time
+#pragma mark -
+
+- (int)day
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dc = [calendar components:NSDayCalendarUnit fromDate:[NSDate date]];
+    return [dc day];
+}
+
+- (int)month
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dc = [calendar components:NSMonthCalendarUnit fromDate:[NSDate date]];
+    return [dc month];
+}
+
+- (int)year
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dc = [calendar components:NSYearCalendarUnit fromDate:[NSDate date]];
+    return [dc year];
+}
+
+- (int)hour
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dc = [calendar components:NSHourCalendarUnit fromDate:[NSDate date]];
+    return [dc hour];
+}
+
+- (int)minute
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dc = [calendar components:NSMinuteCalendarUnit fromDate:[NSDate date]];
+    return [dc minute];
+}
+
+- (int)second
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dc = [calendar components:NSSecondCalendarUnit fromDate:[NSDate date]];
+    return [dc second];
+}
+
+// Returns the milliseconds since the view loaded.
+- (int)millis
+{
+    NSTimeInterval ti = -[startTime_ timeIntervalSinceNow];
+    return (int)floor(ti * 1000);
 }
 
 @end
