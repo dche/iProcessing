@@ -88,6 +88,14 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
     [graphics_ fill:pc.red :pc.green :pc.blue :pc.alpha];
     curStyle_.fillColor = clr;
     curStyle_.doFill = YES;
+    
+    if (shapeBegan_ && self.mode == P3D) {
+        Byte t = PColorFill;
+        [accessories_ appendBytes:&pc length:sizeof(PColor)];
+        [indices_ appendBytes:&t length:1];
+        
+        perVertexFillColor_ = YES;
+    }
 }
 
 - (void)fill:(float)gray :(float)alpha
@@ -124,6 +132,14 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
     [graphics_ stroke:pc.red :pc.green :pc.blue :pc.alpha];
     curStyle_.strokeColor = clr; 
     curStyle_.doStroke = YES;
+    
+    if (shapeBegan_ && self.mode == P3D) {
+        Byte t = PColorStroke;
+        [accessories_ appendBytes:&pc length:sizeof(PColor)];
+        [indices_ appendBytes:&t length:1];
+        
+        perVertexStrokeColor_ = YES;
+    }
 }
 
 - (void)stroke:(float)gray :(float)alpha
@@ -288,6 +304,7 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 
 - (color)lerpColor:(color)c1 :(color)c2 :(float)amt
 {
+    // TODO: lerp Color.
     return 0; 
 }
 
