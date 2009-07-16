@@ -28,7 +28,11 @@
     examples = [[NSMutableDictionary alloc] init];
     /// Specs
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[ProcessingSpec class]];
-    [examples setObject:demoController forKey:@"Specs"];
+    [examples setObject:demoController forKey:@"2D Specs"];
+    [demoController release];    
+    /// 3D Specs
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[P3DSpec class]];
+    [examples setObject:demoController forKey:@"P3D Specs"];
     [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
