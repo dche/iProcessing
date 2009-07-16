@@ -10,6 +10,7 @@
 #import "ProcessingFunctions.h"
 #import "PGraphicsProtocol.h"
 #import "PStyle.h"
+#import "PImage.h"
 
 @class PGraphics;
 
@@ -29,9 +30,13 @@
     BOOL visible_;
     /// Current frameRate
     NSUInteger frameRate_;
+    /// Timer for restart draw()
     NSTimer *loopTimer_;
     /// Number of frames since setup() is called.
     NSUInteger frameCount_;
+    
+    /// Origin matrix. This matrix should be restored before each draw()
+    Matrix3D matrix_;
     
     //..........................
     //  Image
@@ -53,6 +58,11 @@
     NSMutableData *vertices_;
     /// The index list, contains vertex types.
     NSMutableData *indices_;
+    /// Flag when per-vertex color is provided.
+    BOOL perVertexFillColor_;
+    BOOL perVertexStrokeColor_;
+    /// Flag when custom normal is provided.
+    BOOL customNormal_;
     
     //..........................
     //  3D
@@ -60,9 +70,13 @@
     
     /// YES if perspective projection is used, o.w., ortho projection. Default is YES.
     BOOL perspective_;
+    /// Weak reference of Texture to be applied. Used only in P3D mode.
+    PImage *texture_;
+    /// How to set texture cord. Default is IMAGE.
+    int textureMode_;
+    /// List for color, normal for vertices. Used only if in P3D mode.
+    NSMutableData *accessories_;
         
-    //..........................
-    //  Mouse Input
     //..........................
 
     /// Mouse input states
@@ -72,6 +86,7 @@
     float pMouseX_;
     float pMouseY_;
     
+    /// For pushStyle() and popStyle()
     NSMutableArray *styleStack_;
     PStyle *curStyle_;
     
@@ -85,7 +100,7 @@
     NSUInteger curFPS_;
 }
 
-/// Control if measure real Frames per second.
+/// Control if measure real FPS. Default is NO.
 @property (assign) BOOL showFPS;
 
 @property (readonly) color *pixels;
@@ -95,7 +110,7 @@
 
 - (id)initWithContainer:(UIView *)containerView;
 
-/// Called by concrete PGraphics instance.
+/// Called by the render (PGraphics instance).
 - (void)guardedDraw;
 
 /// TODO: Execute raw Processing code.
@@ -182,6 +197,7 @@
 #pragma mark Not implemented
 #pragma mark -
 #pragma mark Input - File
+#pragma mark Not implemented
 #pragma mark -
 
 - (NSData *)loadBytes:(NSURL*)url;
