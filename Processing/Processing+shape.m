@@ -10,22 +10,24 @@
 
 @interface Processing (Vertices)
 
-- (void)addVertex:(PVertex)v;
+- (void)addVertex:(PVertex)v :(PTextureCord)tc;
 - (void)addCurveVertex:(PVertex)v;
 - (void)addBezierVertices:(PVertex)cp1 :(PVertex)cp2 :(PVertex)p;
 - (void)resetVertices;
-
-- (void)addVertexColor;
 
 @end
 
 @implementation Processing (Vertices)
 
-- (void)addVertex:(PVertex)v
+- (void)addVertex:(PVertex)v :(PTextureCord)tc
 {
     Byte vt = PVertexNormal;
     [vertices_ appendBytes:&v length:sizeof(PVertex)];
     [indices_ appendBytes:&vt length:1];
+    
+    if (self.mode == P3D) {
+        [accessories_ appendBytes:&tc length:sizeof(PTextureCord)];
+    }
 }
 
 - (void)addCurveVertex:(PVertex)v
@@ -43,19 +45,15 @@
     [indices_ appendBytes:&vt length:1];        
 }
 
-- (void)addVertexColor
-{
-    if (mode_ != P3D) return;
-    
-    // Get last vertex color
-    // Has fillColor or strokeColor changed? If both, use fillColor.
-    
-}
-
 - (void)resetVertices
 {
     [vertices_ setLength:0];
     [indices_ setLength:0];
+    [accessories_ setLength:0];
+    
+    perVertexFillColor_ = perVertexStrokeColor_ = customNormal_ = NO;
+    
+    texture_ = nil;
 }
 
 @end
@@ -459,13 +457,29 @@
 {
     if (!shapeBegan_) return;
     
-    if (mode != OPEN && mode != CLOSE) return;
+    if (mode == OPEN || mode == CLOSE) {
+        
+        if (self.mode == QUARTZ2D) {
+            [graphics_ draw2DShapeWithVertices:[vertices_ bytes] 
+                                  vertexNumber:[indices_ length]
+                                       indices:[indices_ bytes] 
+                                          mode:vertexMode_ 
+                                         close:(mode == CLOSE)];
+        } else {
+            [graphics_ draw3DShapeWithVertices:[vertices_ bytes] 
+                                  vertexNumber:[vertices_ length]/sizeof(PVertex)
+                                       indices:[indices_ bytes] 
+                                   indexNumber:[indices_ length]
+                                   accessories:[accessories_ bytes] 
+                                       texture:texture_ 
+                            perVertexFillColor:perVertexFillColor_ 
+                          perVertexStrokeColor:perVertexStrokeColor_ 
+                                  customNormal:customNormal_
+                                          mode:vertexMode_ 
+                                         close:(mode == CLOSE)];
+        }
+    }
     
-    [graphics_ drawShapeWithVertices:[vertices_ bytes] 
-                             indices:[indices_ bytes]
-                        vertexNumber:[indices_ length]
-                                mode:vertexMode_ 
-                               close:(mode == CLOSE)];
     [self resetVertices];
     shapeBegan_ = NO;
 }
@@ -478,8 +492,13 @@
 
 - (void)vertex:(float)x :(float)y :(float)z
 {
+    [self vertex:x :y :z :-1.0f :-1.0f];
+}
+
+- (void)vertex:(float)x :(float)y :(float)z :(float)u :(float)v
+{
     if (!shapeBegan_) return;
-    [self addVertex:PVertexMake(x, y, z)];
+    [self addVertex:PVertexMake(x, y, z) :PTextureCordMake(u, v)];    
 }
 
 - (void)curveVertex:(float)x :(float)y
