@@ -140,22 +140,6 @@
 - (void)curveTightness:(float)squishy;
 
 #pragma mark -
-#pragma mark Shape - 3D primitives
-#pragma mark -
-
-// box()
-- (void)box:(float)size;
-- (void)box:(float)width 
-           :(float)height 
-           :(float)depth;
-// sphere()
-- (void)sphere:(float)radius;
-// sphereDetail()
-- (void)sphereDetail:(float)res;
-- (void)sphereDetail:(float)ures 
-                    :(float)vres;
-
-#pragma mark -
 #pragma mark Shape - Attributes
 #pragma mark -
 - (void)ellipseMode:(int)mode;
@@ -177,6 +161,7 @@
 - (void)endShape:(int)mode;
 - (void)vertex:(float)x :(float)y;
 - (void)vertex:(float)x :(float)y :(float)z;
+- (void)vertex:(float)x :(float)y :(float)z :(float)u :(float)v;
 - (void)curveVertex:(float)x :(float)y;
 - (void)curveVertex:(float)x :(float)y :(float)z;
 - (void)bezierVertex:(float)cx1 
