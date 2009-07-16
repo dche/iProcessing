@@ -23,6 +23,8 @@
     
     PColor fillColor_;
     PColor tintColor_;
+    
+    NSMutableData *matrixStack_;
 }
 
 @end

@@ -9,7 +9,22 @@
 #import "PGraphics2D.h"
 #import "Processing.h"
 
-static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
+typedef struct {
+    float a, b, c, d, tx, ty;
+} Matrix2D;
+
+static inline Matrix2D Matrix2DMake(CGAffineTransform ctm)
+{
+    Matrix2D m;
+    m.a = ctm.a; m.b = ctm.b; m.c = ctm.c; m.d = ctm.d; 
+    m.tx = ctm.tx; m.ty = ctm.ty;
+    
+    return m;
+}
+
+static const NSUInteger kDefaultMatrixStackDepth = 4;
+
+static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 {
     if (doFill && doStroke) {
         return kCGPathFillStroke;
@@ -47,6 +62,8 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
         self.backgroundColor = [UIColor clearColor];    // No background color.
         p_ = p;
         ctx = [self createBitmapCGContextWithWidth:frame.size.width height:frame.size.height];
+        
+        matrixStack_ = [[NSMutableData alloc] initWithCapacity:kDefaultMatrixStackDepth];
     }
     return self;
     
@@ -66,7 +83,10 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 
 - (void)dealloc {
     CGContextRelease(ctx);
+    [matrixStack_ release];
+    
     if (pixels_ != NULL) free(pixels_);
+    
     [super dealloc];
 }
 
@@ -190,11 +210,11 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     CGContextSetLineWidth(ctx, w);
 }
 
-- (void)drawShapeWithVertices:(const PVertex *)v 
-                      indices:(const Byte *)i 
-                 vertexNumber:(NSUInteger)n
-                         mode:(int)m 
-                        close:(BOOL)toClose
+- (void)draw2DShapeWithVertices:(const PVertex *)v
+                   vertexNumber:(NSUInteger)n 
+                        indices:(const Byte *)i 
+                           mode:(int)m 
+                          close:(BOOL)toClose
 {
     if (n == 0) return;
     
@@ -413,20 +433,45 @@ static CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 
 - (void)pushMatrix
 {
-    // TODO: construct a matrix stack.
-    CGContextSaveGState(ctx);
+    CGAffineTransform ctm = CGContextGetCTM(ctx);
+    Matrix2D m = Matrix2DMake(ctm);
+    [matrixStack_ appendBytes:&m length:sizeof(Matrix2D)];
 }
 
 - (void)popMatrix
 {
-    // BUG: ditto.
-    CGContextRestoreGState(ctx);
+    Matrix2D m;
+    NSUInteger lengthAfterPop = [matrixStack_ length] - sizeof(Matrix2D);
+    [matrixStack_ getBytes:&m 
+                     range:NSMakeRange(lengthAfterPop, sizeof(Matrix2D))];
+    [matrixStack_ setLength:lengthAfterPop];
+    
+    [self loadIdentity];
+    CGContextConcatCTM(ctx, CGAffineTransformMake(m.a, m.b, m.c, m.d, m.tx, m.ty));
 }
 
 - (void)loadIdentity
 {
     CGAffineTransform ctm = CGContextGetCTM(ctx);
     CGContextConcatCTM(ctx, CGAffineTransformInvert(ctm));
+}
+
+- (Matrix3D)matrix
+{
+    Matrix3D m;
+    CGAffineTransform ctm = CGContextGetCTM(ctx);
+    m.m0 = ctm.a; m.m1 = ctm.b; m.m4 = ctm.c; m.m5 = ctm.d;
+    m.m12 = ctm.tx; m.m13 = ctm.ty;
+    
+    m.m2 = m.m3 = m.m6 = m.m7 = m.m8 = m.m9 = m.m10 = m.m11 = m.m14 = m.m15 = 0.0f;
+    return m;
+}
+
+- (void)loadMatrix:(Matrix3D)m
+{
+    [self loadIdentity];
+    CGAffineTransform ctm = CGAffineTransformMake(m.m0, m.m1, m.m4, m.m5, m.m12, m.m13);
+    CGContextConcatCTM(ctx, ctm);
 }
 
 - (void)rotate:(float)theta :(float)x :(float)y :(float)z
