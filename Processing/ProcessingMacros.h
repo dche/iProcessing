@@ -177,8 +177,6 @@ typedef UInt32 color;
 
 /** texture coordinates in 0..1 range */
 #define NORMAL      (1)
-/** @deprecated use NORMAL instead */
-#define NORMALIZED  (1)
 /** texture coordinates based on image width/height */
 #define IMAGE       (2)
 
