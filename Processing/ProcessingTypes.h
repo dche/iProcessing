@@ -19,7 +19,7 @@ typedef enum {
     PRedColor = ALPHA_MASK | RED_MASK,
     PGreenColor = ALPHA_MASK | GREEN_MASK,
     PBlueColor = ALPHA_MASK | BLUE_MASK,
-    PGrayColor = 0xFF808080,
+    PGrayColor = ALPHA_MASK | 0x80808080,
 } PColorConstants;
 
 typedef struct {
@@ -80,19 +80,62 @@ static inline PVertex PVertexMake(float fx, float fy, float fz)
 	return pv;
 }
 
+static inline void PVectorAdd(PVector *v, const PVector *va)
+{
+    v->x += va->x;
+    v->y += va->y;
+    v->z += va->z;
+}
+
+static inline void PVectorSub(PVector *v, const PVector *vs)
+{
+    v->x -= vs->x;
+    v->y -= vs->y;
+    v->z -= vs->z;
+}
+
+static inline PVector PVectorCross(PVector vr, PVector vl)
+{
+    PVector v;
+    v.x = vr.y * vl.z - vr.z * vl.y;
+    v.y = vr.z * vl.x - vr.x * vl.z;
+    v.z = vr.x * vl.y - vr.y * vl.x;
+    return v;
+}
+
+static inline void PVectorNormalize(PVector *v)
+{
+    float mag = sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
+
+    if (mag > 0) {
+        v->x /= mag;
+        v->y /= mag;
+        v->z /= mag;
+    }
+}
+
+static inline PVector PVertexSub(PVertex vs, PVertex ve)
+{
+    PVector v;
+    v.x = ve.x - vs.x;
+    v.y = ve.y - vs.y;
+    v.z = ve.z - vs.z;
+    return v;
+}
+
 typedef enum {
-    kPVertextNormal = 0,
-    kPVertextBezier,
-    kPVertextCurve,
-    kPVectorNormal,
+    kPVertexNormal = 0,
+    kPVertexBezier,
+    kPVertexCurve,
+    kPNormalVector,
     kPColorFill,
     kPColorStroke,
 } PVertexType;
 
-#define PVertexNormal       kPVertextNormal
-#define PVertexBezier       kPVertextBezier
-#define PVertexCurve        kPVertextCurve
-#define PVectorNormal       kPVectorNormal
+#define PVertexNormal       kPVertexNormal
+#define PVertexBezier       kPVertexBezier
+#define PVertexCurve        kPVertexCurve
+#define PNormalVector       kPNormalVector
 #define PColorFill          kPColorFill
 #define PColorStroke        kPColorStroke
 
@@ -100,4 +143,29 @@ typedef enum {
 #pragma mark Matrix3D
 #pragma mark -
 
-typedef float Matrix3D[16];
+typedef struct {
+    float m0, m1, m2, m3;
+    float m4, m5, m6, m7;
+    float m8, m9, m10, m11;
+    float m12, m13, m14, m15;
+} Matrix3D;
+
+// TODO: matrix code in asm.
+
+#pragma mark -
+#pragma mark Texture
+#pragma mark -
+
+typedef struct {
+    float u;
+    float v;
+} PTextureCord;
+
+
+static inline PTextureCord PTextureCordMake(float u, float v)
+{
+    PTextureCord tc;
+    tc.u = u; tc.v = v;
+    
+    return tc;
+}

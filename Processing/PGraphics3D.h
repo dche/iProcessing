@@ -16,6 +16,9 @@
 @private
     Processing *p_;
     
+    /// Flag of first initialized, to avoid duplicated setupGL()
+    BOOL inInit_;
+    
     /// The pixel dimensions of the backbuffer
     GLint backingWidth;
     GLint backingHeight;
@@ -36,8 +39,17 @@
     PColor tintColor_;
     
     UIFont *curFont_;
-    /// Private vertices list.
-    NSData *vertices_;
+    
+    /// Private vertex data.
+    NSMutableData *vertices_;   // For curve vertices.
+    NSMutableData *indices_;    // Vertex indices used by OpenGL.
+    NSMutableData *fillColorList_;  // Color buffer when fill
+    NSMutableData *strokeColorList_; // Color buffer when stroke
+    NSMutableData *normalList_;     // Normal buffer used by OpenGL.
+    
+    /// Sphere detail. Both default are 30.
+    GLfloat sphereURes_;
+    GLfloat sphereVRes_;
     
     /// Flag when baginCamera();
     BOOL cameraBegan;
@@ -45,8 +57,18 @@
     //................
     // Lighting
     //................
+    
+    /// Flag for light. We keep this state here just for reducing glGet queries.
+    /// And (curLight_ == 0) can't be used for this purpose, since global ambient
+    /// light does not have a light source.
+    BOOL lightEnabled_;
+    /// 1 + the largest number of light currently enabled. 
+    /// For examle, if LIGHT7 is enabled, curLights_ should equal to 8.
     NSUInteger curLights_;
     PColor lightSpecular_;
+    GLfloat lightAttenuationConst_;
+    GLfloat lightAttenuationLinear_;
+    GLfloat lightAttenuationQuardratic_;
 }
 
 @end

@@ -41,7 +41,7 @@
     int textMode;
     int textLeading;
     
-    // emissive(), specular(), shininess(), ambient()
+    // TODO: emissive(), specular(), shininess(), ambient()
 }
 
 @property (assign) BOOL doFill;

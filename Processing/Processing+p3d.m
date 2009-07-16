@@ -11,6 +11,29 @@
 @implementation Processing (ThreeD)
 
 #pragma mark -
+#pragma mark Texture
+#pragma mark -
+
+- (void)texture:(PImage *)img
+{
+    if (shapeBegan_) {
+        texture_ = img;        
+    }
+}
+
+- (void)textureMode:(int)mode
+{
+    switch (mode) {
+        case IMAGE:
+        case NORMAL:
+            textureMode_ = mode;
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark -
 #pragma 3D Primitives
 #pragma mark -
 
@@ -21,41 +44,15 @@
 
 - (void)box:(float)width :(float)height :(float)depth
 {
-    if (self.mode != P3D) return;
-    
-    float x = width/2.0f;
-    float y = height/2.0f;
-    float z = depth/2.0f;
-    
-    [self beginShape:QUAD_STRIP];
-    [self vertex:-x :-y :-z];
-    [self vertex:-x :-y :z];
-    [self vertex:x :-y :-z];
-    [self vertex:x :-y :z];
-    [self vertex:x :y :-z];
-    [self vertex:x :y :z];
-    [self vertex:-x :y :-z];
-    [self vertex:-x :y :z];
-    [self vertex:-x :-y :-z];   // Close the strip.
-    [self vertex:-x :-y :z];
-    [self endShape];
-    
-    [self beginShape:QUADS];
-    [self vertex:-x :-y :-z];
-    [self vertex:-x :y :-z];
-    [self vertex:x :y :-z];
-    [self vertex:x :-y :-z];
-    [self vertex:-x :-y :z];
-    [self vertex:-x :y :z];
-    [self vertex:x :y :z];
-    [self vertex:x :-y :z];    
-    [self endShape];
+    if (self.mode == P3D) {
+        [graphics_ boxWithWidth:width height:height depth:depth];
+    }
 }
 
 - (void)sphere:(float)radius
 {
     if (self.mode == P3D) {
-        
+        [graphics_ sphereWithRadius:radius];
     }
 }
 
@@ -67,10 +64,9 @@
 - (void)sphereDetail:(float)ures :(float)vres
 {
     if (self.mode != P3D) {
-        
+        [graphics_ sphereDetailWithUres:ures vres:vres];
     }
 }
-
 
 #pragma mark -
 #pragma mark Lights
@@ -79,7 +75,7 @@
 - (void)ambientLight:(float)v1 :(float)v2 :(float)v3
 {
     if (self.mode == P3D) {
-        [graphics_ addAmbientLightWithColor:PColorMake([self color:v1 :v2 :v3])];
+        [graphics_ enableGlobalAmbientLight:PColorMake([self color:v1 :v2 :v3])];
     }
 }
 
@@ -127,7 +123,7 @@
         [self lightFalloff:1 :0 :0];
         [graphics_ lightSpecular:PColorMake(PWhiteColor)];
         
-        [graphics_ addAmbientLightWithColor:PColorMake(PGrayColor)];
+        [graphics_ enableGlobalAmbientLight:PColorMake(PGrayColor)];
         [graphics_ addDirectionalLightWithColor:PColorMake(PGrayColor)
                                     toDirection:PVertexMake(0, 0, -1)];
     }    
@@ -143,7 +139,15 @@
 /// Set current normal vector.
 - (void)normal:(float)x :(float)y :(float)z
 {
-    
+    if (shapeBegan_ && self.mode == P3D) {
+        PVector n = PVertexMake(x, y, z);
+        Byte t = PNormalVector;
+        
+        [accessories_ appendBytes:&n length:sizeof(PVector)];
+        [indices_ appendBytes:&t length:1];
+        
+        customNormal_ = YES;
+    }
 }
 
 - (void)pointLight:(float)v1 :(float)v2 :(float)v3 :(float)x :(float)y :(float)z
@@ -180,7 +184,14 @@
 
 - (void)camera
 {
+    // clear camera
     
+    float ex = self.width / 2.0f;
+    float ey = self.height / 2.0f;
+    float ez = ey / [self tan:60 * DEG_TO_RAD / 2.0f];
+    float cx = ex; float cy = ey; float cz = 0.0f;
+    
+    [self camera:ex :ey :ez :cx :cy :cz :0 :1 :0];
 }
 
 - (void)camera:(float)eyeX :(float)eyeY :(float)eyeZ 
@@ -211,7 +222,8 @@
 
 - (void)perspective
 {
-    float near = (self.height / 2.0f) / [self tan:60/2];
+    // TODO: doc these numbers
+    float near = (self.height / 2.0f) / [self tan:60 * DEG_TO_RAD/2.0f];
     float far = near * 1000;
 
     [self perspective:60 :self.height/self.width :near :far];

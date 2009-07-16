@@ -159,7 +159,7 @@
 {
     // In RGB mode, alpha chanel is ignored.
     if (mode_ == RGB) return;
-    // Must be the same size as self.
+    // Must be the same size as of self.
     if (mask.width != width || mask.height != height) return;
     
     [mask loadPixels];
@@ -205,6 +205,7 @@
 
 - (void)filter:(int)mode :(float)param
 {
+    // TODO: implement image filters.
     switch (mode) {
         case GRAY:
             break;

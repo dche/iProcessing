@@ -11,6 +11,7 @@
 #import "ProcessingTypes.h"
 
 @class Processing;
+@class PImage;
 
 @protocol PGraphics <NSObject>
 
@@ -46,12 +47,6 @@
             :(float)width 
             :(float)height;
 
-- (void)drawShapeWithVertices:(const PVertex *)v 
-                      indices:(const Byte *)i 
-                 vertexNumber:(NSUInteger)n
-                         mode:(int)m 
-                        close:(BOOL)toClose;
-
 // Transformation
 - (void)multMatrix:(float)n00 :(float)n01 :(float)n02 :(float)n03
                   :(float)n04 :(float)n05 :(float)n06 :(float)n07
@@ -63,6 +58,9 @@
 - (void)rotate:(float)theta :(float)x :(float)y :(float)z;
 - (void)scale:(float)x :(float)y :(float)z;
 - (void)translate:(float)x :(float)y :(float)z;
+
+- (Matrix3D)matrix;
+- (void)loadMatrix:(Matrix3D)m;
 
 // Typography
 /// Draw a single line of text.
@@ -84,7 +82,27 @@
 
 @optional
 
-// Shape - N/A in 3D mode.
+- (void)draw2DShapeWithVertices:(const PVertex *)v
+                   vertexNumber:(NSUInteger)n 
+                        indices:(const Byte *)i 
+                           mode:(int)m 
+                          close:(BOOL)toClose;
+
+/// A very very fat interface that including everything can be added
+/// between beginShape() endShape()
+- (void)draw3DShapeWithVertices:(const PVertex *)v 
+                   vertexNumber:(NSUInteger)n
+                        indices:(const Byte *)i 
+                    indexNumber:(NSUInteger)ni
+                    accessories:(const Byte *)a 
+                        texture:(const PImage *)t
+             perVertexFillColor:(BOOL)useFillColorArray 
+           perVertexStrokeColor:(BOOL)useStrokeColorArray 
+                   customNormal:(BOOL)normalProvided
+                           mode:(int)m 
+                          close:(BOOL)toClose;
+
+// Shape - N/A in 3D mode, so optional
 - (void)bezierDetail:(int)res;
 - (void)curveDetail:(int)aInt;
 
@@ -92,9 +110,11 @@
 #pragma mark 3D specific methods
 #pragma mark -
 
-- (void)swapBuffer;
+- (void)boxWithWidth:(float)w height:(float)h depth:(float)d;
+- (void)sphereWithRadius:(float)r;
+- (void)sphereDetailWithUres:(float)u vres:(float)v;
 
-- (void)addAmbientLightWithColor:(PColor)pc;
+- (void)enableGlobalAmbientLight:(PColor)pc;
 - (void)addAmbientLightWithColor:(PColor)pc atPosition:(PVector)pos;
 - (void)addDirectionalLightWithColor:(PColor)pc toDirection:(PVector)dir;
 - (void)addPointLightWithColor:(PColor)pc atPosition:(PVector)pos;

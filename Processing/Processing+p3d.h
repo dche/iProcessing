@@ -11,6 +11,10 @@
 
 @interface Processing (ThreeD)
 
+#pragma mark Texture
+- (void)texture:(PImage *)img;
+- (void)textureMode:(int)mode;
+
 #pragma 3D Primitives
 - (void)box:(float)size;
 - (void)box:(float)width :(float)height :(float)depth;
