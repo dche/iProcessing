@@ -90,7 +90,7 @@ void draw()
 { 
     [self size:320 :320 :P3D]; 
     [self noStroke]; 
-    [self colorMode:RGB :1]; 
+    [self colorMode:RGB :1];
 } 
 
 - (void)draw 

@@ -129,8 +129,6 @@
     [self line:85 :20 :85 :75];
     [self stroke:[self color:255]];
     [self line:85 :75 :30 :75];
-    
-    // TODO: 3D spec.
 }
 
 - (void)strokeCap

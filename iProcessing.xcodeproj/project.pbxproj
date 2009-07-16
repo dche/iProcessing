@@ -13,6 +13,15 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		5D04CD7F100C4D2000D0ED13 /* LightsGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CD7E100C4D2000D0ED13 /* LightsGL.m */; };
+		5D04CD82100C4EB800D0ED13 /* Directional.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CD81100C4EB800D0ED13 /* Directional.m */; };
+		5D04CD88100C4F8100D0ED13 /* Lights1.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CD87100C4F8100D0ED13 /* Lights1.m */; };
+		5D04CD8B100C4FCE00D0ED13 /* Lights2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CD8A100C4FCE00D0ED13 /* Lights2.m */; };
+		5D04CD8E100C500600D0ED13 /* Spot.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CD8D100C500600D0ED13 /* Spot.m */; };
+		5D04CD91100C504200D0ED13 /* Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CD90100C504200D0ED13 /* Reflection.m */; };
+		5D04CF3C100E10F300D0ED13 /* Premitives3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CF3B100E10F300D0ED13 /* Premitives3D.m */; };
+		5D04CF3F100E117700D0ED13 /* ShapeTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CF3E100E117700D0ED13 /* ShapeTransform.m */; };
+		5D04CF46100E12DA00D0ED13 /* Vertices3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CF45100E12DA00D0ED13 /* Vertices3D.m */; };
 		5D260A010FF5EDD000E0C0FC /* ShapePrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D260A000FF5EDD000E0C0FC /* ShapePrimitives.m */; };
 		5D260A030FF5EDDC00E0C0FC /* Vertices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2609FB0FF5EBBC00E0C0FC /* Vertices.m */; };
 		5D260B2E0FF69CCD00E0C0FC /* TriangleStrip.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D260B2D0FF69CCD00E0C0FC /* TriangleStrip.m */; };
@@ -102,6 +111,12 @@
 		5DD623240FF395E60056B47C /* Letters.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD623230FF395E60056B47C /* Letters.m */; };
 		5DD623270FF3963F0056B47C /* Words.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD623260FF3963F0056B47C /* Words.m */; };
 		5DD626CE0FF59F480056B47C /* ProcessingTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD626CD0FF59F480056B47C /* ProcessingTypes.h */; };
+		5DE0CEF3100E32690078707F /* Texture1.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0CEF2100E32690078707F /* Texture1.m */; };
+		5DE0CEF6100E32890078707F /* Texture2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0CEF5100E32890078707F /* Texture2.m */; };
+		5DE0CEF9100E32CE0078707F /* Texture3.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0CEF8100E32CE0078707F /* Texture3.m */; };
+		5DE0CEFC100E33060078707F /* TextureCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0CEFB100E33060078707F /* TextureCube.m */; };
+		5DE0CEFF100E335D0078707F /* TextureSphere.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0CEFE100E335D0078707F /* TextureSphere.m */; };
+		5DE0CF02100E34D90078707F /* SpaceJunk.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0CF01100E34D90078707F /* SpaceJunk.m */; };
 		5DF1000A0FFAA46700B7AFBE /* PImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF100080FFAA46700B7AFBE /* PImage.m */; };
 		5DF1000B0FFAA46700B7AFBE /* PImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF100090FFAA46700B7AFBE /* PImage.h */; };
 		5DF100FC0FFAC2AC00B7AFBE /* eames.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5DF100FB0FFAC2AC00B7AFBE /* eames.jpg */; };
@@ -128,6 +143,7 @@
 		5DFB75F11005F9DB001DFD19 /* Processing+p3d.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFB75EF1005F9DB001DFD19 /* Processing+p3d.h */; };
 		5DFB75F21005F9DB001DFD19 /* Processing+p3d.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB75F01005F9DB001DFD19 /* Processing+p3d.m */; };
 		5DFB778B10070887001DFD19 /* Rotate2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB778A10070887001DFD19 /* Rotate2.m */; };
+		5DFB78E7100AB475001DFD19 /* P3DSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB78E6100AB475001DFD19 /* P3DSpec.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +166,24 @@
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iProcessing_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iProcessing_Prefix.pch; sourceTree = "<group>"; };
+		5D04CD7D100C4D2000D0ED13 /* LightsGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightsGL.h; sourceTree = "<group>"; };
+		5D04CD7E100C4D2000D0ED13 /* LightsGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightsGL.m; sourceTree = "<group>"; };
+		5D04CD80100C4EB800D0ED13 /* Directional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Directional.h; sourceTree = "<group>"; };
+		5D04CD81100C4EB800D0ED13 /* Directional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Directional.m; sourceTree = "<group>"; };
+		5D04CD86100C4F8100D0ED13 /* Lights1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lights1.h; sourceTree = "<group>"; };
+		5D04CD87100C4F8100D0ED13 /* Lights1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lights1.m; sourceTree = "<group>"; };
+		5D04CD89100C4FCE00D0ED13 /* Lights2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lights2.h; sourceTree = "<group>"; };
+		5D04CD8A100C4FCE00D0ED13 /* Lights2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lights2.m; sourceTree = "<group>"; };
+		5D04CD8C100C500600D0ED13 /* Spot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spot.h; sourceTree = "<group>"; };
+		5D04CD8D100C500600D0ED13 /* Spot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spot.m; sourceTree = "<group>"; };
+		5D04CD8F100C504200D0ED13 /* Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reflection.h; sourceTree = "<group>"; };
+		5D04CD90100C504200D0ED13 /* Reflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reflection.m; sourceTree = "<group>"; };
+		5D04CF3A100E10F300D0ED13 /* Premitives3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Premitives3D.h; sourceTree = "<group>"; };
+		5D04CF3B100E10F300D0ED13 /* Premitives3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Premitives3D.m; sourceTree = "<group>"; };
+		5D04CF3D100E117700D0ED13 /* ShapeTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeTransform.h; sourceTree = "<group>"; };
+		5D04CF3E100E117700D0ED13 /* ShapeTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeTransform.m; sourceTree = "<group>"; };
+		5D04CF44100E12DA00D0ED13 /* Vertices3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertices3D.h; sourceTree = "<group>"; };
+		5D04CF45100E12DA00D0ED13 /* Vertices3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vertices3D.m; sourceTree = "<group>"; };
 		5D2609FA0FF5EBBC00E0C0FC /* Vertices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertices.h; sourceTree = "<group>"; };
 		5D2609FB0FF5EBBC00E0C0FC /* Vertices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vertices.m; sourceTree = "<group>"; };
 		5D2609FF0FF5EDD000E0C0FC /* ShapePrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapePrimitives.h; sourceTree = "<group>"; };
@@ -157,7 +191,6 @@
 		5D260B2C0FF69CCD00E0C0FC /* TriangleStrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangleStrip.h; sourceTree = "<group>"; };
 		5D260B2D0FF69CCD00E0C0FC /* TriangleStrip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TriangleStrip.m; sourceTree = "<group>"; };
 		5DA3EDC40FE69D4F0028380E /* libProcessing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libProcessing.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DA3EDD20FE6AEEC0028380E /* processing.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = processing.js; sourceTree = "<group>"; };
 		5DA3EDD50FE6AEEC0028380E /* Processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing.h; sourceTree = "<group>"; };
 		5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+transformation.m"; sourceTree = "<group>"; };
 		5DA3EDD70FE6AEEC0028380E /* Processing+transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+transformation.h"; sourceTree = "<group>"; };
@@ -295,6 +328,18 @@
 		5DD623250FF3963F0056B47C /* Words.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Words.h; sourceTree = "<group>"; };
 		5DD623260FF3963F0056B47C /* Words.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Words.m; sourceTree = "<group>"; };
 		5DD626CD0FF59F480056B47C /* ProcessingTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingTypes.h; sourceTree = "<group>"; };
+		5DE0CEF1100E32690078707F /* Texture1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture1.h; sourceTree = "<group>"; };
+		5DE0CEF2100E32690078707F /* Texture1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture1.m; sourceTree = "<group>"; };
+		5DE0CEF4100E32890078707F /* Texture2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture2.h; sourceTree = "<group>"; };
+		5DE0CEF5100E32890078707F /* Texture2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture2.m; sourceTree = "<group>"; };
+		5DE0CEF7100E32CE0078707F /* Texture3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture3.h; sourceTree = "<group>"; };
+		5DE0CEF8100E32CE0078707F /* Texture3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture3.m; sourceTree = "<group>"; };
+		5DE0CEFA100E33060078707F /* TextureCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCube.h; sourceTree = "<group>"; };
+		5DE0CEFB100E33060078707F /* TextureCube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureCube.m; sourceTree = "<group>"; };
+		5DE0CEFD100E335D0078707F /* TextureSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureSphere.h; sourceTree = "<group>"; };
+		5DE0CEFE100E335D0078707F /* TextureSphere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureSphere.m; sourceTree = "<group>"; };
+		5DE0CF00100E34D90078707F /* SpaceJunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceJunk.h; sourceTree = "<group>"; };
+		5DE0CF01100E34D90078707F /* SpaceJunk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpaceJunk.m; sourceTree = "<group>"; };
 		5DF100080FFAA46700B7AFBE /* PImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PImage.m; sourceTree = "<group>"; };
 		5DF100090FFAA46700B7AFBE /* PImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PImage.h; sourceTree = "<group>"; };
 		5DF100FB0FFAC2AC00B7AFBE /* eames.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eames.jpg; sourceTree = "<group>"; };
@@ -330,6 +375,8 @@
 		5DFB75F01005F9DB001DFD19 /* Processing+p3d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+p3d.m"; sourceTree = "<group>"; };
 		5DFB778910070887001DFD19 /* Rotate2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rotate2.h; sourceTree = "<group>"; };
 		5DFB778A10070887001DFD19 /* Rotate2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rotate2.m; sourceTree = "<group>"; };
+		5DFB78E5100AB475001DFD19 /* P3DSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P3DSpec.h; sourceTree = "<group>"; };
+		5DFB78E6100AB475001DFD19 /* P3DSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = P3DSpec.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* iProcessing-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iProcessing-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -441,10 +488,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5D04CD62100C4D0500D0ED13 /* Lights */ = {
+			isa = PBXGroup;
+			children = (
+				5D04CD7D100C4D2000D0ED13 /* LightsGL.h */,
+				5D04CD7E100C4D2000D0ED13 /* LightsGL.m */,
+				5D04CD80100C4EB800D0ED13 /* Directional.h */,
+				5D04CD81100C4EB800D0ED13 /* Directional.m */,
+				5D04CD86100C4F8100D0ED13 /* Lights1.h */,
+				5D04CD87100C4F8100D0ED13 /* Lights1.m */,
+				5D04CD89100C4FCE00D0ED13 /* Lights2.h */,
+				5D04CD8A100C4FCE00D0ED13 /* Lights2.m */,
+				5D04CD8C100C500600D0ED13 /* Spot.h */,
+				5D04CD8D100C500600D0ED13 /* Spot.m */,
+				5D04CD8F100C504200D0ED13 /* Reflection.h */,
+				5D04CD90100C504200D0ED13 /* Reflection.m */,
+			);
+			name = Lights;
+			sourceTree = "<group>";
+		};
+		5D04CEB6100DCB1100D0ED13 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sound;
+			sourceTree = "<group>";
+		};
 		5DA3EDBF0FE69D1D0028380E /* Processing */ = {
 			isa = PBXGroup;
 			children = (
-				5DA3EDD20FE6AEEC0028380E /* processing.js */,
+				5D04CEB6100DCB1100D0ED13 /* Sound */,
 				5DA3EDD50FE6AEEC0028380E /* Processing.h */,
 				5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */,
 				5DA3EDD70FE6AEEC0028380E /* Processing+transformation.h */,
@@ -534,6 +607,8 @@
 			children = (
 				5DBE5CBA0FF00258003176FB /* ProcessingSpec.h */,
 				5DBE5CBB0FF00258003176FB /* ProcessingSpec.m */,
+				5DFB78E5100AB475001DFD19 /* P3DSpec.h */,
+				5DFB78E6100AB475001DFD19 /* P3DSpec.m */,
 			);
 			name = Spec;
 			sourceTree = "<group>";
@@ -696,6 +771,23 @@
 			name = Typography;
 			sourceTree = "<group>";
 		};
+		5DE0CEEF100E324A0078707F /* Texture */ = {
+			isa = PBXGroup;
+			children = (
+				5DE0CEF1100E32690078707F /* Texture1.h */,
+				5DE0CEF2100E32690078707F /* Texture1.m */,
+				5DE0CEF4100E32890078707F /* Texture2.h */,
+				5DE0CEF5100E32890078707F /* Texture2.m */,
+				5DE0CEF7100E32CE0078707F /* Texture3.h */,
+				5DE0CEF8100E32CE0078707F /* Texture3.m */,
+				5DE0CEFA100E33060078707F /* TextureCube.h */,
+				5DE0CEFB100E33060078707F /* TextureCube.m */,
+				5DE0CEFD100E335D0078707F /* TextureSphere.h */,
+				5DE0CEFE100E335D0078707F /* TextureSphere.m */,
+			);
+			name = Texture;
+			sourceTree = "<group>";
+		};
 		5DF1FDA10FF9837F00B7AFBE /* Image */ = {
 			isa = PBXGroup;
 			children = (
@@ -738,6 +830,8 @@
 		5DFB73AE1003D1D9001DFD19 /* 3D */ = {
 			isa = PBXGroup;
 			children = (
+				5DE0CEEF100E324A0078707F /* Texture */,
+				5D04CD62100C4D0500D0ED13 /* Lights */,
 				5DFB73E21003DA64001DFD19 /* Transform */,
 				5DFB73B31003D1EC001DFD19 /* Form */,
 			);
@@ -751,6 +845,14 @@
 				5DFB73B51003D1FF001DFD19 /* CubicGrid.m */,
 				5DFB73BA1003D4BD001DFD19 /* RGBCube.h */,
 				5DFB73BB1003D4BD001DFD19 /* RGBCube.m */,
+				5D04CF3A100E10F300D0ED13 /* Premitives3D.h */,
+				5D04CF3B100E10F300D0ED13 /* Premitives3D.m */,
+				5D04CF3D100E117700D0ED13 /* ShapeTransform.h */,
+				5D04CF3E100E117700D0ED13 /* ShapeTransform.m */,
+				5D04CF44100E12DA00D0ED13 /* Vertices3D.h */,
+				5D04CF45100E12DA00D0ED13 /* Vertices3D.m */,
+				5DE0CF00100E34D90078707F /* SpaceJunk.h */,
+				5DE0CF01100E34D90078707F /* SpaceJunk.m */,
 			);
 			name = Form;
 			sourceTree = "<group>";
@@ -945,6 +1047,22 @@
 				5DFB73BC1003D4BD001DFD19 /* RGBCube.m in Sources */,
 				5DFB73E51003DA7C001DFD19 /* Rotate1.m in Sources */,
 				5DFB778B10070887001DFD19 /* Rotate2.m in Sources */,
+				5DFB78E7100AB475001DFD19 /* P3DSpec.m in Sources */,
+				5D04CD7F100C4D2000D0ED13 /* LightsGL.m in Sources */,
+				5D04CD82100C4EB800D0ED13 /* Directional.m in Sources */,
+				5D04CD88100C4F8100D0ED13 /* Lights1.m in Sources */,
+				5D04CD8B100C4FCE00D0ED13 /* Lights2.m in Sources */,
+				5D04CD8E100C500600D0ED13 /* Spot.m in Sources */,
+				5D04CD91100C504200D0ED13 /* Reflection.m in Sources */,
+				5D04CF3C100E10F300D0ED13 /* Premitives3D.m in Sources */,
+				5D04CF3F100E117700D0ED13 /* ShapeTransform.m in Sources */,
+				5D04CF46100E12DA00D0ED13 /* Vertices3D.m in Sources */,
+				5DE0CEF3100E32690078707F /* Texture1.m in Sources */,
+				5DE0CEF6100E32890078707F /* Texture2.m in Sources */,
+				5DE0CEF9100E32CE0078707F /* Texture3.m in Sources */,
+				5DE0CEFC100E33060078707F /* TextureCube.m in Sources */,
+				5DE0CEFF100E335D0078707F /* TextureSphere.m in Sources */,
+				5DE0CF02100E34D90078707F /* SpaceJunk.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

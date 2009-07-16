@@ -55,8 +55,8 @@ void draw() {
 
 #import "CubicGrid.h"
 
-static const float boxSize = 30;
-static const float margin = 60; //boxSize*2;
+static const float boxSize = 40;
+static const float margin = 80; //boxSize*2;
 static const float depth = 400;
 
 

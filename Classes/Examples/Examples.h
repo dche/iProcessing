@@ -9,6 +9,7 @@
 
 // Basic - Spec
 #import "ProcessingSpec.h"
+#import "P3DSpec.h"
 
 // Basic - Typography
 #import "Letters.h"
@@ -90,7 +91,28 @@
 // 3D - Form
 #import "RGBCube.h"
 #import "CubicGrid.h"
+#import "Premitives3D.h"
+#import "ShapeTransform.h"
+#import "Vertices3D.h"
+#import "SpaceJunk.h"
 
 // 3D - Transform
 #import "Rotate1.h"
 #import "Rotate2.h"
+
+// 3D - Texture
+#import "Texture1.h"
+#import "Texture2.h"
+#import "Texture3.h"
+#import "TextureCube.h"
+#import "TextureSphere.h"
+
+// 3D - Lights
+#import "LightsGL.h"
+#import "Directional.h"
+#import "Lights1.h"
+#import "Lights2.h"
+#import "Spot.h"
+#import "Reflection.h"
+
+
