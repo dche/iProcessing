@@ -48,13 +48,10 @@
 {
     if (self = [super init]) {
         container_ = [containerView retain];
-        shapeBegan_ = NO;
         
-        mode_ = P2D;
         loop_ = YES;
         frameRate_ = kDefaultFrameRate;
         startTime_ = [[NSDate date] retain];        
-        showFPS_ = NO;
         
         styleStack_ = [[NSMutableArray alloc] init];
         curStyle_ = [[PStyle alloc] init];
@@ -68,20 +65,9 @@
         if (nil == graphics_) {
             [self release];
             return nil;
-        } else {
-            if ([graphics_ respondsToSelector:@selector(swapBuffer)]) {
-                // +setup()+ might contain arbitrary drawing code.
-                // call +swapBuffer+ to show the first frame if the render need this step.
-                [graphics_ swapBuffer];
-            }
-            // TODO: save current ctm.  
-            
-            if (!loop_ && [self overridedMethod:@selector(draw)]) {
-                // Call +draw()+ at least once.
-                // The QUARTZ2D render can perform this automatically. OPENGL render can't.
-                [self drawView];    // TODO: DO NOT call this if render is QUARTZ2D.
-            }
         }
+        
+        matrix_ = [graphics_ matrix];
     }
     return self;
 }
@@ -104,6 +90,10 @@
     [vertices_ release];
     [indices_ release];
     
+    if (self.mode == P3D) {
+        [accessories_ release];
+    }
+    
     [super dealloc];
 }
 
@@ -115,10 +105,9 @@
 
 - (void)guardedDraw
 {
-    [self pushMatrix];
-    [self draw];    
-    // BUG: if user code pushMatrix but did not pop it, we got a wrong matrix.            
-    [self popMatrix];
+    [self draw];
+    
+    [graphics_ loadMatrix:matrix_];
     
     if (showFPS_) {
         [self pushStyle];
@@ -192,14 +181,12 @@
                                                     selector:@selector(drawView) 
                                                     userInfo:nil 
                                                      repeats:YES];
-        
         if (showFPS_) {
             fpsTimer_ = [NSTimer scheduledTimerWithTimeInterval:1.0f/kFPSSampleRate
                                                          target:self 
                                                        selector:@selector(sampleFPS) 
                                                        userInfo:nil 
                                                         repeats:YES];
-            
         }
     }
 }
@@ -221,8 +208,7 @@
 {
     if (graphics_ == nil) return;
     
-    // Only apply styles that affect state of graphics_.
-    
+    // Only apply styles that affect state of graphics_.    
     // fill color, stroke color, stroke cap, join and weight
     BOOL doFill, doStroke, doTint;
     
@@ -370,7 +356,7 @@
     [style release];
 }
 
-/// executes the code within draw() one time
+/// Executes the draw() once. If in loop, does nothing.
 - (void)redraw
 {
     if (!loop_) {
@@ -378,15 +364,18 @@
     }
 }
 
-// set the size.
+// Set the size, and initialize Processing.
 - (void)size:(float)width :(float)height
 {
+    // By default, use the OpenGL backed render, but for 2D drawing.
     [self size:width :height :P2D];
 }
 
 - (void)size:(float)width :(float)height :(int)mode
 {
-    // TODO: parameter sanity check.
+    if (width < 1 || height < 1 || (mode != P2D && mode != P3D && mode != QUARTZ2D)) {
+        return;
+    }
     
     mode_ = mode;
     
@@ -401,6 +390,9 @@
             self.view = [[PGraphics2D alloc] initWithFrame:frame controller:self];
             break;
         case OPENGL:
+            // Initialize ivar available in OPENGL (P3D) mode.
+            accessories_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength];
+            textureMode_ = IMAGE;
         case P2D:
         default:
             self.view = [[PGraphics3D alloc] initWithFrame:frame controller:self];
