@@ -22,6 +22,15 @@
 		5D04CF3C100E10F300D0ED13 /* Premitives3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CF3B100E10F300D0ED13 /* Premitives3D.m */; };
 		5D04CF3F100E117700D0ED13 /* ShapeTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CF3E100E117700D0ED13 /* ShapeTransform.m */; };
 		5D04CF46100E12DA00D0ED13 /* Vertices3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D04CF45100E12DA00D0ED13 /* Vertices3D.m */; };
+		5D1E8BCC1014D658002C61D7 /* PTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1E8BCA1014D658002C61D7 /* PTexture.h */; };
+		5D1E8BCD1014D658002C61D7 /* PTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8BCB1014D658002C61D7 /* PTexture.m */; };
+		5D1E8BD21014D76F002C61D7 /* Bird.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8BD11014D76F002C61D7 /* Bird.m */; };
+		5D1E8C311014DC6A002C61D7 /* Chain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8C301014DC6A002C61D7 /* Chain.m */; };
+		5D1E8C34101571B5002C61D7 /* CubesWithinCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8C33101571B5002C61D7 /* CubesWithinCube.m */; };
+		5D1E8EF71019C2FC002C61D7 /* berlin-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D1E8EF61019C2FC002C61D7 /* berlin-1.jpg */; };
+		5D1E8F161019C599002C61D7 /* PAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1E8F141019C599002C61D7 /* PAgent.h */; };
+		5D1E8F171019C599002C61D7 /* PAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8F151019C599002C61D7 /* PAgent.m */; };
+		5D1E940A101B62CF002C61D7 /* world32k.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D1E9409101B62CF002C61D7 /* world32k.jpg */; };
 		5D260A010FF5EDD000E0C0FC /* ShapePrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D260A000FF5EDD000E0C0FC /* ShapePrimitives.m */; };
 		5D260A030FF5EDDC00E0C0FC /* Vertices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2609FB0FF5EBBC00E0C0FC /* Vertices.m */; };
 		5D260B2E0FF69CCD00E0C0FC /* TriangleStrip.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D260B2D0FF69CCD00E0C0FC /* TriangleStrip.m */; };
@@ -184,6 +193,18 @@
 		5D04CF3E100E117700D0ED13 /* ShapeTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeTransform.m; sourceTree = "<group>"; };
 		5D04CF44100E12DA00D0ED13 /* Vertices3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertices3D.h; sourceTree = "<group>"; };
 		5D04CF45100E12DA00D0ED13 /* Vertices3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vertices3D.m; sourceTree = "<group>"; };
+		5D1E8BCA1014D658002C61D7 /* PTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTexture.h; sourceTree = "<group>"; };
+		5D1E8BCB1014D658002C61D7 /* PTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTexture.m; sourceTree = "<group>"; };
+		5D1E8BD01014D76F002C61D7 /* Bird.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bird.h; sourceTree = "<group>"; };
+		5D1E8BD11014D76F002C61D7 /* Bird.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bird.m; sourceTree = "<group>"; };
+		5D1E8C2F1014DC6A002C61D7 /* Chain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chain.h; sourceTree = "<group>"; };
+		5D1E8C301014DC6A002C61D7 /* Chain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chain.m; sourceTree = "<group>"; };
+		5D1E8C32101571B5002C61D7 /* CubesWithinCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubesWithinCube.h; sourceTree = "<group>"; };
+		5D1E8C33101571B5002C61D7 /* CubesWithinCube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubesWithinCube.m; sourceTree = "<group>"; };
+		5D1E8EF61019C2FC002C61D7 /* berlin-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "berlin-1.jpg"; sourceTree = "<group>"; };
+		5D1E8F141019C599002C61D7 /* PAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAgent.h; sourceTree = "<group>"; };
+		5D1E8F151019C599002C61D7 /* PAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAgent.m; sourceTree = "<group>"; };
+		5D1E9409101B62CF002C61D7 /* world32k.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = world32k.jpg; sourceTree = "<group>"; };
 		5D2609FA0FF5EBBC00E0C0FC /* Vertices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertices.h; sourceTree = "<group>"; };
 		5D2609FB0FF5EBBC00E0C0FC /* Vertices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vertices.m; sourceTree = "<group>"; };
 		5D2609FF0FF5EDD000E0C0FC /* ShapePrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapePrimitives.h; sourceTree = "<group>"; };
@@ -457,6 +478,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5D1E9409101B62CF002C61D7 /* world32k.jpg */,
+				5D1E8EF61019C2FC002C61D7 /* berlin-1.jpg */,
 				5DCE9D9D0FFC63E700A5E7DE /* trees.jpg */,
 				5DCE9C740FFC17D000A5E7DE /* teddy.gif */,
 				5DCE9AD00FFB327B00A5E7DE /* construct.jpg */,
@@ -514,15 +537,42 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
+		5D1E8B3B10144C81002C61D7 /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Ext;
+			sourceTree = "<group>";
+		};
+		5D1E8C2E1014DC5C002C61D7 /* Simulate */ = {
+			isa = PBXGroup;
+			children = (
+				5D1E8C2F1014DC6A002C61D7 /* Chain.h */,
+				5D1E8C301014DC6A002C61D7 /* Chain.m */,
+			);
+			name = Simulate;
+			sourceTree = "<group>";
+		};
+		5D1E8C351015730F002C61D7 /* ParticleSystem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ParticleSystem;
+			sourceTree = "<group>";
+		};
 		5DA3EDBF0FE69D1D0028380E /* Processing */ = {
 			isa = PBXGroup;
 			children = (
+				5DDDF4A0101CE26100B3881E /* System */,
+				5DDDF49F101CA35800B3881E /* Processor */,
+				5D1E8C351015730F002C61D7 /* ParticleSystem */,
+				5D1E8B3B10144C81002C61D7 /* Ext */,
 				5D04CEB6100DCB1100D0ED13 /* Sound */,
 				5DA3EDD50FE6AEEC0028380E /* Processing.h */,
-				5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */,
 				5DA3EDD70FE6AEEC0028380E /* Processing+transformation.h */,
-				5DA3EDD80FE6AEEC0028380E /* Processing+image.m */,
+				5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */,
 				5DA3EDD90FE6AEEC0028380E /* Processing+image.h */,
+				5DA3EDD80FE6AEEC0028380E /* Processing+image.m */,
 				5DA3EDDB0FE6AEEC0028380E /* Processing+text.h */,
 				5DA3EDDC0FE6AEEC0028380E /* Processing+text.m */,
 				5DA3EDDE0FE6AEEC0028380E /* Processing+color.h */,
@@ -532,8 +582,8 @@
 				5DA3EDE70FE6AEEC0028380E /* Processing+math.h */,
 				5DA3EDDA0FE6AEEC0028380E /* Processing+math.m */,
 				5DA3EDEC0FE6AEEC0028380E /* Processing */,
-				5DA3EDE50FE6AEEC0028380E /* Processing+core.m */,
 				5DA3EDED0FE6AEEC0028380E /* Processing+core.h */,
+				5DA3EDE50FE6AEEC0028380E /* Processing+core.m */,
 				5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */,
 				5DD626CD0FF59F480056B47C /* ProcessingTypes.h */,
 				5DCE9DD40FFCB3B900A5E7DE /* ProcessingFunctions.h */,
@@ -545,8 +595,10 @@
 				5DFB75EF1005F9DB001DFD19 /* Processing+p3d.h */,
 				5DFB75F01005F9DB001DFD19 /* Processing+p3d.m */,
 				5DCE9EE20FFDB7A900A5E7DE /* OpenGL_support.h */,
-				5DF100080FFAA46700B7AFBE /* PImage.m */,
 				5DF100090FFAA46700B7AFBE /* PImage.h */,
+				5DF100080FFAA46700B7AFBE /* PImage.m */,
+				5D1E8BCA1014D658002C61D7 /* PTexture.h */,
+				5D1E8BCB1014D658002C61D7 /* PTexture.m */,
 				5DD621AB0FF2C6F80056B47C /* PStyle.h */,
 				5DD621AC0FF2C6F80056B47C /* PStyle.m */,
 				5DBE65230FF1934C003176FB /* PObject.h */,
@@ -554,6 +606,8 @@
 				5DBE5DF10FF01A23003176FB /* README */,
 				5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */,
 				5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */,
+				5D1E8F141019C599002C61D7 /* PAgent.h */,
+				5D1E8F151019C599002C61D7 /* PAgent.m */,
 			);
 			path = Processing;
 			sourceTree = "<group>";
@@ -736,6 +790,7 @@
 		5DD191660FEA85A9006A7842 /* Topics */ = {
 			isa = PBXGroup;
 			children = (
+				5D1E8C2E1014DC5C002C61D7 /* Simulate */,
 				5DCE9D3C0FFC2F9F00A5E7DE /* Fractals and L-Systems */,
 				5DCE9D170FFC297500A5E7DE /* Image Processing */,
 				5DF1FF2C0FF9DC9E00B7AFBE /* Drawing */,
@@ -756,6 +811,8 @@
 				5DBE62B70FF1478E003176FB /* Rotate.m */,
 				5DBE62CB0FF1496A003176FB /* Translate.h */,
 				5DBE62CC0FF1496A003176FB /* Translate.m */,
+				5D1E8C32101571B5002C61D7 /* CubesWithinCube.h */,
+				5D1E8C33101571B5002C61D7 /* CubesWithinCube.m */,
 			);
 			name = Transform;
 			sourceTree = "<group>";
@@ -769,6 +826,20 @@
 				5DD623260FF3963F0056B47C /* Words.m */,
 			);
 			name = Typography;
+			sourceTree = "<group>";
+		};
+		5DDDF49F101CA35800B3881E /* Processor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Processor;
+			sourceTree = "<group>";
+		};
+		5DDDF4A0101CE26100B3881E /* System */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = System;
 			sourceTree = "<group>";
 		};
 		5DE0CEEF100E324A0078707F /* Texture */ = {
@@ -864,6 +935,8 @@
 				5DFB73E41003DA7C001DFD19 /* Rotate1.m */,
 				5DFB778910070887001DFD19 /* Rotate2.h */,
 				5DFB778A10070887001DFD19 /* Rotate2.m */,
+				5D1E8BD01014D76F002C61D7 /* Bird.h */,
+				5D1E8BD11014D76F002C61D7 /* Bird.m */,
 			);
 			name = Transform;
 			sourceTree = "<group>";
@@ -895,6 +968,8 @@
 				5DCE9DD50FFCB3B900A5E7DE /* ProcessingFunctions.h in Headers */,
 				5DCE9EE30FFDB7A900A5E7DE /* OpenGL_support.h in Headers */,
 				5DFB75F11005F9DB001DFD19 /* Processing+p3d.h in Headers */,
+				5D1E8BCC1014D658002C61D7 /* PTexture.h in Headers */,
+				5D1E8F161019C599002C61D7 /* PAgent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -973,6 +1048,8 @@
 				5DCE9AD30FFB327B00A5E7DE /* wash.jpg in Resources */,
 				5DCE9C750FFC17D000A5E7DE /* teddy.gif in Resources */,
 				5DCE9D9E0FFC63E700A5E7DE /* trees.jpg in Resources */,
+				5D1E8EF71019C2FC002C61D7 /* berlin-1.jpg in Resources */,
+				5D1E940A101B62CF002C61D7 /* world32k.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1063,6 +1140,9 @@
 				5DE0CEFC100E33060078707F /* TextureCube.m in Sources */,
 				5DE0CEFF100E335D0078707F /* TextureSphere.m in Sources */,
 				5DE0CF02100E34D90078707F /* SpaceJunk.m in Sources */,
+				5D1E8BD21014D76F002C61D7 /* Bird.m in Sources */,
+				5D1E8C311014DC6A002C61D7 /* Chain.m in Sources */,
+				5D1E8C34101571B5002C61D7 /* CubesWithinCube.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1084,6 +1164,8 @@
 				5DF1FFF60FFA1D7700B7AFBE /* PGraphics.m in Sources */,
 				5DF1000A0FFAA46700B7AFBE /* PImage.m in Sources */,
 				5DFB75F21005F9DB001DFD19 /* Processing+p3d.m in Sources */,
+				5D1E8BCD1014D658002C61D7 /* PTexture.m in Sources */,
+				5D1E8F171019C599002C61D7 /* PAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
