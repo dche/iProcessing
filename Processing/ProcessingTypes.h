@@ -80,6 +80,13 @@ static inline PVertex PVertexMake(float fx, float fy, float fz)
 	return pv;
 }
 
+static inline void PVertexSet(PVertex *v, float x, float y, float z)
+{
+    v->x = x;
+    v->y = y;
+    v->z = z;
+}
+
 static inline void PVectorAdd(PVector *v, const PVector *va)
 {
     v->x += va->x;
@@ -92,6 +99,13 @@ static inline void PVectorSub(PVector *v, const PVector *vs)
     v->x -= vs->x;
     v->y -= vs->y;
     v->z -= vs->z;
+}
+
+static inline void PVectorScalarMult(PVector *v, float f)
+{
+    v->x *= f;
+    v->y *= f;
+    v->z *= f;
 }
 
 static inline PVector PVectorCross(PVector vr, PVector vl)
@@ -159,12 +173,12 @@ typedef struct {
 typedef struct {
     float u;
     float v;
-} PTextureCord;
+} PTextureCoord;
 
 
-static inline PTextureCord PTextureCordMake(float u, float v)
+static inline PTextureCoord PTextureCoordMake(float u, float v)
 {
-    PTextureCord tc;
+    PTextureCoord tc;
     tc.u = u; tc.v = v;
     
     return tc;
