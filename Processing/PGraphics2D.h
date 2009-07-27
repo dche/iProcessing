@@ -12,7 +12,9 @@
 @interface PGraphics2D : UIView <PGraphics> {
     
 @private
+    /// Quartz
     CGContextRef ctx;
+    /// The drawing buffer
     color *pixels_;
     
     Processing *p_;

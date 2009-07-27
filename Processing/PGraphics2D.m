@@ -83,6 +83,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 
 - (void)dealloc {
     CGContextRelease(ctx);
+    [curFont_ release];
     [matrixStack_ release];
     
     if (pixels_ != NULL) free(pixels_);
@@ -524,21 +525,24 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     pixels_[i] = premultiplyColor(clr);
 }
 
+- (void)loadPixels
+{}
+- (void)updatePixels
+{}
+
 #pragma mark -
 #pragma mark Image
 #pragma mark -
-- (void)drawImage:(CGImageRef)image atPoint:(CGPoint)point
+- (void)drawImage:(PImage *)image atPoint:(CGPoint)point
 {
-    float w = CGImageGetWidth(image);
-    float h = CGImageGetHeight(image);
-
-    [self drawImage:image inRect:CGRectMake(point.x, point.y, w, h)];
+    [self drawImage:image inRect:CGRectMake(point.x, point.y, image.width, image.height)];
 }
 
-- (void)drawImage:(CGImageRef)image inRect:(CGRect)rect
+- (void)drawImage:(PImage *)image inRect:(CGRect)rect
 {
+    CGImageRef img = [image CGImage];
     if (doTint_) {
-        CGContextDrawImage(ctx, rect, image);
+        CGContextDrawImage(ctx, rect, img);
         // TODO: if tintColor is white, use kCGBlendModeOverlay to make the image transparent.
         CGContextSaveGState(ctx);
         CGContextSetBlendMode(ctx, kCGBlendModeColor);
@@ -546,8 +550,9 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
         CGContextFillRect(ctx, rect);
         CGContextRestoreGState(ctx);
     } else {
-        CGContextDrawImage(ctx, rect, image);        
+        CGContextDrawImage(ctx, rect, img);        
     }
+    CGImageRelease(img);
 }
 
 - (void)tint:(float)red :(float)green :(float)blue :(float)alpha
