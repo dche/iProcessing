@@ -44,6 +44,8 @@ static const int kMaxLights = 8;
 
 - (BOOL)enableLight;
 - (GLenum)currentLight;
+- (void)removeAmbientColorFromLight:(GLenum)light;
+- (void)setAttenuationForLight:(GLenum)light;
 
 @end
 
@@ -64,11 +66,8 @@ static const int kMaxLights = 8;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [NSNumber numberWithBool:NO], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
         
-//        context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-        if (!context) {
-            context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
-        }
-        
+        // CHECK: Do we need a version using GLES2?
+        context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
         if (!context || ![EAGLContext setCurrentContext:context]) {
             [self release];
             return nil;
@@ -78,12 +77,16 @@ static const int kMaxLights = 8;
         
         vertices_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber * sizeof(PVertex)];
         indices_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber * sizeof(GLuint)];
-        fillColorList_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber * sizeof(PColor)];
-        strokeColorList_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber *sizeof(PColor)];
-        normalList_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber *sizeof(PVector)];
+        colors_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber * sizeof(PColor)];
+        normals_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber * sizeof(PVector)];
+        texCoords_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber * sizeof(PTextureCoord)];
+        unitCircleCache_ = [[NSMutableData alloc] initWithCapacity:kDefaultIndicesNumber * sizeof(PVector)];
         
         // Defaults
         sphereURes_ = sphereVRes_ = 30.0f;
+        lightSpecular_ = PColorMake(PWhiteColor);
+        lightAttenuationConst_ = 1.0f;
+        textureMode_ = IMAGE;
         
         // Set up environment for drawing code in +Processing#setup()+.
         [EAGLContext setCurrentContext:context];
@@ -105,9 +108,10 @@ static const int kMaxLights = 8;
     
     [vertices_ release];
     [indices_ release];
-    [fillColorList_ release];
-    [strokeColorList_ release];
-    [normalList_ release];
+    [colors_ release];
+    [normals_ release];
+    [texCoords_ release];
+    [unitCircleCache_ release];
     
     [super dealloc];
 }
@@ -115,6 +119,18 @@ static const int kMaxLights = 8;
 - (BOOL)threeD
 {
     return (p_.mode == P3D);
+}
+
+- (void)textureMode:(int)mode
+{
+    switch (mode) {
+        case IMAGE:
+        case NORMAL:
+            textureMode_ = mode;
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)setupGLView
@@ -132,9 +148,10 @@ static const int kMaxLights = 8;
         glFrontFace(GL_CW); // Because we flip the Y-axis.
         
         glEnable(GL_COLOR_MATERIAL);
+        glShadeModel(GL_SMOOTH);
         
         // glEnable(GL_NORMALIZE);
-        glEnable(GL_RESCALE_NORMAL);        
+        glEnable(GL_RESCALE_NORMAL);
     }
     
     glMatrixMode(GL_PROJECTION);
@@ -158,6 +175,9 @@ static const int kMaxLights = 8;
     
     [EAGLContext setCurrentContext:context];
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
+    if ([self threeD] && curLights_ > 0) {
+        [self noLights];
+    }
     [p_ guardedDraw];
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
@@ -168,7 +188,7 @@ static const int kMaxLights = 8;
 - (void)layoutSubviews
 {
     if (!inInit_) {
-        // GL has been initialized for size() to draw.
+        // GL has been initialized in setup().
         [EAGLContext setCurrentContext:context];
         [self destroyFramebuffer];
         [self createFramebuffer];
@@ -231,9 +251,12 @@ static const int kMaxLights = 8;
 - (void)background:(float)red :(float)green :(float)blue :(float)alpha;
 {
     glClearColor(red, green, blue, alpha);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    CHECK_GL_ERROR();
+    if ([self threeD]) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    } else {
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
 }
 
 - (void)noFill
@@ -281,15 +304,10 @@ static const int kMaxLights = 8;
 }
 
 - (void)smooth
-{
-    glEnable(GL_LINE_SMOOTH);
-    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-}
+{/* N/A on iPhone */}
 
 - (void)noSmooth
-{
-    glDisable(GL_LINE_SMOOTH);
-}
+{/* N/A on iPhone */}
 
 #pragma mark -
 #pragma mark Shape
@@ -297,21 +315,232 @@ static const int kMaxLights = 8;
 
 - (void)boxWithWidth:(float)w height:(float)h depth:(float)d
 {
+    float x = w/2.0f;
+    float y = h/2.0f;
+    float z = d/2.0f;
     
+    if (doFill_) {
+        [self useColor:fillColor_];
+        
+        GLfloat vertices[] = {
+            // Up
+            x, -y, -z, -x, -y, -z, x, -y, z,
+            x, -y, z, -x, -y, -z, -x, -y, z,
+            // Front
+            x, -y, z, -x, -y, z, x, y, z,
+            x, y, z, -x, -y, z, -x, y, z,
+            // Bottom
+            x, y, z, -x, y, z, x, y, -z,
+            x, y, -z, -x, y, z, -x, y, -z,
+            // Back
+            x, y, -z, -x, y, -z, -x, -y, -z,
+            -x, -y, -z, x, -y, -z, x, y, -z,
+            // Left
+            -x, -y, -z, -x, y, -z, -x, -y, z,
+            -x, -y, z, -x,  y, -z, -x, y, z,
+            // Right
+            x, -y, z, x, y, z, x, -y, -z,
+            x, -y, -z, x, y, z, x, y, -z,
+        };
+        GLfloat normals[] = {
+            0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1 ,0, 0, -1, 0, 0, -1, 0,
+            0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+            0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 
+            0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 
+            -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 
+            1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 
+        };
+        
+        glVertexPointer(3, GL_FLOAT, 0, vertices);
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glNormalPointer(GL_FLOAT, 0, normals);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDisableClientState(GL_NORMAL_ARRAY);
+    }
+    
+    if (doStroke_) {
+        [self useColor:strokeColor_];
+        
+        GLfloat vertices[] = {
+            x, -y, -z,
+            -x, -y, -z,
+            x, -y, z,
+            -x, -y, z,
+            x, y, z,
+            -x, y, z,
+            x, y, -z,
+            -x, y, -z,
+        };
+        GLushort indices[] = {
+            0,1, 2,3, 4,5, 6,7,
+            0,2, 1,3, 4,6, 5,7,
+            0,6, 1,7, 2,4, 3,5,
+        };
+        
+        glVertexPointer(3, GL_FLOAT, 0, vertices);
+        glDrawElements(GL_LINES, 24, GL_UNSIGNED_SHORT, indices);
+    }
 }
 
 - (void)sphereWithRadius:(float)r
 {
-    // Construct vertices for two triangle fan and some triangle strip
-    // if Fill
-        // Add triangles, compute normal and draw
-    // if stroke
-        // Add lines, draw the lines.
+    float unit_flat = TWO_PI / sphereURes_;
+    float unitz = PI / sphereVRes_;
+    
+    // Get the unit circle
+    GLsizei nv = [unitCircleCache_ length] / sizeof(PVector);
+    if (nv == 0 || nv != sphereURes_) {
+        PVector v = PVertexMake(1, 0, 0);
+        [unitCircleCache_ appendBytes:&v length:sizeof(PVector)];
+        
+        for (float theta = unit_flat; theta < TWO_PI - EPSILON; theta += unit_flat) {
+            v = PVertexMake(cosf(theta), sinf(theta), 0);
+            [unitCircleCache_ appendBytes:&v length:sizeof(PVector)];
+        }
+        nv = [unitCircleCache_ length] / sizeof(PVector);
+    }    
+    
+    PVertex *unitVertices = (PVertex *)[unitCircleCache_ bytes];
+    
+    [vertices_ setLength:2 * nv * sizeof(PVertex)];
+    [normals_ setLength:2 * nv * sizeof(PVertex)];
+    [indices_ setLength:11 * nv * sizeof(GLushort)];
+
+    PVertex *pv = (PVertex *)[vertices_ mutableBytes];
+    PVector *pn = (PVector *)[normals_ mutableBytes];
+    GLushort *pi = (GLushort *)[indices_ mutableBytes];
+    
+    // Add north pole
+    PVertexSet(pv, 0, 0, 1);
+    PVertexSet(pn, 0, 0, 1);
+    
+    PVertex *tier1Vector = pv;
+    PVector *tier1Normal = pn;
+    GLsizei tier1Length = 1;
+    PVertex *tier2Vector = pv+nv;
+    PVector *tier2Normal = pn+nv;
+    GLsizei tier2Length = 0;
+    
+    // Pre-build indices, since we have known the number of vertices.
+    // 6 types of indices should be built.
+    // TODO: move indices to a cache.
+    int pip = 0;
+    // 1. north pole for fill
+    pi[pip++] = 0;
+    for (int i = 0; i < nv; i++) {
+        pi[pip++] = nv+i;
+    }
+    pi[pip++] = nv;
+    // 2. north pole for stroke
+    for (int i = 0; i < nv; i++) {
+        pi[pip++] = 0;
+        pi[pip++] = nv+i;
+    }
+    // 3. south pole for fill
+    pi[pip++] = nv;
+    for (int i = 0; i < nv; i++) {
+        pi[pip++] = i;
+    }
+    pi[pip++] = 0;
+    // 4. south pole for stroke
+    for (int i = 0; i < nv; i++) {
+        pi[pip++] = i;
+        pi[pip++] = nv;
+    }
+    // 5. tier1 first
+    for (int i = 0; i < nv; i++) {
+        pi[pip++] = i;
+        pi[pip++] = nv+i;
+    }
+    pi[pip++] = 0;
+    pi[pip++] = nv;
+    // 6. tier2 first
+    for (int i = 0; i < nv; i++) {
+        pi[pip++] = nv+i;
+        pi[pip++] = i;
+    }
+    pi[pip++] = nv;
+    pi[pip++] = 0;
+    
+    glPushMatrix();
+    glScalef(r, r, r);
+    for (float theta = HALF_PI-unitz; theta > -HALF_PI-EPSILON; theta -= unitz) {        
+        float h = sinf(theta);
+        float flat_r = cosf(theta);
+        
+        // Build new tier
+        if (theta < -HALF_PI + EPSILON) {
+            PVertexSet(tier2Vector, 0, 0, -1);
+            PVertexSet(tier2Normal, 0, 0, -1);
+            tier2Length = 1;
+        } else {
+            tier2Length = nv;            
+            for (int i = 0; i < nv; i++) {
+                PVertex v = unitVertices[i];
+                PVertexSet(tier2Normal + i, v.x * flat_r, v.y * flat_r, h);
+                PVectorNormalize(tier2Normal + i);
+                PVertexSet(tier2Vector+i, v.x * flat_r, v.y *flat_r, h);
+            }
+        }
+        
+        GLushort *pindex;
+        glVertexPointer(3, GL_FLOAT, 0, pv);
+        if (doFill_) {
+            [self useColor:fillColor_];
+            glEnableClientState(GL_NORMAL_ARRAY);
+            glNormalPointer(GL_FLOAT, 0, pn);
+            
+            if (tier1Length == 1 || tier2Length == 1) {
+                pindex = (tier2Vector - pv == 0 || tier1Length == 1) ? (pi) : (pi + nv * 3 + 2);
+                glDrawElements(GL_TRIANGLE_FAN, nv+2, GL_UNSIGNED_SHORT, pindex);
+            } else {
+                pindex = (tier1Vector - pv == 0) ? (pi + nv * 6 + 4) : (pi + nv * 8 + 6);
+                glDrawElements(GL_TRIANGLE_STRIP, nv*2 +2, GL_UNSIGNED_SHORT, pindex);
+            }
+            glDisableClientState(GL_NORMAL_ARRAY);
+        }
+        
+        if (doStroke_) {
+            [self useColor:strokeColor_];
+            
+            if (tier2Length != 1) {
+                glDrawArrays(GL_LINE_LOOP, tier2Vector - pv, nv);
+            }            
+            
+            if (tier1Length == 1 || tier2Length == 1) {
+                pindex = (tier2Vector - pv == 0 || tier1Length == 1) ? (pi + nv + 2) : (pi + nv * 4 + 4);
+            } else {
+                pindex = (tier1Vector - pv == 0) ? (pi + nv * 6 + 4) : (pi + nv * 8 + 6);
+            }
+            glDrawElements(GL_LINES, nv * 2, GL_UNSIGNED_SHORT, pindex);
+        }
+        
+        // set tier2 to tier1
+        tier1Vector = tier2Vector;
+        tier1Normal = tier2Normal;
+        tier1Length = tier2Length;
+        
+        if (tier1Vector > pv) {
+            tier2Vector = pv;
+            tier2Normal = pn;
+        } else {
+            tier2Vector = pv+tier1Length;
+            tier2Normal = pn+tier1Length;
+        }
+        tier2Length = 0;
+    }
+    glPopMatrix();
 }
 
 - (void)sphereDetailWithUres:(float)u vres:(float)v
 {
-    sphereURes_ = u; sphereVRes_ = v;
+    if (u < 1 || v < 1) return;
+    
+    if (sphereURes_ != u) {
+        sphereURes_ = u;
+        [unitCircleCache_ setLength:0];
+    }
+    sphereVRes_ = v;
 }
 
 - (void)arc:(float)ox 
@@ -343,17 +572,17 @@ static const int kMaxLights = 8;
     GLsizei nTriangles = floorf((theta2 - theta1) / delta) + 3;
     [vertices_  setLength:0];
     
-    if (lightEnabled_ && doFill_) {
+    if ([self threeD] && doFill_) {
         glNormal3f(0.0f, 0.0f, 1.0f);
     }
 
     PVertex p = PVertexMake(xc, yc, 0);
     [vertices_ appendBytes:&p length:sizeof(PVertex)];
     
-    // TODO: rewrite with midpoint algorithm.
     int i = 1;
     GLfloat theta = theta1;
     for (; i < nTriangles; i++) {
+        // TODO: fast sine/cosine, or LUT.
         p = PVertexMake(xc + a * cosf(theta), yc + b * sinf(theta), 0);
         [vertices_ appendBytes:&p length:sizeof(PVertex)];
         theta += delta;
@@ -380,7 +609,7 @@ static const int kMaxLights = 8;
     
     glVertexPointer(3, GL_FLOAT, 0, vertices);
     
-    if (lightEnabled_ && doFill_) {
+    if ([self threeD] && doFill_) {
         glNormal3f(0.0f, 0.0f, 1.0f);
     }
     
@@ -401,25 +630,27 @@ static const int kMaxLights = 8;
 
 - (void)resetDrawingData
 {
+    [vertices_ setLength:0];
     [indices_ setLength:0];
 
-    [fillColorList_ setLength:0];
-    [strokeColorList_ setLength:0];
-    [normalList_ setLength:0];
+    [colors_ setLength:0];
+    [normals_ setLength:0];
+    
+    [texCoords_ setLength:0];
 }
 
 - (PVector)normalForTriangle:(const PVertex *)v
                             :(GLushort)p1 :(GLushort)p2 :(GLushort)p3 
 {
     // Note the parameter order of PVectorCross here.
-    PVector vn = PVectorCross(PVertexSub(v[p3], v[p1]), PVertexSub(v[p2], v[p1]));
+    PVector vn = PVectorCross(PVertexSub(v[p2], v[p1]), PVertexSub(v[p3], v[p1]));
     PVectorNormalize(&vn);
     return vn;
 }
 
 - (void)addNormal:(PVector)n
 {
-    [normalList_ appendBytes:&n length:sizeof(PVector)];
+    [normals_ appendBytes:&n length:sizeof(PVector)];
 }
 
 - (void)addTriangle:(const PVertex *)v 
@@ -455,7 +686,7 @@ static const int kMaxLights = 8;
                         indices:(const Byte *)i 
                     indexNumber:(NSUInteger)ni
                     accessories:(const Byte *)a 
-                        texture:(const PImage *)t
+                        texture:(const NSObject<PTexture> *)t
              perVertexFillColor:(BOOL)useFillColorArray 
            perVertexStrokeColor:(BOOL)useStrokeColorArray 
                    customNormal:(BOOL)normalProvided
@@ -498,19 +729,24 @@ static const int kMaxLights = 8;
                         }
                         p += sizeof(PVector);
                         break;
-                    default:
+                    default:    // PVetexNormal
                         if (useFillColorArray) {
-                            [fillColorList_ appendBytes:curClr length:sizeof(PColor)];
+                            [colors_ appendBytes:curClr length:sizeof(PColor)];
                         }
                         
                         if (normalProvided) {
-                            [normalList_ appendBytes:curNormal length:sizeof(PVector)];
+                            [normals_ appendBytes:curNormal length:sizeof(PVector)];
                         }
                         
                         if (t != nil) {
-                            // TODO: texture map.
+                            PTextureCoord tc = *(PTextureCoord *)(a + p);
+                            if (textureMode_ == IMAGE) {
+                                tc.u = [p_ constrain:[p_ norm:tc.u :0 :[t width]] :0 :1];
+                                tc.v = [p_ constrain:[p_ norm:tc.v :0 :[t height]] :0 :1];
+                            }
+                            [texCoords_ appendBytes:&tc length:sizeof(PTextureCoord)];
                         }
-                        p += sizeof(PTextureCord);
+                        p += sizeof(PTextureCoord);
                         break;
                 }
             }
@@ -518,9 +754,27 @@ static const int kMaxLights = 8;
         
         if (useFillColorArray) {
             glEnableClientState(GL_COLOR_ARRAY);
-            glColorPointer(4, GL_FLOAT, 0, [fillColorList_ bytes]);
+            glColorPointer(4, GL_FLOAT, 0, [colors_ bytes]);
         } else {
             [self useColor:fillColor_];
+        }
+        
+        if (t != nil) {
+            glEnable(GL_TEXTURE_2D);
+            if ([t textureObject] == 0) {
+                [t createTextureObject];
+            } else {
+                glBindTexture(GL_TEXTURE_2D, [t textureObject]);
+            }
+            
+            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+            glTexCoordPointer(2, GL_FLOAT, 0, [texCoords_ bytes]);
+            
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, [t mipmap] ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);            
         }
         
         GLenum drawingMode = GL_TRIANGLE_STRIP;
@@ -557,7 +811,7 @@ static const int kMaxLights = 8;
                         }
                     }
                     PVectorNormalize(&zeroNormal);
-                    PVector *normalBytes = (PVector *)[normalList_ mutableBytes];
+                    PVector *normalBytes = (PVector *)[normals_ mutableBytes];
                     normalBytes[0] = zeroNormal;
                 }
                 drawingMode = GL_TRIANGLE_FAN;
@@ -615,7 +869,7 @@ static const int kMaxLights = 8;
         }
         if ([self threeD]) {
             glEnableClientState(GL_NORMAL_ARRAY);
-            glNormalPointer(GL_FLOAT, 0, [normalList_ bytes]);
+            glNormalPointer(GL_FLOAT, 0, [normals_ bytes]);
         }
         // For some shapes, we need not re-construct vertex sequence.
         // Just draw original vertex list is enough.
@@ -626,7 +880,9 @@ static const int kMaxLights = 8;
         }
     }
     if (doStroke_) {
-        if (useStrokeColorArray) {
+        if (useStrokeColorArray) {            
+            if ([colors_ length] > 0) [colors_ setLength:0];
+            
             PColor *curClr = &strokeColor_;
             NSUInteger p = 0;
             
@@ -643,18 +899,19 @@ static const int kMaxLights = 8;
                         p += sizeof(PVector);
                         break;
                     default:
-                        [strokeColorList_ appendBytes:curClr length:sizeof(PColor)];
-                        p += sizeof(PTextureCord);
+                        [colors_ appendBytes:curClr length:sizeof(PColor)];
+                        p += sizeof(PTextureCoord);
                         break;
                 }
             }
+            glColorPointer(4, GL_FLOAT, 0, [colors_ bytes]);
             glEnableClientState(GL_COLOR_ARRAY);
             
         } else {
             [self useColor:strokeColor_];
         }
         
-        [indices_ setLength:0]; // Clear indices add in Fill.
+        if ([indices_ length] > 0) [indices_ setLength:0];
         switch (m) {
             case POINTS:
                 glDrawArrays(GL_POINTS, 0, n);
@@ -732,6 +989,10 @@ static const int kMaxLights = 8;
     if ([self threeD]) {
         glDisableClientState(GL_NORMAL_ARRAY);
     }
+    if (t != nil) {
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        glDisable(GL_TEXTURE_2D);
+    }
 }
 
 #pragma mark -
@@ -782,14 +1043,14 @@ static const int kMaxLights = 8;
 - (Matrix3D)matrix
 {
     Matrix3D m;
-    glGetFloatv(GL_MODELVIEW_MATRIX, &m);
+    glGetFloatv(GL_MODELVIEW_MATRIX, (GLfloat *)&m);
     
     return m;
 }
 
 - (void)loadMatrix:(Matrix3D)m
 {
-    glLoadMatrixf(&m);
+    glLoadMatrixf((const GLfloat *)&m);
 }
 
 #pragma mark -
@@ -798,7 +1059,10 @@ static const int kMaxLights = 8;
 
 - (void)textFont:(UIFont *)font
 {
-    
+    if (curFont_ != font) {
+        [curFont_ release];
+        curFont_ = [font retain];
+    }
 }
 
 - (void)showText:(NSString *)str :(float)x :(float)y :(float)z
@@ -816,20 +1080,59 @@ static const int kMaxLights = 8;
 
 - (void)setPixel:(color)clr  atPoint:(CGPoint)p
 {
-    
 }
+
+- (void)loadPixels
+{}
+
+- (void)updatePixels
+{}
 
 #pragma mark -
 #pragma mark Image
 #pragma mark -
-- (void)drawImage:(CGImageRef)image atPoint:(CGPoint)point
+- (void)drawImage:(PImage *)image atPoint:(CGPoint)point
 {
-    
+    [self drawImage:image inRect:CGRectMake(point.x, point.y, image.width, image.height)];
 }
 
-- (void)drawImage:(CGImageRef)image inRect:(CGRect)rect
+- (void)drawImage:(PImage *)image inRect:(CGRect)rect
 {
-    
+    if (![self threeD]) {
+        GLfloat x = rect.origin.x;
+        GLfloat y = rect.origin.y;
+        GLfloat w = rect.size.width;
+        GLfloat h = rect.size.height;
+        
+        GLfloat vertices[] = {
+            x, y, x+w, y, x+w, y+h, x, y+h,
+        };
+        GLfloat texCoords[] = {
+            0, 0, 1, 0, 1, 1, 0, 1,
+        };
+        
+        glEnable(GL_TEXTURE_2D);
+        if ([image textureObject] == 0) {
+            [image createTextureObject];
+        } else {
+            glBindTexture(GL_TEXTURE_2D, [image textureObject]);
+        }
+        
+        glVertexPointer(2, GL_FLOAT, 0, vertices);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        glDisable(GL_TEXTURE_2D);
+    }
 }
 
 #pragma mark -
@@ -844,9 +1147,6 @@ static const int kMaxLights = 8;
     
     if (curLights_ == 0) {
         glEnable(GL_LIGHTING);
-        lightEnabled_ = YES;
-
-        CHECK_GL_ERROR();
     }    
     curLights_ += 1;    
     glEnable([self currentLight]);
@@ -856,45 +1156,22 @@ static const int kMaxLights = 8;
 
 - (GLenum)currentLight
 {
-    GLenum light;
-    switch (curLights_) {
-        case 1:
-            light = GL_LIGHT0;
-            break;
-        case 2:
-            light = GL_LIGHT1;
-            break;
-        case 3:
-            light = GL_LIGHT2;
-            break;
-        case 4:
-            light = GL_LIGHT3;
-            break;
-        case 5:
-            light = GL_LIGHT4;
-            break;
-        case 6:
-            light = GL_LIGHT5;
-            break;
-        case 7:
-            light = GL_LIGHT6;
-            break;
-        case 8:
-            light = GL_LIGHT7;
-            break;
-        default:
-            break;
-    }
-    return light;
+    return GL_LIGHT0 + curLights_ - 1;
 }
 
-- (void)enableGlobalAmbientLight:(PColor)pc
+- (void)removeAmbientColorFromLight:(GLenum)light
 {
-    if (!glIsEnabled(GL_LIGHTING)) {
-        glEnable(GL_LIGHTING);
-        lightEnabled_ = YES;
-    }
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, &pc);
+    GLfloat none[] = {
+        0, 0, 0, 1.0f,
+    };
+    glLightfv(light, GL_AMBIENT, none);
+}
+
+- (void)setAttenuationForLight:(GLenum)light
+{
+    glLightf(light, GL_CONSTANT_ATTENUATION, lightAttenuationConst_);
+    glLightf(light, GL_LINEAR_ATTENUATION, lightAttenuationLinear_);
+    glLightf(light, GL_QUADRATIC_ATTENUATION, lightAttenuationQuardratic_);
 }
 
 - (void)addAmbientLightWithColor:(PColor)pc atPosition:(PVector)pos
@@ -902,8 +1179,14 @@ static const int kMaxLights = 8;
     if ([self enableLight]) {
         GLenum light = [self currentLight];
         
-        glLightfv(light, GL_AMBIENT, &pc);
-        glLightfv(light, GL_POSITION, &pos);
+        GLfloat wpos[] = {
+            pos.x, pos.y, pos.z, 1.0f,
+        };
+        
+        glLightfv(light, GL_AMBIENT, (const GLfloat *)&pc);
+        glLightfv(light, GL_DIFFUSE, (const GLfloat *)&pc);
+        glLightfv(light, GL_POSITION, wpos);
+        [self setAttenuationForLight:light];
     }    
 }
 
@@ -912,16 +1195,32 @@ static const int kMaxLights = 8;
     if ([self enableLight]) {
         GLenum light = [self currentLight];
         
-        glLightfv(light, GL_DIFFUSE, &pc);
-        glLightfv(light, GL_SPOT_DIRECTION, &dir);
-        glLightf(light, GL_SPOT_CUTOFF, 180.0f);
+        GLfloat wpos[] = {
+            -dir.x, -dir.y, -dir.z, 0.0f,
+        };
+        
+        [self removeAmbientColorFromLight:light];
+        glLightfv(light, GL_POSITION, wpos);
+        glLightfv(light, GL_DIFFUSE, (const GLfloat *)&pc);
+        glLightfv(light, GL_SPECULAR, (const GLfloat *)&lightSpecular_);
+        [self setAttenuationForLight:light];
     }
 }
 
 - (void)addPointLightWithColor:(PColor)pc atPosition:(PVector)pos
 {
     if ([self enableLight]) {
+        GLenum light = [self currentLight];
         
+        GLfloat wpos[] = {
+            pos.x, pos.y, pos.z, 1.0f,
+        };
+        
+        [self removeAmbientColorFromLight:light];
+        glLightfv(light, GL_POSITION, wpos);
+        glLightfv(light, GL_DIFFUSE, (const GLfloat *)&pc);
+        glLightfv(light, GL_SPECULAR, (const GLfloat *)&lightSpecular_);
+        [self setAttenuationForLight:light];
     }
 }
 
@@ -932,16 +1231,30 @@ static const int kMaxLights = 8;
                   toDirection:(PVector)dir
 {
     if ([self enableLight]) {
+        GLenum light = [self currentLight];
         
+        GLfloat wpos[] = {
+            pos.x, pos.y, pos.z, 1.0f,
+        };
+        
+        [self removeAmbientColorFromLight:light];
+        glLightfv(light, GL_POSITION, wpos);
+        glLightfv(light, GL_SPOT_DIRECTION, (const GLfloat *)&dir);
+        glLightfv(light, GL_DIFFUSE, (const GLfloat *)&pc);
+        [self setAttenuationForLight:light];
+        glLightf(light, GL_SPOT_CUTOFF, a * RAD_TO_DEG);
+        glLightf(light, GL_SPOT_EXPONENT, c);
     }
 }
 
 
 - (void)noLights
 {
-    glDisable(GL_LIGHTING);
-    lightEnabled_ = NO;
-    curLights_ = 0;
+    glDisable(GL_LIGHTING);    
+    while (curLights_ > 0) {
+        glDisable([self currentLight]);
+        curLights_--;
+    }
 }
 
 
@@ -956,5 +1269,34 @@ static const int kMaxLights = 8;
 {
     lightSpecular_ = pc;
 }
+
+#pragma mark -
+#pragma mark Materials
+#pragma mark -
+
+- (void)ambient:(PColor)pc
+{
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, (const GLfloat *)&pc);
+}
+
+- (void)emissive:(PColor)pc
+{
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, (const GLfloat *)&pc);
+}
+
+- (void)shininess:(float)shine
+{
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
+}
+
+- (void)specular:(PColor)pc
+{
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, (const GLfloat *)&pc);
+}
+
+#pragma mark -
+#pragma mark Camera
+#pragma mark -
+
 
 @end
