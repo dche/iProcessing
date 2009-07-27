@@ -19,16 +19,12 @@
 
 - (void)image:(PImage *)img :(float)x :(float)y
 {
-    CGImageRef cgImg = [img CGImage];
-    [graphics_ drawImage:cgImg atPoint:CGPointMake(x, y)];
-    CGImageRelease(cgImg);
+    [graphics_ drawImage:img atPoint:CGPointMake(x, y)];
 }
 
 - (void)image:(PImage *)img :(float)x :(float)y :(float)width :(float)height
 {
-    CGImageRef cgImg = [img CGImage];
-    [graphics_ drawImage:cgImg inRect:normalizedRectangle(x, y, width, height, curStyle_.imageMode)];
-    CGImageRelease(cgImg);
+    [graphics_ drawImage:img inRect:normalizedRectangle(x, y, width, height, curStyle_.imageMode)];
 }
 
 - (void)imageMode:(int)mode
@@ -145,7 +141,9 @@
 }
 
 - (void)loadPixels
-{}
+{
+    [graphics_ loadPixels];
+}
 
 - (void)set:(int)x :(int)y :(color)clr
 {
@@ -153,6 +151,8 @@
 }
 
 - (void)updatePixels
-{}
+{
+    [graphics_ updatePixels];
+}
 
 @end
