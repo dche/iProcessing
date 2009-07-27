@@ -12,6 +12,7 @@
 
 @class Processing;
 @class PImage;
+@protocol PTexture;
 
 @protocol PGraphics <NSObject>
 
@@ -75,10 +76,12 @@
 /// Pixel data
 - (color)getPixelAtPoint:(CGPoint)p;
 - (void)setPixel:(color)clr atPoint:(CGPoint)p;
+- (void)loadPixels;
+- (void)updatePixels;
 
 /// Image
-- (void)drawImage:(CGImageRef)image atPoint:(CGPoint)point;
-- (void)drawImage:(CGImageRef)image inRect:(CGRect)rect;
+- (void)drawImage:(PImage *)image atPoint:(CGPoint)point;
+- (void)drawImage:(PImage *)image inRect:(CGRect)rect;
 
 @optional
 
@@ -95,7 +98,7 @@
                         indices:(const Byte *)i 
                     indexNumber:(NSUInteger)ni
                     accessories:(const Byte *)a 
-                        texture:(const PImage *)t
+                        texture:(const NSObject<PTexture> *)t
              perVertexFillColor:(BOOL)useFillColorArray 
            perVertexStrokeColor:(BOOL)useStrokeColorArray 
                    customNormal:(BOOL)normalProvided
@@ -107,14 +110,13 @@
 - (void)curveDetail:(int)aInt;
 
 #pragma mark -
-#pragma mark 3D specific methods
+#pragma mark 3D only methods
 #pragma mark -
 
 - (void)boxWithWidth:(float)w height:(float)h depth:(float)d;
 - (void)sphereWithRadius:(float)r;
 - (void)sphereDetailWithUres:(float)u vres:(float)v;
 
-- (void)enableGlobalAmbientLight:(PColor)pc;
 - (void)addAmbientLightWithColor:(PColor)pc atPosition:(PVector)pos;
 - (void)addDirectionalLightWithColor:(PColor)pc toDirection:(PVector)dir;
 - (void)addPointLightWithColor:(PColor)pc atPosition:(PVector)pos;
@@ -124,5 +126,12 @@
 
 - (void)lightAttenuationConst:(float)c linear:(float)l quardratic:(float)q;
 - (void)lightSpecular:(PColor)pc;
+
+- (void)ambient:(PColor)pc;
+- (void)emissive:(PColor)pc;
+- (void)shininess:(float)shine;
+- (void)specular:(PColor)pc;
+
+- (void)textureMode:(int)mode;
 
 @end

@@ -8,17 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "ProcessingFunctions.h"
+#import "PTexture.h"
 
-@interface PImage : NSObject {
+@interface PImage : NSObject<PTexture> {
 
 @private
     // For resize, mask and blend.
     CGContextRef bitmapContext_;
     int mode_;
     
-    int width, height;
+    int width;
+    int height;
     color *data_;
     color *pixels;
+    
+    /// Texture name
+    GLuint textureObject_;
+    BOOL hasAlpha_;
+    BOOL mipmap_;
 }
 
 @property (readonly) int width;

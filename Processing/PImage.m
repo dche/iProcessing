@@ -57,8 +57,13 @@
     
     NSUInteger w = CGImageGetWidth(img);
     NSUInteger h = CGImageGetHeight(img);
-    
-    [self initWithWidth:w height:h mode:RGBA];
+    CGImageAlphaInfo alpha = CGImageGetAlphaInfo(img);
+
+    int mode = RGBA;
+    if (alpha == kCGImageAlphaNone || alpha == kCGImageAlphaNoneSkipFirst || alpha == kCGImageAlphaNoneSkipLast) {
+        mode = RGB;
+    }
+    [self initWithWidth:w height:h mode:mode];
     CGContextDrawImage(bitmapContext_, CGRectMake(0, 0, w, h), img);
     
     return self;
@@ -69,6 +74,11 @@
     CGContextRelease(bitmapContext_);
     free(data_);
     if (pixels != NULL) free(pixels);
+    
+    if (textureObject_ > 0) {
+        glDeleteTextures(1, &textureObject_);
+    }
+    
     [super dealloc];
 }
 
@@ -91,7 +101,7 @@
     }
     
     colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGBitmapInfo bitmapInfo = (imgMode == ARGB) ? (kCGImageAlphaPremultipliedLast) : (kCGImageAlphaNoneSkipLast);
+    CGBitmapInfo bitmapInfo = (imgMode == RGBA) ? (kCGImageAlphaPremultipliedLast) : (kCGImageAlphaNoneSkipLast);
     
     context = CGBitmapContextCreate (data_,
                                      w,
@@ -128,7 +138,12 @@
 
 - (PImage *)get:(int)x1 :(int)y1 :(int)x2 :(int)y2
 {
-    return nil;
+    // TODO: honor the imageMode.
+    CGRect rect = CGRectMake(x1, y1, x2, y2);
+    CGImageRef imgInRect = CGImageCreateWithImageInRect([self CGImage], rect);
+    
+    if (imgInRect == NULL) return nil;    
+    return [[[PImage alloc] initWithCGImage:imgInRect] autorelease];
 }
 
 - (void)set:(int)x :(int)y :(color)clr
@@ -222,7 +237,8 @@
 
 /// Save to the camera roll album.
 - (void)save:(NSString *)name
-{}
+{// TODO: Save to the camera roll album.
+}
 
 - (void)resize:(int)w :(int)h
 {
@@ -268,6 +284,81 @@
             data_[i] = premultiplyColor(pixels[i]);
         }        
     }
+}
+
+#pragma mark -
+#pragma mark OpenGL Texture
+#pragma mark -
+
+- (GLuint)textureObject
+{
+    return textureObject_;
+}
+
+- (BOOL)hasAlpha
+{
+    return (mode_ == RGBA);
+}
+
+- (void)mipmap:(BOOL)yesno
+{
+    mipmap_ = yesno;
+}
+
+- (BOOL)mipmap
+{
+    return mipmap_;
+}
+
+- (GLsizei)nearestExp2:(NSUInteger)num
+{
+    if (num < 2) return 0;
+    
+    NSUInteger m = 2;
+    while (m <= num) m <<= 1;
+    return m >> 1;
+}
+
+- (BOOL)createTextureObject
+{
+    if (textureObject_ > 0) {
+        glDeleteTextures(1, &textureObject_);
+    }
+    
+    NSUInteger w = [self nearestExp2:width];
+    NSUInteger h = [self nearestExp2:height];
+    
+    GLvoid *data;
+    PImage *img;
+    if (w != width || h != height) {
+        img = [self get];
+        [img resize:w :h];
+        
+        [img loadPixels];
+        data = [img pixels];
+    } else {
+        if (mode_ == RGBA || pixels == NULL) {
+            [self loadPixels];
+            data = pixels;
+        } else {
+            data = data_;
+        }
+    }
+    
+    glGenTextures(1, &textureObject_);
+    glBindTexture(GL_TEXTURE_2D, textureObject_);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    
+    if (mipmap_)
+        glGenerateMipmapOES(GL_TEXTURE_2D);
+    
+    GLenum err = glGetError();
+    if (err != GL_NO_ERROR)
+    {
+        NSLog(@"Error uploading texture. glError: 0x%04X", err);
+        return NO;
+    }
+    return YES;
 }
 
 @end
