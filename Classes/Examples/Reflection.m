@@ -53,7 +53,7 @@ void draw() {
     [self directionalLight:0.8 :0.8 :0.8 :0 :0 :-1];
     float s = self.mouseX / (float)(self.width);
     [self specular:s :s :s];
-    [self sphere:120];
+    [self sphere:80];
 }
 
 @end

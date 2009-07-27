@@ -37,4 +37,31 @@ void draw() {
 
 @implementation Texture2
 
+- (void)setup
+{
+    [self size:320 :320 :P3D];
+    img = [self loadImage:@"berlin-1.jpg"];
+    [img retain];
+    [self noStroke];
+}
+
+- (void)draw
+{
+    [self background:PBlackColor];
+    [self translate:self.width / 2.0f :self.height / 2.0f];
+    [self rotateY:[self map:self.mouseX :0 :self.width :-PI :PI]];
+    [self beginShape:TRIANGLES];
+    [self texture:img];
+    [self vertex:-100 :-100 :0 :0 :0];
+    [self vertex:100 :-40 :0 :400 :120];
+    [self vertex:0 :100 :0 :200 :400];
+    [self endShape];
+}
+
+- (void)dealloc
+{
+    [img release];
+    [super dealloc];
+}
+
 @end

@@ -10,7 +10,9 @@
 #import "Processing.h"
 
 @interface Texture3 : Processing {
-
+    PImage *img;
+    float *tubeX;
+    float *tubeY;
 }
 
 @end

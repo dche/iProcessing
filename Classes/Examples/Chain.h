@@ -1,16 +1,16 @@
 //
-//  Texture1.h
+//  Chain.h
 //  iProcessing
 //
-//  Created by Kenan Che on 09-07-15.
+//  Created by Kenan Che on 09-07-21.
 //  Copyright 2009 campl software. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "Processing.h"
 
-@interface Texture1 : Processing {
-    PImage *img;
+@interface Chain : Processing {
+
 }
 
 @end

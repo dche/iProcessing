@@ -9,7 +9,26 @@
 #import <Foundation/Foundation.h>
 #import "Processing.h"
 
+@interface Cube : PObject
+{
+    int w;
+    int h;
+    int d;
+    int shiftX;
+    int shiftY;
+    int shiftZ;    
+}
+
++ (Cube *)cube:(int)w :(int)h :(int)d :(int)shiftX :(int)shiftY :(int)shiftZ;
+- (void)drawCube;
+
+@end
+
+
 @interface SpaceJunk : Processing {
+    float ang;
+    // Array for all cubes
+    NSMutableArray *cubes;
 
 }
 

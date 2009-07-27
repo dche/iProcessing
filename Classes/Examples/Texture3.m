@@ -55,7 +55,49 @@ void draw() {
 
 #import "Texture3.h"
 
+static const int tubeRes = 32;
 
 @implementation Texture3
+
+- (void)setup
+{
+    [self size:320 :320 :P3D];
+    img = [[self loadImage:@"berlin-1.jpg"] retain];
+    
+    float angle = 270.0f / tubeRes;
+    tubeX = (float *)malloc(tubeRes * sizeof(float));
+    tubeY = (float *)malloc(tubeRes * sizeof(float));
+    
+    for (int i = 0; i < tubeRes; i++) {
+        tubeX[i] = [self cos:[self radians:i * angle]];
+        tubeY[i] = [self sin:[self radians:i * angle]];
+    }
+    [self noStroke];
+}
+
+- (void)draw
+{
+    [self background:PBlackColor];
+    [self translate:self.width / 2 :self.height / 2];
+    [self rotateX:[self map:self.mouseY :0 :self.height :-PI :PI]];
+    [self rotateY:[self map:self.mouseX :0 :self.width :-PI :PI]];
+    [self beginShape:QUAD_STRIP];
+    [self texture:img];
+    for (int i = 0; i < tubeRes; i++) {
+        float x = tubeX[i] * 100;
+        float z = tubeY[i] * 100;
+        float u = img.width / tubeRes * i;
+        [self vertex:x :-100 :z :u :0];
+        [self vertex:x :100 :z :u :img.height];
+    }
+    [self endShape];
+    [self beginShape:QUADS];
+    [self texture:img];
+    [self vertex:0 :-100 :0 :0 :0];
+    [self vertex:100 :-100 :0 :100 :0];
+    [self vertex:100 :100 :0 :100 :100];
+    [self vertex:0 :100 :0 :0 :100];
+    [self endShape];
+}
 
 @end

@@ -8,9 +8,12 @@
 
 #import "ProcessingSpec.h"
 
-#define NSPEC   24
+#define NSPEC   25
 
 @interface ProcessingSpec ()
+
+// Structure
+- (void)pushPopStyle;
 
 // Shape
 - (void)arc;
@@ -52,6 +55,7 @@
 {
     [self size:200 :200];    
     SEL selectors[] = {
+        @selector(pushPopStyle),
         @selector(arc),
         @selector(ellipse),
         @selector(line),
@@ -100,6 +104,26 @@
 - (void)mouseClicked
 {
     [self redraw];
+}
+
+#pragma mark -
+#pragma mark Structure
+#pragma mark -
+
+- (void)pushPopStyle
+{
+    [self smooth];
+    [self ellipse:0 :50 :33 :33];    // Left
+    [self pushStyle];               // Start a new style
+    [self strokeWeight:10];
+    [self fill:204 :153 :0];
+    [self ellipse:33 :50 :33 :33];   // Left-Middle
+    [self pushStyle];               // Start another new style
+    [self stroke:0 :102 :153];
+    [self ellipse:66 :50 :33 :33];   // Right-Middle
+    [self popStyle];                // Restore the previous style
+    [self popStyle];                // Restore original style
+    [self ellipse:100 :50 :33 :33];  // Right    
 }
 
 #pragma mark -

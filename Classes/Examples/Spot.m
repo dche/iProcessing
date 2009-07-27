@@ -64,10 +64,10 @@ static const int concentration = 600;
     [self directionalLight:51 :102 :126 :0 :-1 :0];
     
     // Orange light on the upper-right of the sphere
-    [self spotLight:204 :153 :0 :360 :160 :600 :0 :0 :-1 :PI/2 :600]; 
+    [self spotLight:204 :153 :0 :360 :160 :600 :0 :0 :-1 :PI/2 :128]; 
     
     // Moving spotlight that follows the mouse
-    [self spotLight:102 :153 :204 :360 :self.mouseY :600 :0 :0 :-1 :PI/2 :600]; 
+    [self spotLight:102 :153 :204 :360 :self.mouseY :600 :0 :0 :-1 :PI/2 :128]; 
     
     [self translate:self.width/2 :self.height/2 :0]; 
     [self sphere:120]; 

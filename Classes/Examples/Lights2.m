@@ -60,7 +60,7 @@ void draw()
     
     // Orange point light on the right
     [self pointLight:150 :100 :0    // Color
-                    :200 :-150 :0]; // Position
+                    :50 :-50 :0]; // Position
     
     // Blue directional light from the left
     [self directionalLight:0 :102 :255  // Color
@@ -68,12 +68,12 @@ void draw()
     
     // Yellow spotlight from the front
     [self spotLight:255 :255 :109   // Color
-                   :0 :40 :200      // Position
+                   :0 :30 :100      // Position
                    :0 :-0.5f :-0.5f // Direction
                    :PI / 2 :2];     // Angle, concentration
     
     [self rotateY:[self map:self.mouseX :0 :self.width :0 :PI]];
     [self rotateX:[self map:self.mouseY :0 :self.height :0 :PI]];
-    [self box:90];
+    [self box:40 :90 :40];
 }
 @end

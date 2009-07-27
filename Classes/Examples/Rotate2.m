@@ -52,24 +52,24 @@ void draw()
 #import "Rotate2.h"
 
 static const float offset = PI/24.0;             // Angle offset between boxes
-static const int num = 12;                     // Number of boxes
+static const int num = 1;                     // Number of boxes
 
 @implementation Rotate2
 
 - (void)setup 
 { 
     [self size:320 :320 :P3D];
-    [self noStroke];  
+    [self noStroke];
     for(int i=0; i<num; i++) {
         colors[i] = [self color:255 * (i+1)/num];
     }
-    [self lights];
 } 
 
 
 - (void)draw
 {     
     [self background:0 :0 :26];
+    [self lights];
     [self translate:self.width/2 :self.height/2];
     a += 0.01;   
     

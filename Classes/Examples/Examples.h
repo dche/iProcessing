@@ -99,6 +99,7 @@
 // 3D - Transform
 #import "Rotate1.h"
 #import "Rotate2.h"
+#import "Bird.h"
 
 // 3D - Texture
 #import "Texture1.h"

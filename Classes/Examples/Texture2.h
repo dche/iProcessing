@@ -10,7 +10,7 @@
 #import "Processing.h"
 
 @interface Texture2 : Processing {
-
+    PImage *img;
 }
 
 @end

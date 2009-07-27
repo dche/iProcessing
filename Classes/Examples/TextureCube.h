@@ -10,7 +10,9 @@
 #import "Processing.h"
 
 @interface TextureCube : Processing {
-
+    PImage *tex;
+    float rotx;
+    float roty;
 }
 
 @end

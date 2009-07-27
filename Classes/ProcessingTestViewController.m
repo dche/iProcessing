@@ -376,6 +376,18 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[CubicGrid class]];
     [examples setObject:demoController forKey:@"CubicGrid"];
     [demoController release];    
+    /// Primitives3D
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Premitives3D class]];
+    [examples setObject:demoController forKey:@"Primitives3D"];
+    [demoController release];    
+    /// Vertices3D
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Vertices3D class]];
+    [examples setObject:demoController forKey:@"Vertices3D"];
+    [demoController release];    
+    /// SpaceJunk
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[SpaceJunk class]];
+    [examples setObject:demoController forKey:@"SpaceJunk"];
+    [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
@@ -394,6 +406,10 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Rotate2 class]];
     [examples setObject:demoController forKey:@"Rotate2"];
     [demoController release];    
+    /// Bird
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Bird class]];
+    [examples setObject:demoController forKey:@"Bird"];
+    [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
@@ -401,7 +417,67 @@
     listController.title = @"Transform";
     [threeDCategories setObject:listController forKey:listController.title];
     [listController release];
+    
+    // 3D - Lights
+    examples = [[NSMutableDictionary alloc] init];    
+    /// LightsGL
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[LightsGL class]];
+    [examples setObject:demoController forKey:@"LightsGL"];
+    [demoController release];    
+    /// Lights1
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Lights1 class]];
+    [examples setObject:demoController forKey:@"Lights1"];
+    [demoController release];    
+    /// Lights2
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Lights2 class]];
+    [examples setObject:demoController forKey:@"Lights2"];
+    [demoController release];    
+    /// Spot
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Spot class]];
+    [examples setObject:demoController forKey:@"Spot"];
+    [demoController release];    
+    /// Directional
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Directional class]];
+    [examples setObject:demoController forKey:@"Directional"];
+    [demoController release];    
+    /// Reflection
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Reflection class]];
+    [examples setObject:demoController forKey:@"Reflection"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Lights";
+    [threeDCategories setObject:listController forKey:listController.title];
+    [listController release];    
 
+    // 3D - Texture
+    examples = [[NSMutableDictionary alloc] init];    
+    /// Texture1
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Texture1 class]];
+    [examples setObject:demoController forKey:@"Texture1"];
+    [demoController release];    
+    /// Texture2
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Texture2 class]];
+    [examples setObject:demoController forKey:@"Texture2"];
+    [demoController release];    
+    /// Texture3
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Texture3 class]];
+    [examples setObject:demoController forKey:@"Texture3"];
+    [demoController release];    
+    /// TextureCube
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[TextureCube class]];
+    [examples setObject:demoController forKey:@"TextureCube"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Texture";
+    [threeDCategories setObject:listController forKey:listController.title];
+    [listController release];    
+    
     [categoryList setObject:threeDCategories forKey:@"3D"];
     [threeDCategories release];    
     

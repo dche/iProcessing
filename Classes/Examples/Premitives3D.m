@@ -41,4 +41,26 @@ popMatrix();
 
 @implementation Premitives3D
 
+- (void)setup
+{
+    [self size:320 :320 :P3D]; 
+    [self background:0];
+    [self lights];
+    
+    [self noStroke];
+    [self pushMatrix];
+    [self translate:50 :self.height/2 :0];
+    [self rotateY:1.25];
+    [self rotateX:-0.4];
+    [self box:100];
+    [self popMatrix];
+    
+    [self noFill];
+    [self stroke:[self color:255]];
+    [self pushMatrix];
+    [self translate:300 :self.height*0.35 :-200];
+    [self sphere:180];
+    [self popMatrix];
+}
+
 @end
