@@ -20,6 +20,7 @@
     
 @private
     UIView *container_;
+    /// The render.
     id<PGraphics> graphics_;
     
     /// QUARTZ2D, P2D or P3D (OPENGL)
@@ -71,7 +72,7 @@
     /// YES if perspective projection is used, o.w., ortho projection. Default is YES.
     BOOL perspective_;
     /// Weak reference of Texture to be applied. Used only in P3D mode.
-    PImage *texture_;
+    NSObject<PTexture> *texture_;
     /// How to set texture cord. Default is IMAGE.
     int textureMode_;
     /// List for color, normal for vertices. Used only if in P3D mode.

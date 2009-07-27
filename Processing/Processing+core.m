@@ -10,8 +10,6 @@
 #import "PGraphics2D.h"
 #import "PGraphics3D.h"
 
-#import <objc/objc-class.h>
-
 #define kFPSSampleRate                  3
 #define kDefaultVerticesArrayLength     30
 #define kDefaultFrameRate               60
@@ -390,7 +388,7 @@
             self.view = [[PGraphics2D alloc] initWithFrame:frame controller:self];
             break;
         case OPENGL:
-            // Initialize ivar available in OPENGL (P3D) mode.
+            // Initialize ivar for OPENGL (P3D) mode.
             accessories_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength];
             textureMode_ = IMAGE;
         case P2D:
