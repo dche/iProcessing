@@ -10,7 +10,7 @@
 
 @interface Processing (Vertices)
 
-- (void)addVertex:(PVertex)v :(PTextureCord)tc;
+- (void)addVertex:(PVertex)v :(PTextureCoord)tc;
 - (void)addCurveVertex:(PVertex)v;
 - (void)addBezierVertices:(PVertex)cp1 :(PVertex)cp2 :(PVertex)p;
 - (void)resetVertices;
@@ -19,14 +19,14 @@
 
 @implementation Processing (Vertices)
 
-- (void)addVertex:(PVertex)v :(PTextureCord)tc
+- (void)addVertex:(PVertex)v :(PTextureCoord)tc
 {
     Byte vt = PVertexNormal;
     [vertices_ appendBytes:&v length:sizeof(PVertex)];
     [indices_ appendBytes:&vt length:1];
     
     if (self.mode == P3D) {
-        [accessories_ appendBytes:&tc length:sizeof(PTextureCord)];
+        [accessories_ appendBytes:&tc length:sizeof(PTextureCoord)];
     }
 }
 
@@ -498,7 +498,7 @@
 - (void)vertex:(float)x :(float)y :(float)z :(float)u :(float)v
 {
     if (!shapeBegan_) return;
-    [self addVertex:PVertexMake(x, y, z) :PTextureCordMake(u, v)];    
+    [self addVertex:PVertexMake(x, y, z) :PTextureCoordMake(u, v)];    
 }
 
 - (void)curveVertex:(float)x :(float)y
