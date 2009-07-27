@@ -14,7 +14,7 @@
 #pragma mark Texture
 #pragma mark -
 
-- (void)texture:(PImage *)img
+- (void)texture:(NSObject<PTexture> *)img
 {
     if (shapeBegan_) {
         texture_ = img;        
@@ -27,10 +27,19 @@
         case IMAGE:
         case NORMAL:
             textureMode_ = mode;
+            if ([graphics_ respondsToSelector:@selector(textureMode:)]) {
+                [graphics_ textureMode:mode];
+            }
             break;
         default:
             break;
     }
+}
+
+- (PVRTexture *)loadTexture:(NSString *)name
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:[[name lastPathComponent] stringByDeletingPathExtension] ofType:@"pvr"];
+    return [PVRTexture textureWithContentsOfFile:path];
 }
 
 #pragma mark -
@@ -74,9 +83,7 @@
 
 - (void)ambientLight:(float)v1 :(float)v2 :(float)v3
 {
-    if (self.mode == P3D) {
-        [graphics_ enableGlobalAmbientLight:PColorMake([self color:v1 :v2 :v3])];
-    }
+    [self ambientLight:v1 :v2 :v3 :0 :0 :0];
 }
 
 - (void)ambientLight:(float)v1 :(float)v2 :(float)v3 :(float)x :(float)y :(float)z
@@ -123,7 +130,7 @@
         [self lightFalloff:1 :0 :0];
         [graphics_ lightSpecular:PColorMake(PWhiteColor)];
         
-        [graphics_ enableGlobalAmbientLight:PColorMake(PGrayColor)];
+        [graphics_ addAmbientLightWithColor:PColorMake(PGrayColor) atPosition:PVertexMake(0, 0, 0)];
         [graphics_ addDirectionalLightWithColor:PColorMake(PGrayColor)
                                     toDirection:PVertexMake(0, 0, -1)];
     }    
@@ -287,7 +294,7 @@
 - (void)ambient:(color)clr
 {
     if (self.mode == P3D) {
-        
+        [graphics_ ambient:PColorMake(clr)];
     }
 }
 
@@ -299,21 +306,21 @@
 - (void)emissive:(color)clr
 {
     if (self.mode == P3D) {
-        
+        [graphics_ emissive:PColorMake(clr)];
     }
 }
 
 - (void)shininess:(float)shine
 {
     if (self.mode == P3D) {
-        
+        [graphics_ shininess:shine];
     }
 }
 
 - (void)specular:(color)clr
 {
     if (self.mode == P3D) {
-        
+        [graphics_ specular:PColorMake(clr)];
     }
 }
 

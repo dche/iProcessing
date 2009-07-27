@@ -12,8 +12,10 @@
 @interface Processing (ThreeD)
 
 #pragma mark Texture
-- (void)texture:(PImage *)img;
+- (void)texture:(NSObject<PTexture> *)img;
 - (void)textureMode:(int)mode;
+// FIXME: should move this mothod to ext group?
+- (PVRTexture *)loadTexture:(NSString *)name;
 
 #pragma 3D Primitives
 - (void)box:(float)size;
