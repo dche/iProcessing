@@ -59,6 +59,15 @@ static inline void PColorSet(PColor *pc, float r, float g, float b, float a)
     pc->alpha = a;
 }
 
+static inline color hexColor(UInt32 hexdec)
+{
+    color c = hexdec;
+    if (c < 0xFF000000) {
+        c = (c << 8) ^ 0xFF;
+    }
+    return CFSwapInt32HostToBig(c);
+}
+
 #pragma mark -
 #pragma mark Vertex
 #pragma mark -
