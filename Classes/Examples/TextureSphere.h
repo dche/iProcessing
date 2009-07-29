@@ -10,7 +10,16 @@
 #import "Processing.h"
 
 @interface TextureSphere : Processing {
-
+    PImage *texmap;
+    int sDetail;
+    
+    float rotationX;
+    float rotationY;
+    float velocityX;
+    float velocityY;
+    float *sphereX;
+    float *sphereY;
+    float *sphereZ;
 }
 
 @end
