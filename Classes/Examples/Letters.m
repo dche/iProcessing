@@ -125,7 +125,7 @@ void draw()
                 if(letter == 'A' || letter == 'E' || letter == 'I' || 
                    letter == 'O' || letter == 'U') {
                     [self fill:204 :204 :0];
-                } 
+                }
                 else {
                     [self fill:[self color:255]];
                 }

@@ -72,4 +72,8 @@
 /// Updates the image with the data in its pixels[] array
 - (void)updatePixels;
 
+/// Generate texture for text.
++ (PImage *)textureOfString:(NSString *)str withFont:(UIFont *)font inColor:(PColor)clr;
+- (void)drawText:(NSString *)str withFont:(UIFont *)font inColor:(PColor)clr;
+
 @end

@@ -8,6 +8,15 @@
 
 #import "PImage.h"
 
+static inline GLsizei nearestExp2(NSUInteger num)
+{
+    if (num < 2) return 0;
+    
+    NSUInteger m = 2;
+    while (m < num) m <<= 1;
+    return m;
+}
+
 @interface PImage ()
 
 - (CGContextRef)createBitmapCGContextWithWidth:(NSUInteger)w 
@@ -173,7 +182,9 @@
 - (void)mask:(PImage *)mask
 {
     // In RGB mode, alpha chanel is ignored.
-    if (mode_ == RGB) return;
+    if (mode_ == RGB) {
+        return;
+    }
     // Must be the same size as of self.
     if (mask.width != width || mask.height != height) return;
     
@@ -277,6 +288,8 @@
 
 - (void)updatePixels
 {
+    if (pixels == NULL) return;
+
     if (mode_ == RGB) {
         memcpy(data_, pixels, width * height * sizeof(color));
     } else {
@@ -310,23 +323,14 @@
     return mipmap_;
 }
 
-- (GLsizei)nearestExp2:(NSUInteger)num
-{
-    if (num < 2) return 0;
-    
-    NSUInteger m = 2;
-    while (m <= num) m <<= 1;
-    return m >> 1;
-}
-
 - (BOOL)createTextureObject
 {
     if (textureObject_ > 0) {
         glDeleteTextures(1, &textureObject_);
     }
     
-    NSUInteger w = [self nearestExp2:width];
-    NSUInteger h = [self nearestExp2:height];
+    NSUInteger w = nearestExp2(width);
+    NSUInteger h = nearestExp2(height);
     
     GLvoid *data;
     PImage *img;
@@ -359,6 +363,30 @@
         return NO;
     }
     return YES;
+}
+
+#pragma mark -
+#pragma mark Texture for text
+#pragma mark -
+
++ (PImage *)textureOfString:(NSString *)str withFont:(UIFont *)font inColor:(PColor)clr
+{
+    CGSize sz = [str sizeWithFont:font];
+    if (sz.width == 0 || sz.height == 0) return nil;
+    
+    PImage *img = [[PImage alloc] initWithWidth:nearestExp2(sz.width) height:nearestExp2(sz.width) mode:RGBA];
+    [img drawText:str withFont:font inColor:clr];
+    
+    return [img autorelease];
+}
+
+- (void)drawText:(NSString *)str withFont:(UIFont *)font inColor:(PColor)clr
+{
+    CGContextSetRGBFillColor(bitmapContext_, clr.red, clr.green, clr.blue, clr.alpha);
+    
+    UIGraphicsPushContext(bitmapContext_);
+    [str drawAtPoint:CGPointMake(0, 0) withFont:font];
+    UIGraphicsPopContext();
 }
 
 @end

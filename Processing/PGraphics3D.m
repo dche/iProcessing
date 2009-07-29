@@ -604,10 +604,10 @@ static const int kMaxLights = 8;
             :(float)height
 {
     const GLfloat vertices[] = {
-        ox, oy, 0, ox + width, oy, 0, ox + width, oy + height, 0, ox, oy + height, 0,
+        ox, oy, ox + width, oy, ox + width, oy + height, ox, oy + height,
     };
     
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
     
     if ([self threeD] && doFill_) {
         glNormal3f(0.0f, 0.0f, 1.0f);
@@ -1066,8 +1066,9 @@ static const int kMaxLights = 8;
 }
 
 - (void)showText:(NSString *)str :(float)x :(float)y :(float)z
-{
-    NSLog(@"%@", str);
+{    
+    PImage *tex = [PImage textureOfString:str withFont:curFont_ inColor:fillColor_];
+    [self drawImage:tex atPoint:CGPointMake(x, y)];
 }
 
 #pragma mark -
