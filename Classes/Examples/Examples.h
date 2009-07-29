@@ -116,4 +116,7 @@
 #import "Spot.h"
 #import "Reflection.h"
 
+// OpenProcessing
+#import "GreenTornado.h"
+#import "RecursiveSpheres.h"
 

@@ -28,12 +28,17 @@
 		5D1E8C311014DC6A002C61D7 /* Chain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8C301014DC6A002C61D7 /* Chain.m */; };
 		5D1E8C34101571B5002C61D7 /* CubesWithinCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8C33101571B5002C61D7 /* CubesWithinCube.m */; };
 		5D1E8EF71019C2FC002C61D7 /* berlin-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D1E8EF61019C2FC002C61D7 /* berlin-1.jpg */; };
-		5D1E8F161019C599002C61D7 /* PAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1E8F141019C599002C61D7 /* PAgent.h */; };
-		5D1E8F171019C599002C61D7 /* PAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8F151019C599002C61D7 /* PAgent.m */; };
 		5D1E940A101B62CF002C61D7 /* world32k.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D1E9409101B62CF002C61D7 /* world32k.jpg */; };
 		5D260A010FF5EDD000E0C0FC /* ShapePrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D260A000FF5EDD000E0C0FC /* ShapePrimitives.m */; };
 		5D260A030FF5EDDC00E0C0FC /* Vertices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2609FB0FF5EBBC00E0C0FC /* Vertices.m */; };
 		5D260B2E0FF69CCD00E0C0FC /* TriangleStrip.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D260B2D0FF69CCD00E0C0FC /* TriangleStrip.m */; };
+		5D494767101ECE5A00D816E5 /* GreenTornado.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D494766101ECE5A00D816E5 /* GreenTornado.m */; };
+		5D494783101ED58700D816E5 /* RandomFlowers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D494782101ED58700D816E5 /* RandomFlowers.m */; };
+		5D494786101EDB8300D816E5 /* Processing+accelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D494784101EDB8300D816E5 /* Processing+accelerometer.h */; };
+		5D494787101EDB8300D816E5 /* Processing+accelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D494785101EDB8300D816E5 /* Processing+accelerometer.m */; };
+		5D49478E101EF91200D816E5 /* RecursiveSpheres.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D49478D101EF91200D816E5 /* RecursiveSpheres.m */; };
+		5D494863101F6CCE00D816E5 /* PAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D494861101F6CCE00D816E5 /* PAgent.h */; };
+		5D494864101F6CCF00D816E5 /* PAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D494862101F6CCE00D816E5 /* PAgent.m */; };
 		5DA3EDF10FE6AEEC0028380E /* Processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDD50FE6AEEC0028380E /* Processing.h */; };
 		5DA3EDF20FE6AEEC0028380E /* Processing+transformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */; };
 		5DA3EDF30FE6AEEC0028380E /* Processing+transformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDD70FE6AEEC0028380E /* Processing+transformation.h */; };
@@ -202,8 +207,6 @@
 		5D1E8C32101571B5002C61D7 /* CubesWithinCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubesWithinCube.h; sourceTree = "<group>"; };
 		5D1E8C33101571B5002C61D7 /* CubesWithinCube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubesWithinCube.m; sourceTree = "<group>"; };
 		5D1E8EF61019C2FC002C61D7 /* berlin-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "berlin-1.jpg"; sourceTree = "<group>"; };
-		5D1E8F141019C599002C61D7 /* PAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAgent.h; sourceTree = "<group>"; };
-		5D1E8F151019C599002C61D7 /* PAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAgent.m; sourceTree = "<group>"; };
 		5D1E9409101B62CF002C61D7 /* world32k.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = world32k.jpg; sourceTree = "<group>"; };
 		5D2609FA0FF5EBBC00E0C0FC /* Vertices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertices.h; sourceTree = "<group>"; };
 		5D2609FB0FF5EBBC00E0C0FC /* Vertices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vertices.m; sourceTree = "<group>"; };
@@ -211,6 +214,16 @@
 		5D260A000FF5EDD000E0C0FC /* ShapePrimitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapePrimitives.m; sourceTree = "<group>"; };
 		5D260B2C0FF69CCD00E0C0FC /* TriangleStrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangleStrip.h; sourceTree = "<group>"; };
 		5D260B2D0FF69CCD00E0C0FC /* TriangleStrip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TriangleStrip.m; sourceTree = "<group>"; };
+		5D494765101ECE5A00D816E5 /* GreenTornado.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenTornado.h; sourceTree = "<group>"; };
+		5D494766101ECE5A00D816E5 /* GreenTornado.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GreenTornado.m; sourceTree = "<group>"; };
+		5D494781101ED58700D816E5 /* RandomFlowers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomFlowers.h; sourceTree = "<group>"; };
+		5D494782101ED58700D816E5 /* RandomFlowers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomFlowers.m; sourceTree = "<group>"; };
+		5D494784101EDB8300D816E5 /* Processing+accelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+accelerometer.h"; sourceTree = "<group>"; };
+		5D494785101EDB8300D816E5 /* Processing+accelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+accelerometer.m"; sourceTree = "<group>"; };
+		5D49478C101EF91200D816E5 /* RecursiveSpheres.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecursiveSpheres.h; sourceTree = "<group>"; };
+		5D49478D101EF91200D816E5 /* RecursiveSpheres.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecursiveSpheres.m; sourceTree = "<group>"; };
+		5D494861101F6CCE00D816E5 /* PAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAgent.h; sourceTree = "<group>"; };
+		5D494862101F6CCE00D816E5 /* PAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAgent.m; sourceTree = "<group>"; };
 		5DA3EDC40FE69D4F0028380E /* libProcessing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libProcessing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DA3EDD50FE6AEEC0028380E /* Processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing.h; sourceTree = "<group>"; };
 		5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+transformation.m"; sourceTree = "<group>"; };
@@ -540,6 +553,10 @@
 		5D1E8B3B10144C81002C61D7 /* Ext */ = {
 			isa = PBXGroup;
 			children = (
+				5D494861101F6CCE00D816E5 /* PAgent.h */,
+				5D494862101F6CCE00D816E5 /* PAgent.m */,
+				5D494784101EDB8300D816E5 /* Processing+accelerometer.h */,
+				5D494785101EDB8300D816E5 /* Processing+accelerometer.m */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -560,11 +577,24 @@
 			path = ParticleSystem;
 			sourceTree = "<group>";
 		};
+		5D494764101ECE4700D816E5 /* OpenProcessing */ = {
+			isa = PBXGroup;
+			children = (
+				5D494765101ECE5A00D816E5 /* GreenTornado.h */,
+				5D494766101ECE5A00D816E5 /* GreenTornado.m */,
+				5D494781101ED58700D816E5 /* RandomFlowers.h */,
+				5D494782101ED58700D816E5 /* RandomFlowers.m */,
+				5D49478C101EF91200D816E5 /* RecursiveSpheres.h */,
+				5D49478D101EF91200D816E5 /* RecursiveSpheres.m */,
+			);
+			name = OpenProcessing;
+			sourceTree = "<group>";
+		};
 		5DA3EDBF0FE69D1D0028380E /* Processing */ = {
 			isa = PBXGroup;
 			children = (
+				5DDDF49F101CA35800B3881E /* P2D */,
 				5DDDF4A0101CE26100B3881E /* System */,
-				5DDDF49F101CA35800B3881E /* Processor */,
 				5D1E8C351015730F002C61D7 /* ParticleSystem */,
 				5D1E8B3B10144C81002C61D7 /* Ext */,
 				5D04CEB6100DCB1100D0ED13 /* Sound */,
@@ -606,8 +636,6 @@
 				5DBE5DF10FF01A23003176FB /* README */,
 				5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */,
 				5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */,
-				5D1E8F141019C599002C61D7 /* PAgent.h */,
-				5D1E8F151019C599002C61D7 /* PAgent.m */,
 			);
 			path = Processing;
 			sourceTree = "<group>";
@@ -714,6 +742,7 @@
 		5DD190E80FEA49A9006A7842 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				5D494764101ECE4700D816E5 /* OpenProcessing */,
 				5DFB73AE1003D1D9001DFD19 /* 3D */,
 				5DD191660FEA85A9006A7842 /* Topics */,
 				5DD190EE0FEA49E4006A7842 /* Basics */,
@@ -828,11 +857,11 @@
 			name = Typography;
 			sourceTree = "<group>";
 		};
-		5DDDF49F101CA35800B3881E /* Processor */ = {
+		5DDDF49F101CA35800B3881E /* P2D */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = Processor;
+			path = P2D;
 			sourceTree = "<group>";
 		};
 		5DDDF4A0101CE26100B3881E /* System */ = {
@@ -969,7 +998,8 @@
 				5DCE9EE30FFDB7A900A5E7DE /* OpenGL_support.h in Headers */,
 				5DFB75F11005F9DB001DFD19 /* Processing+p3d.h in Headers */,
 				5D1E8BCC1014D658002C61D7 /* PTexture.h in Headers */,
-				5D1E8F161019C599002C61D7 /* PAgent.h in Headers */,
+				5D494786101EDB8300D816E5 /* Processing+accelerometer.h in Headers */,
+				5D494863101F6CCE00D816E5 /* PAgent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1143,6 +1173,9 @@
 				5D1E8BD21014D76F002C61D7 /* Bird.m in Sources */,
 				5D1E8C311014DC6A002C61D7 /* Chain.m in Sources */,
 				5D1E8C34101571B5002C61D7 /* CubesWithinCube.m in Sources */,
+				5D494767101ECE5A00D816E5 /* GreenTornado.m in Sources */,
+				5D494783101ED58700D816E5 /* RandomFlowers.m in Sources */,
+				5D49478E101EF91200D816E5 /* RecursiveSpheres.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1165,7 +1198,8 @@
 				5DF1000A0FFAA46700B7AFBE /* PImage.m in Sources */,
 				5DFB75F21005F9DB001DFD19 /* Processing+p3d.m in Sources */,
 				5D1E8BCD1014D658002C61D7 /* PTexture.m in Sources */,
-				5D1E8F171019C599002C61D7 /* PAgent.m in Sources */,
+				5D494787101EDB8300D816E5 /* Processing+accelerometer.m in Sources */,
+				5D494864101F6CCF00D816E5 /* PAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
