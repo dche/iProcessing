@@ -10,6 +10,10 @@
 #import "PGraphics2D.h"
 #import "PGraphics3D.h"
 
+#if TARGET_IPHONE_SIMULATOR
+#import <objc/objc-class.h>
+#endif
+
 #define kFPSSampleRate                  3
 #define kDefaultVerticesArrayLength     30
 #define kDefaultFrameRate               60
