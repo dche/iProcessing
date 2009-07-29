@@ -362,6 +362,24 @@
     [topicsCategories setObject:listController forKey:listController.title];
     [listController release];
     
+    // Topics - OpenProcessing
+    examples = [[NSMutableDictionary alloc] init];    
+    /// Green Tornado
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[GreenTornado class]];
+    [examples setObject:demoController forKey:@"GreenTornado"];
+    [demoController release];    
+    /// Green RecursiveSpheres
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[RecursiveSpheres class]];
+    [examples setObject:demoController forKey:@"RecursiveSpheres"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"OpenProcessing";
+    [topicsCategories setObject:listController forKey:listController.title];
+    [listController release];
+    
     [categoryList setObject:topicsCategories forKey:@"Topics"];
     [topicsCategories release];    
 
@@ -469,6 +487,10 @@
     /// TextureCube
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[TextureCube class]];
     [examples setObject:demoController forKey:@"TextureCube"];
+    [demoController release];    
+    /// TextureSphere
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[TextureSphere class]];
+    [examples setObject:demoController forKey:@"TextureSphere"];
     [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
