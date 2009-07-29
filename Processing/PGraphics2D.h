@@ -14,7 +14,11 @@
 @private
     /// Quartz
     CGContextRef ctx;
+    /// Drawing buffer length.
+    NSUInteger bufferLength_;
     /// The drawing buffer
+    color *data_;
+    /// The pixels array.
     color *pixels_;
     
     Processing *p_;

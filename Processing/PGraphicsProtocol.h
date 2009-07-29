@@ -76,7 +76,7 @@
 /// Pixel data
 - (color)getPixelAtPoint:(CGPoint)p;
 - (void)setPixel:(color)clr atPoint:(CGPoint)p;
-- (void)loadPixels;
+- (color *)loadPixels;
 - (void)updatePixels;
 
 /// Image

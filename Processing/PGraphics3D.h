@@ -25,6 +25,8 @@
     
     EAGLContext *context;
     
+    color *pixels_;
+    
     /// OpenGL names for the renderbuffer and framebuffers used to render to this view
     GLuint viewRenderbuffer, viewFramebuffer;
     

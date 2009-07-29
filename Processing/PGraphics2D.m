@@ -86,6 +86,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     [curFont_ release];
     [matrixStack_ release];
     
+    if (data_ != NULL) free(data_);
     if (pixels_ != NULL) free(pixels_);
     
     [super dealloc];
@@ -103,12 +104,13 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     CGColorSpaceRef colorSpace;    
     int             bitmapBytesPerRow;
     
-    bitmapBytesPerRow = (w * 4);        
-    pixels_ = malloc(h * bitmapBytesPerRow);
-    if (NULL == pixels_) return NULL;
+    bitmapBytesPerRow = (w * 4);
+    bufferLength_ = h * bitmapBytesPerRow;
+    data_ = malloc(bufferLength_);
+    if (NULL == data_) return NULL;
     
     colorSpace = CGColorSpaceCreateDeviceRGB();    
-    context = CGBitmapContextCreate (pixels_,
+    context = CGBitmapContextCreate (data_,
                                      w,
                                      h,
                                      8,
@@ -119,8 +121,8 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     CGColorSpaceRelease(colorSpace);
     
     if (context == NULL) {
-        free(pixels_);
-        pixels_ = NULL;
+        free(data_);
+        data_ = NULL;
     }
     return context;
 }
@@ -516,19 +518,33 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 - (color)getPixelAtPoint:(CGPoint)p
 {
     NSUInteger i = cordsToIndex(p.x, p.y, CGBitmapContextGetWidth(ctx), CGBitmapContextGetHeight(ctx), YES);
-    return dePremultiplyColor(pixels_[i]);
+    return dePremultiplyColor(data_[i]);
 }
 
 - (void)setPixel:(color)clr atPoint:(CGPoint)p
 {
     NSUInteger i = cordsToIndex(p.x, p.y, CGBitmapContextGetWidth(ctx), CGBitmapContextGetHeight(ctx), YES);
-    pixels_[i] = premultiplyColor(clr);
+    data_[i] = premultiplyColor(clr);
 }
 
-- (void)loadPixels
-{}
+- (color *)loadPixels
+{
+    if (pixels_ == NULL) {
+        pixels_ = malloc(bufferLength_);
+    }
+    dePremultiplyCopy(pixels_, data_, bufferLength_/sizeof(color));
+    return pixels_;
+}
+
 - (void)updatePixels
-{}
+{
+    if (pixels_ != NULL) {
+        premultiplyCopy(data_, pixels_, bufferLength_/sizeof(color));
+        
+        free(pixels_);
+        pixels_ = NULL;
+    }
+}
 
 #pragma mark -
 #pragma mark Image

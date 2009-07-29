@@ -280,22 +280,20 @@ static inline GLsizei nearestExp2(NSUInteger num)
     if (mode_ == RGB) {
         memcpy(pixels, data_, sz);
     } else {
-        for (int i  = 0; i < width * height; i++) {
-            pixels[i] = dePremultiplyColor(data_[i]);
-        }        
+        dePremultiplyCopy(pixels, data_, width * height);
     }
 }
 
 - (void)updatePixels
 {
-    if (pixels == NULL) return;
-
-    if (mode_ == RGB) {
-        memcpy(data_, pixels, width * height * sizeof(color));
-    } else {
-        for (int i  = 0; i < width * height; i++) {
-            data_[i] = premultiplyColor(pixels[i]);
-        }        
+    if (pixels != NULL) {
+        if (mode_ == RGB) {
+            memcpy(data_, pixels, width * height * sizeof(color));
+        } else {
+            premultiplyCopy(data_, pixels, width * height);
+        }
+        free(pixels);
+        pixels = NULL;
     }
 }
 

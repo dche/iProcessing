@@ -132,7 +132,7 @@
 
 - (PImage *)get
 {
-    return nil;
+    return [self get:0 :0 :self.width :self.height];
 }
 
 - (PImage *)get:(int)x1 :(int)y1 :(int)x2 :(int)y2
@@ -142,7 +142,7 @@
 
 - (void)loadPixels
 {
-    [graphics_ loadPixels];
+    pixels_ = [graphics_ loadPixels];
 }
 
 - (void)set:(int)x :(int)y :(color)clr

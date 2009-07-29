@@ -47,6 +47,8 @@ static const int kMaxLights = 8;
 - (void)removeAmbientColorFromLight:(GLenum)light;
 - (void)setAttenuationForLight:(GLenum)light;
 
+- (void)drawTexture:(GLuint)texObj inRect:(CGRect)rect;
+
 @end
 
 
@@ -103,6 +105,9 @@ static const int kMaxLights = 8;
         [EAGLContext setCurrentContext:nil];
     }    
     [context release];
+    if (pixels_ != NULL) {
+        free(pixels_);
+    }
     
     [curFont_ release];
     
@@ -1074,30 +1079,48 @@ static const int kMaxLights = 8;
 #pragma mark -
 #pragma mark Pixel
 #pragma mark -
+
 - (color)getPixelAtPoint:(CGPoint)p
 {
+    NSLog(@"Read single pixel is inefficient, use pixels[] instead.");
     return 0;
 }
 
-- (void)setPixel:(color)clr  atPoint:(CGPoint)p
+- (void)setPixel:(color)clr atPoint:(CGPoint)p
 {
+    NSLog(@"OpenGLES does not support set pixel directly, use pixels[] instead.");
 }
 
-- (void)loadPixels
-{}
+- (color *)loadPixels
+{
+    if (pixels_ == NULL) {
+        pixels_ = malloc(p_.width * p_.height * sizeof(color));
+    }
+    glReadPixels(0, 0, p_.width, p_.height, GL_RGBA, GL_UNSIGNED_BYTE, pixels_);
+    return pixels_;
+}
 
 - (void)updatePixels
-{}
+{
+    if (pixels_ != NULL) {
+        GLuint texObj;
+        glGenTextures(1, &texObj);
+        glBindTexture(GL_TEXTURE_2D, texObj);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, p_.width, p_.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels_);
+        
+        [self drawTexture:texObj inRect:CGRectMake(0, 0, p_.width, p_.height)];
+        
+        glDeleteTextures(1, &texObj);
+        free(pixels_);
+        pixels_ = NULL;
+    }
+}
 
 #pragma mark -
 #pragma mark Image
 #pragma mark -
-- (void)drawImage:(PImage *)image atPoint:(CGPoint)point
-{
-    [self drawImage:image inRect:CGRectMake(point.x, point.y, image.width, image.height)];
-}
 
-- (void)drawImage:(PImage *)image inRect:(CGRect)rect
+- (void)drawTexture:(GLuint)texObj inRect:(CGRect)rect
 {
     if (![self threeD]) {
         GLfloat x = rect.origin.x;
@@ -1113,16 +1136,13 @@ static const int kMaxLights = 8;
         };
         
         glEnable(GL_TEXTURE_2D);
-        if ([image textureObject] == 0) {
-            [image createTextureObject];
-        } else {
-            glBindTexture(GL_TEXTURE_2D, [image textureObject]);
-        }
+        glBindTexture(GL_TEXTURE_2D, texObj);
         
         glVertexPointer(2, GL_FLOAT, 0, vertices);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
         
+        // No fancy settings. Use the simplest.
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
@@ -1134,6 +1154,19 @@ static const int kMaxLights = 8;
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
         glDisable(GL_TEXTURE_2D);
     }
+}
+
+- (void)drawImage:(PImage *)image atPoint:(CGPoint)point
+{
+    [self drawImage:image inRect:CGRectMake(point.x, point.y, image.width, image.height)];
+}
+
+- (void)drawImage:(PImage *)image inRect:(CGRect)rect
+{
+    if ([image textureObject] == 0) {
+        [image createTextureObject];
+    }
+    [self drawTexture:[image textureObject] inRect:rect];
 }
 
 #pragma mark -

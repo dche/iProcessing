@@ -79,6 +79,20 @@ static inline color dePremultiplyColor(UInt32 clr)
     return (a << ALPHA_SHIFT) ^ (b << BLUE_SHIFT) ^ (g << GREEN_SHIFT) ^ (r << RED_SHIFT);
 }
 
+static inline void premultiplyCopy(color * dst, const color *src, NSUInteger sz)
+{
+    for (int i = 0; i < sz; i++) {
+        dst[i] = premultiplyColor(src[i]);
+    }
+}
+
+static inline void dePremultiplyCopy(color * dst, const color *src, NSUInteger sz)
+{
+    for (int i = 0; i < sz; i++) {
+        dst[i] = dePremultiplyColor(src[i]);
+    }
+}
+
 #pragma mark -
 #pragma mark Image Processing
 #pragma mark -
