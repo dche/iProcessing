@@ -16,7 +16,7 @@
     float angle;    
 }
 
-- (id)init:(int)x :(int)y :(int)s;
+- (id)initWithProcessing:(Processing *)p :(int)x :(int)y :(int)s;
 - (void)update:(int)mx :(int)my;
 - (void)display;
 

@@ -19,7 +19,7 @@
     int shiftZ;    
 }
 
-+ (Cube *)cube:(int)w :(int)h :(int)d :(int)shiftX :(int)shiftY :(int)shiftZ;
++ (Cube *)cube:(Processing *)p :(int)w :(int)h :(int)d :(int)shiftX :(int)shiftY :(int)shiftZ;
 - (void)drawCube;
 
 @end

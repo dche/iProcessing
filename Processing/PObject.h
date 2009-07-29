@@ -13,9 +13,15 @@
 @interface PObject : NSObject {
 
 @private
+    /// Reference to Processing.
     Processing *p_;
 }
 
-@property (nonatomic, retain) Processing *p;
+@property (readonly) Processing *p;
+
+- (id)initWithProcessing:(Processing *)p;
+
+- (BOOL)update;
+- (void)display;
 
 @end

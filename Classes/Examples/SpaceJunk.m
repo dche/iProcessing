@@ -154,9 +154,8 @@ static int limit = 500;
     // Instantiate cubes, passing in random vals for size and postion
     cubes = [[NSMutableArray alloc] initWithCapacity:limit];
     for (int i = 0; i< limit; i++){
-        Cube *c = [Cube cube:[self random:-10 :10] :[self random:-10 :10] :[self random:-10 :10] 
+        Cube *c = [Cube cube:self :[self random:-10 :10] :[self random:-10 :10] :[self random:-10 :10] 
                             :[self random:-100 :100] :[self random:-100 :100] :[self random:-100 :100]];
-        c.p = self;
         [cubes addObject:c];
     }
 }
@@ -202,9 +201,9 @@ static int limit = 500;
 
 @implementation Cube
 
-- (id)init:(int)width :(int)height :(int)depth :(int)sx :(int)sy :(int)sz
+- (id)initWithProcessing:(Processing *)p :(int)width :(int)height :(int)depth :(int)sx :(int)sy :(int)sz
 {
-    if (self = [super init]) {
+    if (self = [super initWithProcessing:p]) {
         w = width;
         h = height;
         d = depth;
@@ -215,9 +214,9 @@ static int limit = 500;
     return self;
 }
 
-+ (Cube *)cube:(int)w :(int)h :(int)d :(int)shiftX :(int)shiftY :(int)shiftZ
++ (Cube *)cube:(Processing *)p :(int)w :(int)h :(int)d :(int)shiftX :(int)shiftY :(int)shiftZ
 {
-    return [[[self alloc] init:w :h :d :shiftX :shiftY :shiftZ] autorelease];
+    return [[[self alloc] initWithProcessing:p :w :h :d :shiftX :shiftY :shiftZ] autorelease];
 }
 
 - (void)drawCube
