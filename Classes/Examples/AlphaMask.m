@@ -40,7 +40,7 @@ void draw()
 - (void)setup 
 {
     [self size:200 :200];
-    img = [self loadImage:@"test.jpg"];
+    img = [self loadImage:@"test.png"];
     maskImg = [self loadImage:@"mask.jpg"];
     [img retain];
     [maskImg retain];
