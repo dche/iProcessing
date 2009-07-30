@@ -1082,14 +1082,14 @@ static const int kMaxLights = 8;
 
 - (color)getPixelAtPoint:(CGPoint)p
 {
-    NSLog(@"Read single pixel is inefficient, use pixels[] instead.");
-    return 0;
+    if (pixels_ == NULL) {
+        [self loadPixels];        
+    }
+    return pixels_[cordsToIndex(p.x, p.y, p_.width, p_.height, NO)];
 }
 
 - (void)setPixel:(color)clr atPoint:(CGPoint)p
-{
-    NSLog(@"OpenGLES does not support set pixel directly, use pixels[] instead.");
-}
+{/* N/A in OpenGL ES. Use pixels[] instead. */}
 
 - (color *)loadPixels
 {
