@@ -138,10 +138,10 @@ static const float wh = 4;
             // We color each pixel based on how long it takes to get to infinity
             // If we never got there, let's pick the color black
             if (n == maxiterations) {
-//                pixels[i+j*self.width] = 0;
+                self.pixels[i+j*(int)self.width] = 0;
             } else {
                 // Gosh, we could make fancy colors here if we wanted
-//                pixels[i+j*self.width] = [self color:n*16 % 255];  
+                self.pixels[i+j*(int)self.width] = [self color:n*16 % 255];  
             }
             x += dx;
         }

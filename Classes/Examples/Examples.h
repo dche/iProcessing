@@ -84,8 +84,10 @@
 #import "Histogram.h"
 #import "Blur.h"
 #import "ImageBrightness.h"
+#import "EdgeDetection.h"
 
 // Topics - Fractals and L-systems
+#import "Mandelbrot.h"
 #import "Tree.h"
 
 // 3D - Form
