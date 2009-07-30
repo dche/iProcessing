@@ -21,8 +21,12 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (CGContextRef)createBitmapCGContextWithWidth:(NSUInteger)w 
                                         height:(NSUInteger)h 
-                                          mode:(int)imgMode 
-                                          data:(const void *)d;
+                                        format:(int)imgFormat
+                                          data:(const color *)d;
+
+- (void)createBitmapCGContext;
+- (void)releaseBitmapCGContext;
+- (void)copyFromBitmapCGContextAndReleaseIt;
 
 @end
 
@@ -33,56 +37,76 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (id)initWithWidth:(NSUInteger)w 
              height:(NSUInteger)h 
-               mode:(int)imgMode 
+             format:(int)imgFormat
                data:(const void *)d
 {
     if (self = [super init]) {
-        bitmapContext_ = [self createBitmapCGContextWithWidth:w 
-                                                       height:h 
-                                                         mode:imgMode
-                                                         data:d];
-        if (bitmapContext_ == NULL) {
+        pixels = calloc(w * h, sizeof(color));
+
+        if (pixels == NULL) {
             [self release];
             return nil;
         }
+        
         width = w;
         height = h;
-        mode_ = imgMode;
+        format_ = imgFormat;
         
-        // Flip the y-axis.
-        CGContextConcatCTM(bitmapContext_, CGAffineTransformMake(1, 0, 0, -1, 0, h));
+        if (d != NULL) {
+            bitmapContext_ = [self createBitmapCGContextWithWidth:w 
+                                                           height:h 
+                                                           format:format_
+                                                             data:d];
+            if (bitmapContext_ == NULL) {
+                [self release];
+                return nil;
+            } else {
+                [self copyFromBitmapCGContextAndReleaseIt];
+            }
+        }
     }
     return self;
 }
 
-- (id)initWithWidth:(NSUInteger)w height:(NSUInteger)h mode:(int)imgMode
+- (id)initWithWidth:(NSUInteger)w height:(NSUInteger)h format:(int)imgFormat
 {
-    return [self initWithWidth:w height:h mode:imgMode data:nil];
+    return [self initWithWidth:w height:h format:imgFormat data:nil];
 }
 
 - (id)initWithCGImage:(CGImageRef)img
 {
     if (img == NULL) return nil;
     
-    NSUInteger w = CGImageGetWidth(img);
-    NSUInteger h = CGImageGetHeight(img);
-    CGImageAlphaInfo alpha = CGImageGetAlphaInfo(img);
+    width = CGImageGetWidth(img);
+    height = CGImageGetHeight(img);
 
-    int mode = RGBA;
+    CGImageAlphaInfo alpha = CGImageGetAlphaInfo(img);
+    format_ = RGBA;
     if (alpha == kCGImageAlphaNone || alpha == kCGImageAlphaNoneSkipFirst || alpha == kCGImageAlphaNoneSkipLast) {
-        mode = RGB;
+        format_ = RGB;
     }
-    [self initWithWidth:w height:h mode:mode];
-    CGContextDrawImage(bitmapContext_, CGRectMake(0, 0, w, h), img);
     
+    if (self = [super init]) {
+        pixels = malloc(width * height * sizeof(color));
+        bitmapContext_ = [self createBitmapCGContextWithWidth:width 
+                                                       height:height 
+                                                       format:format_
+                                                         data:NULL];
+        if (pixels == NULL || bitmapContext_ == NULL) {
+            [self release];
+            return nil;
+        }
+        CGContextDrawImage(bitmapContext_, CGRectMake(0, 0, width, height), img);
+
+        [self copyFromBitmapCGContextAndReleaseIt];
+    }
     return self;
 }
 
 - (void)dealloc
 {
-    CGContextRelease(bitmapContext_);
-    free(data_);
-    if (pixels != NULL) free(pixels);
+    [self releaseBitmapCGContext];
+    free(pixels);
     
     if (textureObject_ > 0) {
         glDeleteTextures(1, &textureObject_);
@@ -93,30 +117,38 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (CGContextRef)createBitmapCGContextWithWidth:(NSUInteger)w 
                                         height:(NSUInteger)h 
-                                          mode:(int)imgMode 
-                                          data:(const void *)d
+                                        format:(int)imgFormat
+                                          data:(const color *)d
 {
     CGContextRef    context = NULL;    
     CGColorSpaceRef colorSpace;    
-    int             bitmapBytesPerRow;
-    
-    bitmapBytesPerRow   = (w * 4);
-    data_ = (color *)calloc(w * h, sizeof(color));
-    if (NULL == data_) {
-        return NULL;
-    }
-    if (NULL != d) {
-        memcpy(data_, d, w * h * sizeof(color));
+
+    if (imgFormat == RGB) {
+        data_ = pixels;
+        
+        if (d != NULL && d != pixels) {
+            memcpy(data_, d, w * h * sizeof(color));
+        }
+    } else {
+        data_ = (color *)calloc(w * h, sizeof(color));
+        if (data_ == NULL) {
+            return NULL;
+        }
+        if (d != NULL) {
+            for (int i = 0; i < w * h; i++) {
+                data_[i] = premultiplyColor(d[i]);
+            }
+        }        
     }
     
     colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGBitmapInfo bitmapInfo = (imgMode == RGBA) ? (kCGImageAlphaPremultipliedLast) : (kCGImageAlphaNoneSkipLast);
+    CGBitmapInfo bitmapInfo = (imgFormat == RGBA) ? (kCGImageAlphaPremultipliedLast) : (kCGImageAlphaNoneSkipLast);
     
     context = CGBitmapContextCreate (data_,
                                      w,
                                      h,
                                      8,
-                                     bitmapBytesPerRow,
+                                     w * 4,
                                      colorSpace,
                                      bitmapInfo);
     
@@ -124,24 +156,58 @@ static inline GLsizei nearestExp2(NSUInteger num)
     return context;
 }
 
+- (void)createBitmapCGContext
+{
+    if (bitmapContext_ == NULL) {
+        bitmapContext_ = [self createBitmapCGContextWithWidth:width 
+                                                       height:height 
+                                                       format:format_ 
+                                                         data:pixels];
+    }
+}
+
+- (void)releaseBitmapCGContext
+{
+    if (bitmapContext_ != NULL) {
+        CGContextRelease(bitmapContext_);        
+        if (pixels != data_) free(data_);
+        
+        bitmapContext_ = NULL;
+        data_ = NULL;
+    }
+}
+
+- (void)copyFromBitmapCGContextAndReleaseIt
+{
+    if (bitmapContext_ != NULL) {
+        if (format_ == RGBA) {
+            for (int i = 0; i < width * height; i++) {
+                pixels[i] = dePremultiplyColor(data_[i]);
+            }            
+        }
+        [self releaseBitmapCGContext];
+    }
+}
+
 - (CGImageRef)CGImage
 {
-    return CGBitmapContextCreateImage(bitmapContext_);
+    if (bitmapContext_ == nil) {
+        [self createBitmapCGContext];
+    }
+    CGImageRef img = CGBitmapContextCreateImage(bitmapContext_);
+    [self releaseBitmapCGContext]; 
+    
+    return img;
 }
 
 - (color)get:(int)x :(int)y
 {
-    UInt32 val = data_[cordsToIndex(x, y, width, height, YES)];
-    if (mode_ == RGB) {
-        return val;
-    } else {
-        return dePremultiplyColor(val);
-    }
+    return pixels[cordsToIndex(x, y, width, height, NO)];
 }
 
 - (PImage *)get
 {
-    PImage *img = [[PImage alloc] initWithWidth:width height:height mode:mode_ data:data_];
+    PImage *img = [[PImage alloc] initWithWidth:width height:height format:format_ data:pixels];
     return [img autorelease];
 }
 
@@ -157,54 +223,33 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (void)set:(int)x :(int)y :(color)clr
 {
-    color c = (mode_ == RGB) ? clr : premultiplyColor(clr);
-    data_[cordsToIndex(x, y, width, height, YES)] = premultiplyColor(c);
+    pixels[cordsToIndex(x, y, width, height, NO)] = clr;
 }
 
 
 - (void)copy:(int)sx :(int)sy :(int)swidth :(int)sheight 
             :(int)dx :(int)dy :(int)dwidth :(int)dheight
 {
-    CGImageRef imgInRect = CGImageCreateWithImageInRect([self CGImage], CGRectMake(sx, sy, swidth, sheight));
-    CGContextDrawImage(bitmapContext_, CGRectMake(dx, dy, dwidth, dheight), imgInRect);
 }
 
 - (void)copy:(PImage *)srcImg 
             :(int)sx :(int)sy :(int)swidth :(int)sheight 
             :(int)dx :(int)dy :(int)dwidth :(int)dheight
 {
-    if (nil == srcImg) return;
-
-    CGImageRef imgInRect = CGImageCreateWithImageInRect([srcImg CGImage], CGRectMake(sx, sy, swidth, sheight));
-    CGContextDrawImage(bitmapContext_, CGRectMake(dx, dy, dwidth, dheight), imgInRect);
 }
 
 - (void)mask:(PImage *)mask
 {
     // In RGB mode, alpha chanel is ignored.
-    if (mode_ == RGB) {
+    if (format_ == RGB) {
         return;
     }
     // Must be the same size as of self.
     if (mask.width != width || mask.height != height) return;
     
-    [mask loadPixels];
     for (int i = 0; i < width * height; i++) {
-        UInt32 alpha = (mask.pixels[i] & BLUE_MASK) >> BLUE_SHIFT;
-        
-        color c = data_[i];
-        UInt8 currentAlpha = (c & ALPHA_MASK) >> ALPHA_SHIFT;
-        
-        if (currentAlpha == 0xFF) {
-            if (alpha != 0xFF) {
-                c = c & ~ALPHA_MASK ^ (alpha << ALPHA_SHIFT);
-                data_[i] = premultiplyColor(c);               
-            }
-        } else {
-            c = dePremultiplyColor(c);
-            c = c & ~ALPHA_MASK ^ (alpha << ALPHA_SHIFT);
-            data_[i] = premultiplyColor(c);            
-        }
+        UInt32 alpha = colorValue(mask.pixels[i], B);
+        pixels[i] &= ~ALPHA_MASK ^ (alpha << ALPHA_SHIFT);
     }
 }
 
@@ -248,54 +293,38 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 /// Save to the camera roll album.
 - (void)save:(NSString *)name
-{// TODO: Save to the camera roll album.
+{
+    UIImageWriteToSavedPhotosAlbum([UIImage imageWithCGImage:[self CGImage]], nil, nil, NULL);
 }
 
 - (void)resize:(int)w :(int)h
 {
     if (width == w && height == h) return;
     
+    // Store image data to CGImage
     CGImageRef cgImg = [self CGImage];
     
-    CGContextRelease(bitmapContext_);
-    free(data_);
+    free(pixels);
+    pixels = malloc(w * h * sizeof(color));
+    
+    width = w;
+    height = h;
     
     bitmapContext_ = [self createBitmapCGContextWithWidth:w 
                                                    height:h 
-                                                     mode:mode_ 
+                                                   format:format_ 
                                                      data:NULL];
-    width = w;
-    height = h;
     CGContextDrawImage(bitmapContext_, CGRectMake(0, 0, w, h), cgImg);
     CGImageRelease(cgImg);
+    
+    [self copyFromBitmapCGContextAndReleaseIt];
 }
 
 - (void)loadPixels
-{
-    size_t sz = width * height * sizeof(color);
-    if (pixels == NULL) {
-        pixels = (color *)malloc(sz);
-    }
-    
-    if (mode_ == RGB) {
-        memcpy(pixels, data_, sz);
-    } else {
-        dePremultiplyCopy(pixels, data_, width * height);
-    }
-}
+{}
 
 - (void)updatePixels
-{
-    if (pixels != NULL) {
-        if (mode_ == RGB) {
-            memcpy(data_, pixels, width * height * sizeof(color));
-        } else {
-            premultiplyCopy(data_, pixels, width * height);
-        }
-        free(pixels);
-        pixels = NULL;
-    }
-}
+{}
 
 #pragma mark -
 #pragma mark OpenGL Texture
@@ -308,7 +337,7 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (BOOL)hasAlpha
 {
-    return (mode_ == RGBA);
+    return (format_ == RGBA);
 }
 
 - (void)mipmap:(BOOL)yesno
@@ -335,16 +364,9 @@ static inline GLsizei nearestExp2(NSUInteger num)
     if (w != width || h != height) {
         img = [self get];
         [img resize:w :h];
-        
-        [img loadPixels];
-        data = [img pixels];
+        data = img.pixels;
     } else {
-        if (mode_ == RGBA || pixels == NULL) {
-            [self loadPixels];
-            data = pixels;
-        } else {
-            data = data_;
-        }
+        data = pixels;
     }
     
     glGenTextures(1, &textureObject_);
@@ -372,7 +394,7 @@ static inline GLsizei nearestExp2(NSUInteger num)
     CGSize sz = [str sizeWithFont:font];
     if (sz.width == 0 || sz.height == 0) return nil;
     
-    PImage *img = [[PImage alloc] initWithWidth:nearestExp2(sz.width) height:nearestExp2(sz.width) mode:RGBA];
+    PImage *img = [[PImage alloc] initWithWidth:nearestExp2(sz.width) height:nearestExp2(sz.width) format:RGBA];
     [img drawText:str withFont:font inColor:clr];
     
     return [img autorelease];
@@ -380,11 +402,18 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (void)drawText:(NSString *)str withFont:(UIFont *)font inColor:(PColor)clr
 {
-    CGContextSetRGBFillColor(bitmapContext_, clr.red, clr.green, clr.blue, clr.alpha);
+    if (bitmapContext_ == NULL) {
+        [self createBitmapCGContext];
+    }
     
+    // Flip the Y-axis because we use NSString#drawAtPoint::
+    CGContextConcatCTM(bitmapContext_, CGAffineTransformMake(1, 0, 0, -1, 0, height));
+    CGContextSetRGBFillColor(bitmapContext_, clr.red, clr.green, clr.blue, clr.alpha);    
     UIGraphicsPushContext(bitmapContext_);
     [str drawAtPoint:CGPointMake(0, 0) withFont:font];
     UIGraphicsPopContext();
+    
+    [self copyFromBitmapCGContextAndReleaseIt];
 }
 
 @end
