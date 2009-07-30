@@ -11,9 +11,9 @@
 
 @implementation Processing (Image)
 
-- (PImage *)createImage:(int)width :(int)height :(int)mode
+- (PImage *)createImage:(int)width :(int)height :(int)format
 {
-    PImage *img = [[PImage alloc] initWithWidth:width height:height mode:mode];
+    PImage *img = [[PImage alloc] initWithWidth:width height:height format:format];
     return [img autorelease];
 }
 

@@ -13,8 +13,8 @@
 
 @interface Processing (Image)
 
-/// Creates a new PImage. The sender needs not release it.
-- (PImage *)createImage:(int)width :(int)height :(int)mode;
+/// Creates a new PImage.
+- (PImage *)createImage:(int)width :(int)height :(int)format;
 
 - (void)image:(PImage *)img :(float)x :(float)y;
 - (void)image:(PImage *)img :(float)x :(float)y :(float)width :(float)height;
