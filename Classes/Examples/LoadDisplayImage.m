@@ -49,7 +49,7 @@ void draw() {
     // Displays the image at its actual size at point (0,0)
     [self image:a :0 :0]; 
     // Displays the image at point (100, 0) at half of its size
-    [self image:a :100 :0 :a.width/2 :a.height/2];
+    [self image:a :100 :10 :a.width/2 :a.height/2];
 }
 
 - (void)dealloc

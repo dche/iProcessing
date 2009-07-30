@@ -340,6 +340,14 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Blur class]];
     [examples setObject:demoController forKey:@"Blur"];
     [demoController release];    
+    /// ImageBrightness
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[ImageBrightness class]];
+    [examples setObject:demoController forKey:@"ImageBrightness"];
+    [demoController release];    
+    /// EdgeDetection
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[EdgeDetection class]];
+    [examples setObject:demoController forKey:@"EdgeDetection"];
+    [demoController release];        
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
@@ -353,6 +361,10 @@
     /// Tree
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Tree class]];
     [examples setObject:demoController forKey:@"Tree"];
+    [demoController release];    
+    /// Mandelbrot
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Mandelbrot class]];
+    [examples setObject:demoController forKey:@"Mandelbrot"];
     [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];

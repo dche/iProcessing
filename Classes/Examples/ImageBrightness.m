@@ -62,6 +62,13 @@ void draw() {
     [self size:200 :200];
     [self frameRate:30];
     img = [self loadImage:@"jelly.jpg"];
+    [img retain];
+}
+
+- (void)dealloc
+{
+    [img release];
+    [super dealloc];
 }
 
 - (void)draw
@@ -89,8 +96,8 @@ void draw() {
             //b = constrain(b,0,255);
             // Make a new color and set pixel in the window
             //color c = color(r,g,b);
-            // color c = [self color:r];
-            // pixels[loc] = c;
+            color c = [self color:r];
+            self.pixels[loc] = c;
         }
     }
     [self updatePixels];
