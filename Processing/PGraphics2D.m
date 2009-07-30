@@ -102,11 +102,8 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 {
     CGContextRef    context = NULL;    
     CGColorSpaceRef colorSpace;    
-    int             bitmapBytesPerRow;
-    
-    bitmapBytesPerRow = (w * 4);
-    bufferLength_ = h * bitmapBytesPerRow;
-    data_ = malloc(bufferLength_);
+
+    data_ = malloc(h * w * sizeof(color));
     if (NULL == data_) return NULL;
     
     colorSpace = CGColorSpaceCreateDeviceRGB();    
@@ -114,7 +111,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
                                      w,
                                      h,
                                      8,
-                                     bitmapBytesPerRow,
+                                     w * sizeof(color),
                                      colorSpace,
                                      kCGImageAlphaPremultipliedLast);
     
@@ -263,6 +260,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     for (int i = 0; i < n; i++) {
         p = v + i;
         CGContextMoveToPoint(ctx, p->x, p->y);
+        // No point drawing in Quartz 2D. Draw a small rectangle instead.
         CGContextAddRect(ctx, CGRectMake(p->x, p->y, 1, 1));        
     }
 }
@@ -529,17 +527,31 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 
 - (color *)loadPixels
 {
+    NSUInteger w = self.bounds.size.width;
+    NSUInteger h = self.bounds.size.height;
+    
     if (pixels_ == NULL) {
-        pixels_ = malloc(bufferLength_);
+        pixels_ = malloc(w * h * sizeof(color));
     }
-    dePremultiplyCopy(pixels_, data_, bufferLength_/sizeof(color));
+    for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+            pixels_[cordsToIndex(i, j, w, h, YES)] = dePremultiplyColor(data_[j * w + i]);
+        }
+    }
     return pixels_;
 }
 
 - (void)updatePixels
 {
     if (pixels_ != NULL) {
-        premultiplyCopy(data_, pixels_, bufferLength_/sizeof(color));
+        NSUInteger w = self.bounds.size.width;
+        NSUInteger h = self.bounds.size.height;
+
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                data_[cordsToIndex(i, j, w, h, YES)] = premultiplyColor(pixels_[j * w + i]);
+            }
+        }
         
         free(pixels_);
         pixels_ = NULL;
@@ -557,6 +569,10 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 - (void)drawImage:(PImage *)image inRect:(CGRect)rect
 {
     CGImageRef img = [image CGImage];
+    float fy = rect.origin.y * 2 + rect.size.height;
+    
+    // Flip the image.
+    CGContextConcatCTM(ctx, CGAffineTransformMake(1, 0, 0, -1, 0, fy));
     if (doTint_) {
         CGContextDrawImage(ctx, rect, img);
         // TODO: if tintColor is white, use kCGBlendModeOverlay to make the image transparent.
@@ -568,6 +584,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     } else {
         CGContextDrawImage(ctx, rect, img);        
     }
+    CGContextConcatCTM(ctx, CGAffineTransformMake(1, 0, 0, -1, 0, fy));
     CGImageRelease(img);
 }
 
