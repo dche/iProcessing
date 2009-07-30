@@ -15,7 +15,7 @@
 @private
     // For resize, mask and blend.
     CGContextRef bitmapContext_;
-    int mode_;
+    int format_;
     
     int width;
     int height;
@@ -32,9 +32,9 @@
 @property (readonly) int height;
 @property (readonly) color *pixels;
 
-- (id)initWithWidth:(NSUInteger)w height:(NSUInteger)h mode:(int)imgMode 
+- (id)initWithWidth:(NSUInteger)w height:(NSUInteger)h format:(int)imgFormat 
                data:(const void *)d;
-- (id)initWithWidth:(NSUInteger)w height:(NSUInteger)h mode:(int)imgMode;
+- (id)initWithWidth:(NSUInteger)w height:(NSUInteger)h format:(int)imgFormat;
 - (id)initWithCGImage:(CGImageRef)img;
 
 /// Return the CGImage of the pixel data.
