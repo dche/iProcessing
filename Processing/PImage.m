@@ -53,16 +53,7 @@ static inline GLsizei nearestExp2(NSUInteger num)
         format_ = imgFormat;
         
         if (d != NULL) {
-            bitmapContext_ = [self createBitmapCGContextWithWidth:w 
-                                                           height:h 
-                                                           format:format_
-                                                             data:d];
-            if (bitmapContext_ == NULL) {
-                [self release];
-                return nil;
-            } else {
-                [self copyFromBitmapCGContextAndReleaseIt];
-            }
+            memcpy(pixels, d, w * h * sizeof(color));
         }
     }
     return self;
@@ -240,10 +231,6 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (void)mask:(PImage *)mask
 {
-    // In RGB mode, alpha chanel is ignored.
-    if (format_ == RGB) {
-        return;
-    }
     // Must be the same size as of self.
     if (mask.width != width || mask.height != height) return;
     
@@ -251,6 +238,7 @@ static inline GLsizei nearestExp2(NSUInteger num)
         UInt32 alpha = colorValue(mask.pixels[i], B);
         pixels[i] &= ~ALPHA_MASK ^ (alpha << ALPHA_SHIFT);
     }
+    format_ = RGBA;
 }
 
 - (void)blend:(int)x :(int)y :(int)w :(int)h 
@@ -271,25 +259,13 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (void)filter:(int)mode
 {
-    [self filter:mode :1.0f];
+    [self filter:mode :defaultImageFilterParam(mode)];
 }
 
 - (void)filter:(int)mode :(float)param
 {
-    // TODO: implement image filters.
-    switch (mode) {
-        case GRAY:
-            break;
-        case BLUR:
-        case POSTERIZE:
-        case INVERT:
-        case THRESHOLD:
-        case OPAQUE:
-        default:
-            break;
-    }
+    imageFilter(mode, param, pixels, width * height, format_ == RGBA);
 }
-
 
 /// Save to the camera roll album.
 - (void)save:(NSString *)name
