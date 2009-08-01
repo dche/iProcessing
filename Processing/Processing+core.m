@@ -52,6 +52,7 @@
         container_ = [containerView retain];
         
         loop_ = YES;
+        showFPS_ = NO;
         frameRate_ = kDefaultFrameRate;
         startTime_ = [[NSDate date] retain];        
         
@@ -407,7 +408,7 @@
     mouseY_ = pMouseY_ = height / 2.0f;
     
     self.view.userInteractionEnabled = YES;
-    graphics_ = self.view;
+    graphics_ = (id<PGraphics>)self.view;
     
     // Set the default background color, which is not part of style.
     [self background:[self color:51]];
