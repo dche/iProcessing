@@ -191,13 +191,12 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 {
     UInt32 c;
     
-    // CHECK: This funciton depends on the order of color components.
     if (gray <= 0) c = 0;
     else if (gray >= FULL_GREEN) c = 255;
     else c = (UInt32)(gray * 255.0f / FULL_GREEN);
     
     UInt32 a = [self normalizedColorComponent:alpha range:FULL_ALPHA];    
-    return c ^ (c << 8) ^ (c << 16) ^ (a << 24);    
+    return (c << RED_SHIFT)^ (c << GREEN_SHIFT) ^ (c << BLUE_SHIFT) ^ (a << ALPHA_SHIFT);    
 }
 
 - (color)color:(float)val1 :(float)val2 :(float)val3
