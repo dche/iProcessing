@@ -7,6 +7,7 @@
 //
 
 #import "PTexture.h"
+#import "PImage.h"
 
 /*
   
@@ -27,6 +28,46 @@
  Copyright (C) 2008-2009 Apple Inc. All Rights Reserved.
  
  */
+
+@implementation PTexture
+
+@synthesize textureObject, width, height;
+
+- (id)init
+{
+    return [self initWithTextureObject:0 width:0 height:0];
+}
+
+- (id)initWithTextureObject:(GLuint)to width:(int)w height:(int)h
+{
+    if (to == 0) {
+        [self release];
+        return nil;
+    }
+    
+    if (self = [super init]) {
+        textureObject = to;
+        width = w;
+        height = h;
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    glDeleteTextures(1, &textureObject);
+    [super dealloc];
+}
+
++ (PTexture *)textureFromPImage:(PImage *)image
+{
+    if (image == nil) return nil;
+    
+    return [[[PTexture alloc] initWithTextureObject:image.textureObject width:image.width height:image.height] autorelease];
+}
+
+@end
+
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 

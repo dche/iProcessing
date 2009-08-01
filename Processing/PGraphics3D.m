@@ -15,6 +15,8 @@ static const NSUInteger kDefaultIndicesNumber = 64;
 static const float kFieldOfView = PI/3.0f;  // 60 du.
 static const int kMaxLights = 8;
 
+static const int kTextImageCacheSize = 16;
+
 @interface PGraphics3D ()
 
 - (BOOL)threeD;
@@ -110,6 +112,7 @@ static const int kMaxLights = 8;
     }
     
     [curFont_ release];
+    [textImageCache_ release];
     
     [vertices_ release];
     [indices_ release];
@@ -1070,10 +1073,36 @@ static const int kMaxLights = 8;
     }
 }
 
+- (PTexture *)textureForText:(NSString *)str
+{
+    // key = text + font name + font size + color
+    NSString *key = [NSString stringWithFormat:@"%@+%@+%f+%d", str, [curFont_ fontName], [curFont_ pointSize], fillColor_];
+    
+    PTexture *tex = nil;
+    if (textImageCache_ == nil) {
+        textImageCache_ = [[NSMutableDictionary alloc] initWithCapacity:kTextImageCacheSize];
+    } else {
+        tex = [textImageCache_ objectForKey:key];
+    }
+    
+    if (tex == nil) {
+        PImage *img = [PImage textureOfString:str withFont:curFont_ inColor:fillColor_];
+        [img createTextureObject];
+        tex = [PTexture textureFromPImage:img];
+        
+        if ([textImageCache_ count] == kTextImageCacheSize) {
+            // TODO: Randomly remove a image. 
+            [textImageCache_ removeObjectForKey:[[textImageCache_ allKeys] objectAtIndex:0]];
+        }
+        [textImageCache_ setObject:tex forKey:key];
+    }
+    return tex;
+}
+
 - (void)showText:(NSString *)str :(float)x :(float)y :(float)z
 {    
-    PImage *tex = [PImage textureOfString:str withFont:curFont_ inColor:fillColor_];
-    [self drawImage:tex atPoint:CGPointMake(x, y)];
+    PTexture *tex = [self textureForText:str];
+    [self drawTexture:tex.textureObject inRect:CGRectMake(x, y, tex.width, tex.height)];
 }
 
 #pragma mark -
@@ -1096,6 +1125,7 @@ static const int kMaxLights = 8;
     if (pixels_ == NULL) {
         pixels_ = malloc(p_.width * p_.height * sizeof(color));
     }
+    // BUG: not data are read.
     glReadPixels(0, 0, p_.width, p_.height, GL_RGBA, GL_UNSIGNED_BYTE, pixels_);
     return pixels_;
 }

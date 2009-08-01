@@ -28,7 +28,29 @@
 
 @end
 
+@class PImage;
+/// An OpenGL texture object container.
+/// This is internal class for font rendering performance.
+/// It is not part of Processing. And you should not use it.
+@interface PTexture : NSObject
+{
+@private
+    GLuint textureObject;
+    int width;
+    int height;
+}
 
+@property (nonatomic, readonly) GLuint textureObject;
+@property (nonatomic, readonly) int width;
+@property (nonatomic, readonly) int height;
+
++ (PTexture *)textureFromPImage:(PImage *)image;
+- (id)initWithTextureObject:(GLuint)to width:(int)w height:(int)h;
+
+@end
+
+
+/// PVRTC texture loader.
 /// Adapted from PVRTexture of PVRTextureLoader sample .
 @interface PVRTexture : NSObject<PTexture> {
 
@@ -43,11 +65,11 @@
     BOOL mipmap_;
 }
 
-@property (readonly) GLuint textureObject;
-@property (readonly) int width;
-@property (readonly) int height;
-@property (readonly) BOOL hasAlpha;
-@property (readonly) BOOL mipmap;
+@property (nonatomic, readonly) GLuint textureObject;
+@property (nonatomic, readonly) int width;
+@property (nonatomic, readonly) int height;
+@property (nonatomic, readonly) BOOL hasAlpha;
+@property (nonatomic, readonly) BOOL mipmap;
 
 - (id)initWithContentsOfFile:(NSString *)path;
 + (id)textureWithContentsOfFile:(NSString *)path;

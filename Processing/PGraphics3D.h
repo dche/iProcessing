@@ -43,6 +43,7 @@
     int textureMode_;
     
     UIFont *curFont_;
+    NSMutableDictionary *textImageCache_;
     
     /// Private vertex data.
     NSMutableData *vertices_;
