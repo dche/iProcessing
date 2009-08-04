@@ -8,6 +8,8 @@
 
 #import "Processing+shape.h"
 
+#define kDefaultVerticesArrayLength     30
+
 @interface Processing (Vertices)
 
 - (void)addVertex:(PVertex)v :(PTextureCoord)tc;
@@ -430,6 +432,15 @@
 - (void)beginShape:(int)mode
 {
     if (shapeBegan_) return;
+    
+    if (vertices_ == nil) {
+        vertices_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength * sizeof(PVertex)];
+        indices_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength];
+    }
+    
+    if (accessories_ == nil && self.mode == OPENGL) {
+        accessories_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength];
+    }
     
     switch (mode) {
         case PATH:
