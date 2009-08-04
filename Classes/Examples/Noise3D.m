@@ -71,8 +71,9 @@ static const float zincrement = 0.02f;
 
 - (void)setup
 {
-    [self size:200 :200];
+    [self size:200 :200 :QUARTZ2D];
     [self frameRate:30];
+    self.showFPS = YES;
 }
 
 - (void)draw
