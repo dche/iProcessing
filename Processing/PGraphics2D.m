@@ -553,6 +553,13 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
             }
         }
         
+        [self releasePixels];
+    }
+}
+
+- (void)releasePixels
+{
+    if (pixels_ != NULL) {
         free(pixels_);
         pixels_ = NULL;
     }

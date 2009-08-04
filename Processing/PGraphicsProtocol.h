@@ -78,6 +78,7 @@
 - (void)setPixel:(color)clr atPoint:(CGPoint)p;
 - (color *)loadPixels;
 - (void)updatePixels;
+- (void)releasePixels;
 
 /// Image
 - (void)drawImage:(PImage *)image atPoint:(CGPoint)point;
@@ -133,5 +134,8 @@
 - (void)specular:(PColor)pc;
 
 - (void)textureMode:(int)mode;
+
+- (void)frustum:(float)left :(float)right :(float)bottom :(float)top :(float)near :(float)far;
+- (void)ortho:(float)left :(float)right :(float)bottom :(float)top :(float)near :(float)far;
 
 @end

@@ -1125,7 +1125,7 @@ static const int kTextImageCacheSize = 16;
     if (pixels_ == NULL) {
         pixels_ = malloc(p_.width * p_.height * sizeof(color));
     }
-    // BUG: not data are read.
+    // BUG: wrong data are read.
     glReadPixels(0, 0, p_.width, p_.height, GL_RGBA, GL_UNSIGNED_BYTE, pixels_);
     return pixels_;
 }
@@ -1141,6 +1141,13 @@ static const int kTextImageCacheSize = 16;
         [self drawTexture:texObj inRect:CGRectMake(0, 0, p_.width, p_.height)];
         
         glDeleteTextures(1, &texObj);
+        [self releasePixels];
+    }
+}
+
+- (void)releasePixels
+{
+    if (pixels_ != NULL) {
         free(pixels_);
         pixels_ = NULL;
     }
