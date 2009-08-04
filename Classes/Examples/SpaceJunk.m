@@ -142,7 +142,7 @@
 #import "SpaceJunk.h"
 
 // Cube count-lower/raise to test P3D/OPENGL performance
-static int limit = 500;
+static int limit = 200;
 
 @implementation SpaceJunk
 
@@ -175,7 +175,7 @@ static int limit = 500;
     // Center geometry in display windwow.
     // you can change 3rd argument ('0')
     // to move block group closer(+)/further(-)
-    [self translate:self.width/2 :self.height/2 :-200 + self.mouseX * 0.65];
+    [self translate:self.width/2 :self.height/2 :-200 + self.mouseX * 1.0];
     
     // Rotate around y and x axes
     [self rotateY:[self radians:ang]];
