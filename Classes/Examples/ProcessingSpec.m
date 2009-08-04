@@ -8,7 +8,7 @@
 
 #import "ProcessingSpec.h"
 
-#define NSPEC   25
+#define NSPEC   29
 
 @interface ProcessingSpec ()
 
@@ -46,6 +46,10 @@
 // Image
 - (void)resize;
 - (void)copy;
+- (void)gray;
+- (void)invert;
+- (void)threshold;
+- (void)posterize;
 
 @end
 
@@ -53,7 +57,7 @@
 
 - (void)setup
 {
-    [self size:200 :200];    
+    [self size:200 :200 :P2D];    
     SEL selectors[] = {
         @selector(pushPopStyle),
         @selector(arc),
@@ -80,6 +84,10 @@
         @selector(text_ascent),
         @selector(resize),
         @selector(copy),
+        @selector(gray),
+        @selector(invert),
+        @selector(threshold),
+        @selector(posterize),
     };
     specs = (SEL *)malloc(NSPEC * sizeof(SEL));
     memcpy(specs, selectors, sizeof(selectors));
@@ -397,6 +405,34 @@
     PImage *img = [self loadImage:@"jelly.jpg"];
     [img copy:100 :100 :100 :100 :0 :0 :50 :50]; 
     [self image:img :0 :0];
+}
+
+- (void)gray
+{
+    PImage *b = [self loadImage:@"red.png"];
+    [self image:b :0 :0];
+    [self filter:GRAY];
+}
+
+- (void)invert
+{
+    PImage *b = [self loadImage:@"jelly.jpg"];
+    [self image:b :0 :0];
+    [self filter:INVERT];    
+}
+
+- (void)threshold
+{
+    PImage *b = [self loadImage:@"jelly.jpg"];
+    [self image:b :0 :0];
+    [self filter:THRESHOLD];    // 0.5f
+}
+
+- (void)posterize
+{
+    PImage *b = [self loadImage:@"jelly.jpg"];
+    [self image:b :0 :0];
+    [self filter:POSTERIZE :6];
 }
 
 @end
