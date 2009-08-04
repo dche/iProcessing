@@ -170,6 +170,22 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[PolarToCartesian class]];
     [examples setObject:demoController forKey:@"PolarToCartesian"];
     [demoController release];
+    /// Noise1D
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Noise1D class]];
+    [examples setObject:demoController forKey:@"Noise1D"];
+    [demoController release];
+    /// Noise2D
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Noise2D class]];
+    [examples setObject:demoController forKey:@"Noise2D"];
+    [demoController release];
+    /// Noise3D
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Noise3D class]];
+    [examples setObject:demoController forKey:@"Noise3D"];
+    [demoController release];
+    /// NoiseWave
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[NoiseWave class]];
+    [examples setObject:demoController forKey:@"NoiseWave"];
+    [demoController release];
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
@@ -303,6 +319,10 @@
     /// Reflection1
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Reflection1 class]];
     [examples setObject:demoController forKey:@"Reflection1"];
+    [demoController release];    
+    /// SequentialAnim
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[SequentialAnim class]];
+    [examples setObject:demoController forKey:@"SequentialAnim"];
     [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];

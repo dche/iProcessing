@@ -8,6 +8,7 @@
  */
 
 #import "ProcessingMacros.h"
+#import "ProcessingMath.h"
 
 #pragma mark -
 #pragma mark Color Manipulation
@@ -16,6 +17,7 @@
 typedef enum {
     PBlackColor = ALPHA_MASK,
     PWhiteColor = 0xFFFFFFFF,
+    PFullColor = PBlackColor ^ PWhiteColor,
     PRedColor = ALPHA_MASK | RED_MASK,
     PGreenColor = ALPHA_MASK | GREEN_MASK,
     PBlueColor = ALPHA_MASK | BLUE_MASK,

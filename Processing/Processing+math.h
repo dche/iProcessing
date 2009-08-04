@@ -68,7 +68,7 @@
 - (float)noise:(float)x :(float)y;
 - (float)noise:(float)x :(float)y :(float)z;
 - (void)noiseDetail:(int)octaves;
-
+- (void)noiseDetail:(int)octaves :(float)falloff;
 - (void)noiseSeed:(int)x;
 - (float)random:(float)high;
 - (float)random:(float)low :(float)high;

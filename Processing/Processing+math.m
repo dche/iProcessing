@@ -8,11 +8,84 @@
 
 #import "Processing+math.h"
 
-#pragma mark -
-#pragma mark Perlin Noise
-#pragma mark -
+@interface Processing (PerlinNoise)
 
+- (float)intNoise:(int)x;
+- (float)intNoise:(int)x :(float)y;
+- (float)intNoise:(int)x :(float)y :(float)z;
+- (float)interpolatedNoise:(float)x;
+- (float)interpolatedNoise:(float)x :(float)y;
+- (float)interpolatedNoise:(float)x :(float)y :(float)z;
 
+@end
+
+@implementation Processing (PerlinNoise)
+
+- (float)intNoise:(int)x
+{
+    // TODO: use nosieSeed_.
+    x = (x<<13) ^ x;
+    return (1.0 - ((x * (x * x * 15731 + 789221) + 1376312589) & 0x7fffffff) / 2147483648.0f);
+}
+
+- (float)intNoise:(int)x :(float)y
+{
+    return [self intNoise:x + y * 57];
+}
+
+- (float)intNoise:(int)x :(float)y :(float)z
+{
+    return [self intNoise:x + y * 57 + z * 96847];
+}
+
+- (float)interpolatedNoise:(float)x
+{
+    int ix = floorf(x);
+    float fx = x - ix;
+    
+    return cosineInterpolate([self intNoise:ix], [self intNoise:ix + 1], fx);
+}
+
+- (float)interpolatedNoise:(float)x :(float)y
+{
+    int ix = floorf(x);
+    float fx = x - ix;
+    int iy = floorf(y);
+    float fy = y - iy;
+    
+    float v0 = [self intNoise:ix :iy];    
+    float v1 = [self intNoise:ix :iy + 1];
+    float v2 = [self intNoise:ix + 1 :iy];
+    float v3 = [self intNoise:ix + 1 :iy + 1];
+    
+    return cosineInterpolate(cosineInterpolate(v0, v1, fy), cosineInterpolate(v2, v3, fy), fx);
+}
+
+- (float)interpolatedNoise:(float)x :(float)y :(float)z
+{
+    int ix = floorf(x);
+    float fx = x - ix;
+    int iy = floorf(y);
+    float fy = y - iy;
+    int iz = floorf(z);
+    float fz = z - iz;
+    
+    float v0 = [self intNoise:ix :iy :iz];
+    float v1 = [self intNoise:ix :iy + 1 :iz];
+    float v2 = [self intNoise:ix + 1 :iy :iz];
+    float v3 = [self intNoise:ix + 1 :iy + 1 :iz];
+    float v4 = [self intNoise:ix :iy :iz + 1];
+    float v5 = [self intNoise:ix :iy + 1 :iz + 1];
+    float v6 = [self intNoise:ix + 1 :iy :iz + 1];
+    float v7 = [self intNoise:ix + 1 :iy + 1 :iz + 1];
+    
+    float back = cosineInterpolate(cosineInterpolate(v0, v1, fy), cosineInterpolate(v2, v3, fy), fx);
+    float front = cosineInterpolate(cosineInterpolate(v4, v5, fy), cosineInterpolate(v6, v7, fy), fx);
+    
+    return cosineInterpolate(back, front, fz);
+}
+
+@end
 
 
 @implementation Processing (Math)
@@ -142,7 +215,6 @@
     return sqrtf(x);
 }
 
-
 #pragma mark -
 #pragma mark Trigonometry
 #pragma mark -
@@ -203,28 +275,48 @@
 
 - (float)noise:(float)x
 {
-    return 0;
+    float n = 0;
+    for (int i = 0; i < noiseOctaves_; i++) {
+        n += [self interpolatedNoise:x * [self pow:2 :i]] * 0.5f * [self pow:noiseFalloff_ :i];
+    }
+    return n;
 }
 
 - (float)noise:(float)x :(float)y
 {
-    return 0;
+    float n = 0;
+    for (int i = 0; i < noiseOctaves_; i++) {
+        float f = [self pow:2 :i];
+        n += [self interpolatedNoise:x * f :y * f] * 0.5f * [self pow:noiseFalloff_ :i];
+    }
+    return n;
 }
 
 - (float)noise:(float)x :(float)y :(float)z
 {
-    return 0;
+    float n = 0;
+    for (int i = 0; i < noiseOctaves_; i++) {
+        float f = [self pow:2 :i];
+        n += [self interpolatedNoise:x * f :y * f :z * f] * 0.5f * [self pow:noiseFalloff_ :i];
+    }
+    return n;
 }
 
 - (void)noiseDetail:(int)octaves
 {
-    
+    [self noiseDetail:octaves :0.5f];
+}
+
+- (void)noiseDetail:(int)octaves :(float)falloff
+{
+    noiseOctaves_ = (octaves < 1) ? 1 : octaves;
+    noiseFalloff_ = [self constrain:falloff :0 :1];
 }
 
 
 - (void)noiseSeed:(int)x
 {
-    
+    noiseSeed_ = x;
 }
 
 - (float)random:(float)high

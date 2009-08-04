@@ -15,7 +15,6 @@
 #endif
 
 #define kFPSSampleRate                  3
-#define kDefaultVerticesArrayLength     30
 #define kDefaultFrameRate               60
 
 @interface Processing ()
@@ -54,14 +53,14 @@
         loop_ = YES;
         showFPS_ = NO;
         frameRate_ = kDefaultFrameRate;
-        startTime_ = [[NSDate date] retain];        
+        startTime_ = [[NSDate date] retain];
+        
+        // Detault noise parameters
+        [self noiseDetail:8 :0.5f];
+        [self noiseSeed:1];
         
         styleStack_ = [[NSMutableArray alloc] init];
         curStyle_ = [[PStyle alloc] init];
-        
-        // init the vertex array, used by beginShape().
-        vertices_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength * sizeof(PVertex)];
-        indices_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength];
         
         [self setup];
         
@@ -393,8 +392,6 @@
             self.view = [[PGraphics2D alloc] initWithFrame:frame controller:self];
             break;
         case OPENGL:
-            // Initialize ivar for OPENGL (P3D) mode.
-            accessories_ = [[NSMutableData alloc] initWithCapacity:kDefaultVerticesArrayLength];
             textureMode_ = IMAGE;
         case P2D:
         default:

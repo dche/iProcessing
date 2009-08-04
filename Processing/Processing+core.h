@@ -19,6 +19,7 @@
 @interface Processing : UIViewController {
     
 @private
+    /// Weak reference to the container of the view.
     UIView *container_;
     /// The render.
     id<PGraphics> graphics_;
@@ -38,6 +39,14 @@
     
     /// Origin matrix. This matrix should be restored before each draw()
     Matrix3D matrix_;
+    
+    //..........................
+    //  Noise parameters
+    //..........................
+    
+    int noiseOctaves_;
+    float noiseFalloff_;
+    int noiseSeed_;
     
     //..........................
     //  Image

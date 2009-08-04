@@ -34,6 +34,10 @@
 #import "SineWave.h"
 #import "Arctangent.h"
 #import "PolarToCartesian.h"
+#import "Noise1D.h"
+#import "Noise2D.h"
+#import "Noise3D.h"
+#import "NoiseWave.h"
 
 // Basic - Transform
 #import "Arm.h"
@@ -73,6 +77,7 @@
 
 // Topics - Motion
 #import "Reflection1.h"
+#import "SequentialAnim.h"
 
 // Topics - Drawing
 #import "ContinuousLines.h"
