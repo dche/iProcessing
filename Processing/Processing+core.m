@@ -36,7 +36,7 @@
 
 @synthesize mode = mode_;
 @synthesize pixels = pixels_;
-@dynamic width, height;
+@synthesize width = width_, height = height_;
 
 @synthesize mouseX = mouseX_, mouseY = mouseY_, pmouseX = pMouseX_, pmouseY = pMouseY_;
 @dynamic day, month, year, hour, minute, second, millis;
@@ -273,12 +273,6 @@
     return frameCount_;
 }
 
-// height of the view
-- (float)height
-{
-    return self.view.frame.size.height;
-}
-
 // show cursor. Does nothing.
 - (void)noCursor
 {}
@@ -293,12 +287,6 @@
 - (CGSize)screen
 {
     return [UIScreen mainScreen].bounds.size;
-}
-
-// width of the view.
-- (float)width
-{
-    return self.view.frame.size.width;
 }
 
 #pragma mark -
@@ -380,6 +368,8 @@
     }
     
     mode_ = mode;
+    width_ = width;
+    height_ = height;
     
     float cw, ch;    
     cw = container_.bounds.size.width;

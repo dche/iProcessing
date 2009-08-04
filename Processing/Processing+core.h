@@ -24,6 +24,10 @@
     /// The render.
     id<PGraphics> graphics_;
     
+    /// Width
+    float width_;
+    /// Height
+    float height_;
     /// QUARTZ2D, P2D or P3D (OPENGL)
     int mode_;
     /// Loop flag.
@@ -111,12 +115,12 @@
 }
 
 /// Control if measure real FPS. Default is NO.
-@property (assign) BOOL showFPS;
+@property (nonatomic, assign) BOOL showFPS;
 
-@property (readonly) color *pixels;
-@property (readonly) int mode;
-@property (readonly) float width;
-@property (readonly) float height;
+@property (nonatomic, readonly) color *pixels;
+@property (nonatomic, readonly) int mode;
+@property (nonatomic, readonly) float width;
+@property (nonatomic, readonly) float height;
 
 - (id)initWithContainer:(UIView *)containerView;
 
