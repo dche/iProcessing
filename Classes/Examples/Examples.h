@@ -62,6 +62,7 @@
 #import "ShapePrimitives.h"
 #import "TriangleStrip.h"
 #import "BezierEllipse.h"
+#import "SimpleCurve.h"
 
 // Basic - Structure
 #import "Redraw.h"

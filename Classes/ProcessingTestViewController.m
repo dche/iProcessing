@@ -242,6 +242,10 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[BezierEllipse class]];
     [examples setObject:demoController forKey:@"BezierEllipse"];
     [demoController release];    
+    /// SimpleCurve
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[SimpleCurve class]];
+    [examples setObject:demoController forKey:@"SimpleCurve"];
+    [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
