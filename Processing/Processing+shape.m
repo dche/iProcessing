@@ -10,13 +10,39 @@
 
 #define kDefaultVerticesArrayLength     30
 
+/// The basis matrix for Bezier curve. 
+static const Matrix3D bezierBasisMatrix = {
+    -1,  3, -3, 1,
+     3, -6,  3, 0,
+    -3,  3,  0, 0,
+     1,  0,  0, 0,
+};
+
+static inline void forwardDifferences(int segments, Matrix3D *m)
+{
+    float f = 1.0f / segments;
+    float ff = f * f;
+    float fff = ff * f;
+    
+    Matrix3DSet(m, 
+                0,     0,    0, 1,
+                fff,   ff,   f, 0,
+                6*fff, 2*ff, 0, 0,
+                6*fff, 0,    0, 0);
+}
+
 @interface Processing (Vertices)
 
 - (void)addVertex:(PVertex)v :(PTextureCoord)tc;
-- (void)addCurveVertex:(PVertex)v;
-- (void)addBezierVertices:(PVertex)cp1 :(PVertex)cp2 :(PVertex)p;
 - (void)resetVertices;
+- (void)resetCurveVertices;
 
+- (void)segmentCurve:(Matrix3D *)drawMatrix :(int)segments
+                    :(float)x0 :(float)y0 :(float)z0 
+                    :(float)x1 :(float)y1 :(float)z1 
+                    :(float)x2 :(float)y2 :(float)z2                 
+                    :(float)x3 :(float)y3 :(float)z3
+                    :(float)x4 :(float)y4 :(float)z4;
 @end
 
 @implementation Processing (Vertices)
@@ -32,21 +58,6 @@
     }
 }
 
-- (void)addCurveVertex:(PVertex)v
-{
-    Byte vt = PVertexCurve;
-    [vertices_ appendBytes:&v length:sizeof(PVertex)];
-    [indices_ appendBytes:&vt length:1];    
-}
-
-- (void)addBezierVertices:(PVertex)cp1 :(PVertex)cp2 :(PVertex)p
-{
-    Byte vt = PVertexBezier;
-    PVertex vs[] = { cp1, cp2, p };
-    [vertices_ appendBytes:vs length:sizeof(PVertex) * 3];
-    [indices_ appendBytes:&vt length:1];        
-}
-
 - (void)resetVertices
 {
     [vertices_ setLength:0];
@@ -56,6 +67,53 @@
     perVertexFillColor_ = perVertexStrokeColor_ = customNormal_ = NO;
     
     texture_ = nil;
+}
+
+- (void)resetCurveVertices
+{
+    collectedCurveVertices_ = 0;
+    firstCurveVertex_ = 0;
+}
+
+- (void)segmentCurve:(Matrix3D *)drawMatrix :(int)segments
+                    :(float)x0 :(float)y0 :(float)z0 
+                    :(float)x1 :(float)y1 :(float)z1 
+                    :(float)x2 :(float)y2 :(float)z2                 
+                    :(float)x3 :(float)y3 :(float)z3
+                    :(float)x4 :(float)y4 :(float)z4
+{
+    Matrix3D m, eDelta;
+    Matrix3DSet(&m, 
+                x1, y1, z1, 0, 
+                x2, y2, z2, 0, 
+                x3, y3, z3, 0, 
+                x4, y4, z4, 0);
+    Matrix3DMultiply(drawMatrix, &m, &eDelta);
+    
+    printMatrix3D(drawMatrix);
+    printMatrix3D(&m);
+    printMatrix3D(&eDelta);
+    
+    float xplot1 = eDelta.m10;
+    float xplot2 = eDelta.m20;
+    float xplot3 = eDelta.m30;
+    
+    float yplot1 = eDelta.m11;
+    float yplot2 = eDelta.m21;
+    float yplot3 = eDelta.m31;
+    
+    float zplot1 = eDelta.m12;
+    float zplot2 = eDelta.m22;
+    float zplot3 = eDelta.m32;
+    
+    [self vertex:x0 :y0 :z0];
+    for (int i = 0; i < segments; i++) {
+        x0 += xplot1; xplot1 += xplot2; xplot2 += xplot3;
+        y0 += yplot1; yplot1 += yplot2; yplot2 += yplot3;
+        z0 += zplot1; zplot1 += zplot2; zplot2 += zplot3;
+        
+        [self vertex:x0 :y0 :z0];
+    }
 }
 
 @end
@@ -241,7 +299,11 @@
 // bezierDetail()
 - (void)bezierDetail:(int)res
 {
+    if (res < 1) res = 1;
     
+    bezierDetail_ = res;
+    forwardDifferences(res, &bezierDrawMatrix_);
+    Matrix3DApply(&bezierDrawMatrix_, &bezierBasisMatrix);
 }
 
 // bezierPoint()
@@ -302,35 +364,60 @@
 }
 
 // curveDetail()
-- (void)curveDetail:(int)aInt
+- (void)curveDetail:(int)segments
 {
+    if (segments < 1) segments = 1;
     
+    curveDetail_ = segments;
+    forwardDifferences(segments, &curveDrawMatrix_);
+    Matrix3DApply(&curveDrawMatrix_, &curveBasisMatrix_);
 }
 
 // curvePoint()
 - (float)curvePoint:(float)a 
-                  :(float)b 
-                  :(float)c 
-                  :(float)d 
-                  :(float)t
+                   :(float)b 
+                   :(float)c 
+                   :(float)d 
+                   :(float)t
 {
-    return 0;
+    float tt = t * t;
+    float ttt = t * tt;
+    Matrix3D *pm = &curveBasisMatrix_;
+    
+    // TODO: write the matrix * vecter in asm.
+    return (a * (ttt*pm->m00 + tt*pm->m10 + t*pm->m20 + pm->m30) +
+            b * (ttt*pm->m01 + tt*pm->m11 + t*pm->m21 + pm->m31) +
+            c * (ttt*pm->m02 + tt*pm->m12 + t*pm->m22 + pm->m32) +
+            d * (ttt*pm->m03 + tt*pm->m13 + t*pm->m23 + pm->m33));
 }
 
 // curveTangent()
 - (float)curveTangent:(float)a 
-                    :(float)b 
-                    :(float)c 
-                    :(float)d 
-                    :(float)t
+                     :(float)b 
+                     :(float)c 
+                     :(float)d 
+                     :(float)t
 {
-    return 0;
+    float tt3 = t * t * 3;
+    float t2 = t * 2;
+    Matrix3D *pm = &curveBasisMatrix_;
+    
+    return (a * (tt3*pm->m00 + t2*pm->m10 + pm->m20) +
+            b * (tt3*pm->m01 + t2*pm->m11 + pm->m21) +
+            c * (tt3*pm->m02 + t2*pm->m12 + pm->m22) +
+            d * (tt3*pm->m03 + t2*pm->m13 + pm->m23));
 }
 
 // curveTightness()
-- (void)curveTightness:(float)squishy
+- (void)curveTightness:(float)s
 {
-    
+    Matrix3DSet(&curveBasisMatrix_, 
+                (s-1)/2,  (s+3)/2,   (-3-s)/2,  (1-s)/2,
+                (1-s),    (-5-s)/2,  (s+2),     (s-1)/2,
+                (s-1)/2,  0,         (1-s)/2,   0,
+                0,        1,         0,         0);
+    // rebuild curveDrawMatrix.
+    [self curveDetail:curveDetail_];
 }
 
 #pragma mark -
@@ -492,6 +579,7 @@
     }
     
     [self resetVertices];
+    [self resetCurveVertices];
     shapeBegan_ = NO;
 }
 
@@ -509,7 +597,9 @@
 - (void)vertex:(float)x :(float)y :(float)z :(float)u :(float)v
 {
     if (!shapeBegan_) return;
-    [self addVertex:PVertexMake(x, y, z) :PTextureCoordMake(u, v)];    
+    [self addVertex:PVertexMake(x, y, z) :PTextureCoordMake(u, v)];
+    
+    [self resetCurveVertices];
 }
 
 - (void)curveVertex:(float)x :(float)y
@@ -520,7 +610,27 @@
 - (void)curveVertex:(float)x :(float)y :(float)z
 {
     if (!shapeBegan_ || vertexMode_ != PATH) return;
-    [self addCurveVertex:PVertexMake(x, y, z)];
+    
+    curveVertices_[(firstCurveVertex_ + collectedCurveVertices_) % 4] = PVertexMake(x, y, z);
+    if (collectedCurveVertices_ < 3) {
+        collectedCurveVertices_++;
+    } else {
+        PVertex *pv1 = curveVertices_ + firstCurveVertex_;
+        PVertex *pv2 = curveVertices_ + (firstCurveVertex_ + 1) % 4;
+        PVertex *pv3 = curveVertices_ + (firstCurveVertex_ + 2) % 4;
+        PVertex *pv4 = curveVertices_ + (firstCurveVertex_ + 3) % 4;
+        
+        [self segmentCurve:&curveDrawMatrix_ :curveDetail_ 
+                          :pv2->x :pv2->y :pv2->z   // The second point is the start point.
+                          :pv1->x :pv1->y :pv1->z 
+                          :pv2->x :pv2->y :pv2->z 
+                          :pv3->x :pv3->y :pv3->z 
+                          :pv4->x :pv4->y :pv4->z];
+        
+        // Vertex:: will reset curve vertices, so restore them here.
+        collectedCurveVertices_ = 3;
+        firstCurveVertex_ = pv2 - curveVertices_;
+    }
 }
 
 - (void)bezierVertex:(float)cx1 
@@ -544,9 +654,17 @@
                     :(float)z
 {
     if (!shapeBegan_ || vertexMode_ != PATH) return;
-    [self addBezierVertices:PVertexMake(cx1, cy1, cz1) 
-                           :PVertexMake(cx2, cy2, cz2) 
-                           :PVertexMake(x, y, z)];
+    if ([vertices_ length] == 0) return;
+    
+    [self resetCurveVertices];
+    
+    // Get last vertex, which will be the first point of bezier curve.
+    PVertex *v = ((PVertex *)[vertices_ bytes]) + [vertices_ length] / sizeof(PVertex) - 1;
+    [self segmentCurve:&bezierDrawMatrix_ :bezierDetail_
+                      :v->x :v->y :v->z :v->x :v->y :v->z 
+                      :cx1 :cy1 :cz1 
+                      :cx2 :cy2 :cz2 
+                      :x :y :z];
 }
 
 @end

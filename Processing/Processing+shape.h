@@ -123,7 +123,7 @@
              :(float)y4
              :(float)z4;
 // curveDetail()
-- (void)curveDetail:(int)aInt;
+- (void)curveDetail:(int)segments;
 // curvePoint()
 - (float)curvePoint:(float)a 
                   :(float)b 
@@ -137,7 +137,7 @@
                     :(float)d 
                     :(float)t;
 // curveTightness()
-- (void)curveTightness:(float)squishy;
+- (void)curveTightness:(float)s;
 
 #pragma mark -
 #pragma mark Shape - Attributes
