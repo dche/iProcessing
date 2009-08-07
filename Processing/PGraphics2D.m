@@ -355,30 +355,12 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     if (n == 0) return;
     
     const PVertex *p = v;
-    NSUInteger j = 1;
-    NSUInteger curveVertices = 0;
-    BOOL hasBezierAnchor = (i[0] == PVertexNormal);
-    
     CGContextMoveToPoint(ctx, v->x, v->y);
-    while (j < n) {
-        Byte vt = i[j++];
-        if (vt == PVertexNormal) {
-            if (!hasBezierAnchor) hasBezierAnchor = YES;
-            curveVertices = 0;
-            
-            p = p + 1;
-            CGContextAddLineToPoint(ctx, p->x, p->y);
-        } else if (vt == PVertexBezier) {
-            if (hasBezierAnchor) {
-                const PVertex *cp1 = p + 1;
-                const PVertex *cp2 = p + 2;
-                const PVertex *dp = p + 3;
-                CGContextAddCurveToPoint(ctx, cp1->x, cp1->y, cp2->x, cp2->y, dp->x, dp->y);
-            }
-            p += 3;
-        } else {
-            // TODO: draw curve.
-        }
+    
+    int j = 0;
+    while (j++ < n) {
+        p = p + 1;
+        CGContextAddLineToPoint(ctx, p->x, p->y);
     }
 }
 
@@ -461,17 +443,17 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 {
     Matrix3D m;
     CGAffineTransform ctm = CGContextGetCTM(ctx);
-    m.m0 = ctm.a; m.m1 = ctm.b; m.m4 = ctm.c; m.m5 = ctm.d;
-    m.m12 = ctm.tx; m.m13 = ctm.ty;
+    m.m00 = ctm.a; m.m10 = ctm.b; m.m01 = ctm.c; m.m11 = ctm.d;
+    m.m30 = ctm.tx; m.m31 = ctm.ty;
     
-    m.m2 = m.m3 = m.m6 = m.m7 = m.m8 = m.m9 = m.m10 = m.m11 = m.m14 = m.m15 = 0.0f;
+    m.m02 = m.m03 = m.m12 = m.m13 = m.m20 = m.m21 = m.m22 = m.m23 = m.m32 = m.m33 = 0.0f;
     return m;
 }
 
 - (void)loadMatrix:(Matrix3D)m
 {
     [self loadIdentity];
-    CGAffineTransform ctm = CGAffineTransformMake(m.m0, m.m1, m.m4, m.m5, m.m12, m.m13);
+    CGAffineTransform ctm = CGAffineTransformMake(m.m00, m.m01, m.m10, m.m11, m.m30, m.m31);
     CGContextConcatCTM(ctx, ctm);
 }
 
