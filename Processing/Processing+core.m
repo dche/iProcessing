@@ -55,9 +55,13 @@
         frameRate_ = kDefaultFrameRate;
         startTime_ = [[NSDate date] retain];
         
-        // Detault noise parameters
-        [self noiseDetail:8 :0.5f];
+        // Default noise parameters
+        [self noiseDetail:4 :0.5f];
         [self noiseSeed:1];
+        // Default curve details.
+        curveDetail_ = 20;
+        [self curveTightness:0];
+        [self bezierDetail:20];
         
         styleStack_ = [[NSMutableArray alloc] init];
         curStyle_ = [[PStyle alloc] init];

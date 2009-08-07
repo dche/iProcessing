@@ -78,6 +78,24 @@
     /// Flag when custom normal is provided.
     BOOL customNormal_;
     
+    /// How many curveVertex have been specified.
+    NSUInteger collectedCurveVertices_;
+    /// The index of first curve vertex in curveVertices_.
+    NSUInteger firstCurveVertex_;
+    /// The curve vertex collector.
+    PVertex curveVertices_[4];
+    /// CurveDetail
+    int curveDetail_;
+    /// BezierDetail
+    int bezierDetail_;
+    /// The basis matrix for Catmull–Rom spline. 
+    /// It is a function of curveTighness.
+    Matrix3D curveBasisMatrix_;
+    /// The draw matrix, which is E(delta) * Basis * Points
+    Matrix3D curveDrawMatrix_;
+    /// The draw matrix for Bezier
+    Matrix3D bezierDrawMatrix_;
+    
     //..........................
     //  3D
     //..........................
