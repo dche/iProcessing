@@ -8,7 +8,7 @@
 
 #import "ProcessingSpec.h"
 
-#define NSPEC   29
+#define NSPEC   34
 
 @interface ProcessingSpec ()
 
@@ -28,6 +28,11 @@
 - (void)shape_quads;
 - (void)shape_quad_strip;
 - (void)bezierVertex;
+- (void)bezierPoint;
+- (void)bezierTangent;
+- (void)curveVertex;
+- (void)curvePoint;
+- (void)curveTangent;
 - (void)polygon_close;
 - (void)polygon_open;
 
@@ -57,7 +62,7 @@
 
 - (void)setup
 {
-    [self size:200 :200 :P2D];    
+    [self size:200 :200];    
     SEL selectors[] = {
         @selector(pushPopStyle),
         @selector(arc),
@@ -72,6 +77,11 @@
         @selector(shape_quads),
         @selector(shape_quad_strip),
         @selector(bezierVertex),
+        @selector(bezierPoint),
+        @selector(bezierTangent),
+        @selector(curveVertex),
+        @selector(curvePoint),
+        @selector(curveTangent),
         @selector(polygon_open),
         @selector(polygon_close),
         @selector(rotate),
@@ -268,6 +278,86 @@
     [self bezierVertex:80 :0 :80 :75 :30 :75];
     [self bezierVertex:50 :80 :60 :25 :30 :20];
     [self endShape:CLOSE];
+}
+
+- (void)bezierPoint
+{
+    [self noFill];
+    [self bezier:85 :20 :10 :10 :90 :90 :15 :80];
+    [self fill:PWhiteColor];
+    int steps = 10;
+    for (int i = 0; i <= steps; i++) {
+        float t = i / (float)steps;
+        float x = [self bezierPoint:85 :10 :90 :15 :t];
+        float y = [self bezierPoint:20 :10 :90 :80 :t];
+        [self ellipse:x :y :5 :5];
+    }
+}
+
+- (void)bezierTangent
+{
+    [self noFill];
+    [self bezier:85 :20 :10 :10 :90 :90 :15 :80];
+    [self stroke:255 :102 :0];
+    int steps = 16;
+    for (int i = 0; i <= steps; i++) {
+        float t = i / (float)steps;
+        float x = [self bezierPoint:85 :10 :90 :15 :t];
+        float y = [self bezierPoint:20 :10 :90 :80 :t];
+        float tx = [self bezierTangent:85 :10 :90 :15 :t];
+        float ty = [self bezierTangent:20 :10 :90 :80 :t];
+        float a = [self atan2:ty :tx];
+        a -= HALF_PI;
+        [self line:x :y :[self cos:a]*8 + x :[self sin:a]*8 + y];
+    }
+}
+
+- (void)curveVertex
+{
+    [self noFill];
+    [self beginShape];
+    [self curveVertex:84 :91];
+    [self curveVertex:84 :91];
+    [self curveVertex:68 :19];
+    [self curveVertex:21 :17];
+    [self curveVertex:32 :100];
+    [self curveVertex:32 :100];
+    [self endShape];
+}
+
+- (void)curvePoint
+{
+    [self curve:5 :26 :5 :26 :73 :24 :73 :61];
+    [self curve:5 :26 :73 :24 :73 :61 :15 :65]; 
+    [self ellipseMode:CENTER];
+    int steps = 6;
+    for (int i = 0; i <= steps; i++) {
+        float t = i / (float)steps;
+        float x = [self curvePoint:5 :5 :73 :73 :t];
+        float y = [self curvePoint:26 :26 :24 :61 :t];
+        [self ellipse:x :y :5 :5];
+        x = [self curvePoint:5 :73 :73 :15 :t];
+        y = [self curvePoint:26 :24 :61 :65 :t];
+        [self ellipse:x :y :5 :5];
+    }
+}
+
+- (void)curveTangent
+{
+    [self noFill];
+    [self curve:5 :26 :73 :24 :73 :61 :15 :65]; 
+    int steps = 6;
+    for (int i = 0; i <= steps; i++) {
+        float t = i / (float)steps;
+        float x = [self curvePoint:5 :73 :73 :15 :t];
+        float y = [self curvePoint:26 :24 :61 :65 :t];
+        //ellipse(x, y, 5, 5);
+        float tx = [self curveTangent:5 :73 :73 :15 :t];
+        float ty = [self curveTangent:26 :24 :61 :65 :t];
+        float a = [self atan2:ty :tx];
+        a -= PI/2.0;
+        [self line:x :y :[self cos:a]*8 + x :[self sin:a]*8 + y];
+    }
 }
 
 - (void)polygon_close
