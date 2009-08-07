@@ -97,11 +97,7 @@
 - (void)printMatrix
 {
     Matrix3D m = [graphics_ matrix];
-    NSLog(@"\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n", 
-          m.m0, m.m4, m.m8, m.m12,
-          m.m1, m.m5, m.m9, m.m13,
-          m.m2, m.m6, m.m10, m.m14,
-          m.m3, m.m7, m.m11, m.m15);
+    printMatrix3D(&m);
 }
 
 @end

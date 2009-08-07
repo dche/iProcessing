@@ -705,14 +705,6 @@ static const int kTextImageCacheSize = 16;
     
     [self resetDrawingData];
     
-    if (m == PATH) {
-        // TODO: finish Polygon drawing.
-        // Add necessary vertices for bezier and curves.
-        // re-build indices and accessories too.
-        
-        // Now we have data that match vertex numbers.
-    }
-    
     glVertexPointer(3, GL_FLOAT, 0, v);
     if (doFill_) {
         if (useFillColorArray || normalProvided || t != nil) {
@@ -1012,10 +1004,12 @@ static const int kTextImageCacheSize = 16;
                   :(float)n08 :(float)n09 :(float)n10 :(float)n11
                   :(float)n12 :(float)n13 :(float)n14 :(float)n15
 {
-    Matrix3D m = [self matrix];
-    // TODO: Mult
-    [self loadIdentity];    // Is this step necessary?
-    [self loadMatrix:m];
+    Matrix3D m;
+    Matrix3DSet(&m, n00, n01, n02, n03, 
+                n04, n05, n06, n07, 
+                n08, n09, n10, n11, 
+                n12, n13, n14, n15);
+    glMultMatrixf((const GLfloat *)&m);
 }
 
 - (void)pushMatrix
