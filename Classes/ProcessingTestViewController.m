@@ -408,6 +408,10 @@
     demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[RecursiveSpheres class]];
     [examples setObject:demoController forKey:@"RecursiveSpheres"];
     [demoController release];    
+    /// CherryBlossom
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[CherryBlossom class]];
+    [examples setObject:demoController forKey:@"CherryBlossom"];
+    [demoController release];    
     
     listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
     listController.examples = examples;
