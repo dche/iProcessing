@@ -7,15 +7,53 @@
  *
  */
 
-//+abs()
-//+ceil()
-//+constrain()
+static inline float p_abs(float x)
+{
+    return (x < 0) ? (-x) : (x);
+}
+
+static inline float p_ceil(float x)
+{
+    return ceilf(x);
+}
+
+static inline float p_constrain(float x, float min, float max)
+{
+    return (x < min) ? (min) : ((x > max) ? (max) : (x));
+}
 //+dist()
 //+exp()
-//+floor()
-//+lerp()
-//+log()
-//+mag()
+
+static inline float p_floor(float x)
+{
+    return floorf(x);
+}
+
+static inline float p_lerp(float a, float b, float amt)
+{
+    if (amt == 0) return a;
+    if (amt == 1) return b;
+    
+    return a + amt * (b - a);
+}
+
+static inline float p_log(float x)
+{
+    if (x <= EPSILON)
+        return -MAXFLOAT;
+    return logf(x);
+}
+
+static inline float p_mag(float a, float b, float c)
+{
+    return 0;
+}
+
+static inline float p_mag_inv(float a, float b, float c)
+{
+    return 0;
+}
+
 //+map()
 //+max()
 //+min()
@@ -34,15 +72,23 @@
 //+cos()
 //+degrees()
 //+radians()
-//+sin()
+
+static inline float p_sin(float x)
+{
+	const float P = 0.225f;
+	
+	x = x * M_1_PI;
+	int k = (int)round(x);
+	x = x - k;
+    
+	float y = (4 - 4 * p_abs(x)) * x;    
+	y = P * (y * p_abs(y) - y) + y;
+    
+	return (k&1) ? -y : y;
+}
+
 //+tan()
 //
-//=== Random
-//+noise()
-//+noiseDetail()
-//+noiseSeed()
-//+random()
-//+randomSeed()
 
 static inline float cosineInterpolate(float a, float b, float x)
 {
