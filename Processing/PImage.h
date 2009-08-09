@@ -28,9 +28,9 @@
     BOOL mipmap_;
 }
 
-@property (readonly) int width;
-@property (readonly) int height;
-@property (readonly) color *pixels;
+@property (nonatomic, readonly) int width;
+@property (nonatomic, readonly) int height;
+@property (nonatomic, readonly) color *pixels;
 
 - (id)initWithWidth:(NSUInteger)w height:(NSUInteger)h format:(int)imgFormat 
                data:(const void *)d;
