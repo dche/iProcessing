@@ -91,7 +91,11 @@
              :(int)dx :(int)dy :(int)dwidth :(int)dheight 
              :(int)mode
 {
-    
+    [self loadPixels];
+    blendImage(self.pixels, self.width, self.height, x, y, width, height, 
+               self.pixels, self.width, self.height, dx, dy, dwidth, dheight, 
+               mode);
+    [self updatePixels];
 }
 
 - (void)blend:(PImage *)srcImg 
@@ -99,30 +103,36 @@
              :(int)dx :(int)dy :(int)dwidth :(int)dheight 
              :(int)mode
 {
-    
+    [self loadPixels];
+    blendImage(srcImg.pixels, self.width, self.height, x, y, width, height, 
+               self.pixels, self.width, self.height, dx, dy, dwidth, dheight, 
+               mode);    
+    [self updatePixels];
 }
 
 - (void)copy:(int)sx :(int)sy :(int)swidth :(int)sheight 
             :(int)dx :(int)dy :(int)dwidth :(int)dheight
 {
-    
+    [self blend:sx :sy :swidth :sheight :dx :dy :dwidth :dheight :REPLACE];
 }
 
 - (void)copy:(PImage *)srcImg 
             :(int)sx :(int)sy :(int)swidth :(int)sheight 
             :(int)dx :(int)dy :(int)dwidth :(int)dheight
 {
-    
+    [self blend:srcImg :sx :sy :swidth :sheight :dx :dy :dwidth :dheight :REPLACE];
 }
 
 - (void)filter:(int)mode
 {
-    
+    [self filter:mode :defaultImageFilterParam(mode)];
 }
 
 - (void)filter:(int)mode :(float)param
 {
-    
+    [self loadPixels];
+    imageFilter(mode, param, pixels_, self.width * self.height, YES);
+    [self updatePixels];
 }
 
 - (color)get:(int)x :(int)y
@@ -135,9 +145,23 @@
     return [self get:0 :0 :self.width :self.height];
 }
 
+- (void)releasePixels
+{
+    [graphics_ releasePixels];
+    pixels_ = NULL;
+}
+
 - (PImage *)get:(int)x1 :(int)y1 :(int)x2 :(int)y2
 {
-    return nil;
+    CGRect rect = normalizedRectangle(x1, y1, x2, y2, curStyle_.imageMode);
+    PImage *img = [[PImage alloc] initWithWidth:rect.size.width height:rect.size.height format:RGBA];
+    
+    [self loadPixels];
+    blendImage(pixels_, self.width, self.height, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height,
+               img.pixels, rect.size.width, rect.size.height, 0, 0, rect.size.width, rect.size.height, 
+               REPLACE);
+    [self releasePixels];
+    return [img autorelease];
 }
 
 - (void)loadPixels
@@ -153,6 +177,7 @@
 - (void)updatePixels
 {
     [graphics_ updatePixels];
+    pixels_ = NULL;
 }
 
 @end

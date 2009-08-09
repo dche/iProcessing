@@ -8,13 +8,22 @@
 
 #import "PImage.h"
 
-static inline GLsizei nearestExp2(NSUInteger num)
+static inline GLsizei ceilExp2(NSUInteger num)
 {
     if (num < 2) return 0;
     
     NSUInteger m = 2;
     while (m < num) m <<= 1;
     return m;
+}
+
+static inline GLsizei floorExp2(NSUInteger num)
+{
+    if (num < 2) return 0;
+    
+    NSUInteger m = 2;
+    while (m < num) m <<= 1;
+    return m == num ? m : m << 1;
 }
 
 @interface PImage ()
@@ -27,6 +36,8 @@ static inline GLsizei nearestExp2(NSUInteger num)
 - (void)createBitmapCGContext;
 - (void)releaseBitmapCGContext;
 - (void)copyFromBitmapCGContextAndReleaseIt;
+
+- (void)resampled;
 
 @end
 
@@ -102,7 +113,6 @@ static inline GLsizei nearestExp2(NSUInteger num)
     if (textureObject_ > 0) {
         glDeleteTextures(1, &textureObject_);
     }
-    
     [super dealloc];
 }
 
@@ -221,12 +231,14 @@ static inline GLsizei nearestExp2(NSUInteger num)
 - (void)copy:(int)sx :(int)sy :(int)swidth :(int)sheight 
             :(int)dx :(int)dy :(int)dwidth :(int)dheight
 {
+    [self blend:sx :sy :swidth :sheight :dx :dy :dwidth :dheight :REPLACE];
 }
 
 - (void)copy:(PImage *)srcImg 
             :(int)sx :(int)sy :(int)swidth :(int)sheight 
             :(int)dx :(int)dy :(int)dwidth :(int)dheight
 {
+    [self blend:srcImg :sx :sy :swidth :sheight :dx :dy :dwidth :dheight :REPLACE];
 }
 
 - (void)mask:(PImage *)mask
@@ -238,6 +250,7 @@ static inline GLsizei nearestExp2(NSUInteger num)
         UInt32 alpha = colorValue(mask.pixels[i], B);
         pixels[i] &= ~ALPHA_MASK ^ (alpha << ALPHA_SHIFT);
     }
+    [self resampled];
     format_ = RGBA;
 }
 
@@ -245,7 +258,7 @@ static inline GLsizei nearestExp2(NSUInteger num)
              :(int)dx :(int)dy :(int)dwidth :(int)dheight 
              :(int)mode
 {
-    
+    [self blend:self :x :y :w :h :dx :dy :dwidth :dheight :mode];
 }
 
 - (void)blend:(PImage *)srcImg 
@@ -253,9 +266,11 @@ static inline GLsizei nearestExp2(NSUInteger num)
              :(int)dx :(int)dy :(int)dwidth :(int)dheight 
              :(int)mode
 {
-    
+    blendImage(srcImg.pixels, srcImg.width, srcImg.height, x, y, w, h, 
+               self.pixels, width, height, dx, dy, dwidth, dheight, 
+               mode);
+    [self resampled];
 }
-
 
 - (void)filter:(int)mode
 {
@@ -265,6 +280,7 @@ static inline GLsizei nearestExp2(NSUInteger num)
 - (void)filter:(int)mode :(float)param
 {
     imageFilter(mode, param, pixels, width * height, format_ == RGBA);
+    [self resampled];
 }
 
 /// Save to the camera roll album.
@@ -275,25 +291,19 @@ static inline GLsizei nearestExp2(NSUInteger num)
 
 - (void)resize:(int)w :(int)h
 {
-    if (width == w && height == h) return;
+    if (w == width && h == height) return;
     
-    // Store image data to CGImage
-    CGImageRef cgImg = [self CGImage];
+    color *newPixels = malloc(w * h * sizeof(color));
+    blendImage(self.pixels, width, height, 0, 0, width, height, 
+               newPixels, w, h, 0, 0, w, h, 
+               REPLACE);
     
     free(pixels);
-    pixels = malloc(w * h * sizeof(color));
-    
+    pixels = newPixels;
     width = w;
     height = h;
     
-    bitmapContext_ = [self createBitmapCGContextWithWidth:w 
-                                                   height:h 
-                                                   format:format_ 
-                                                     data:NULL];
-    CGContextDrawImage(bitmapContext_, CGRectMake(0, 0, w, h), cgImg);
-    CGImageRelease(cgImg);
-    
-    [self copyFromBitmapCGContextAndReleaseIt];
+    [self resampled];
 }
 
 - (void)loadPixels
@@ -305,6 +315,14 @@ static inline GLsizei nearestExp2(NSUInteger num)
 #pragma mark -
 #pragma mark OpenGL Texture
 #pragma mark -
+
+- (void)resampled
+{
+    if (textureObject_ != 0) {
+        glDeleteTextures(1, &textureObject_);
+        textureObject_ = 0;
+    }
+}
 
 - (GLuint)textureObject
 {
@@ -332,8 +350,8 @@ static inline GLsizei nearestExp2(NSUInteger num)
         glDeleteTextures(1, &textureObject_);
     }
     
-    NSUInteger w = nearestExp2(width);
-    NSUInteger h = nearestExp2(height);
+    NSUInteger w = floorExp2(width);
+    NSUInteger h = floorExp2(height);
     
     GLvoid *data;
     PImage *img;
@@ -370,7 +388,7 @@ static inline GLsizei nearestExp2(NSUInteger num)
     CGSize sz = [str sizeWithFont:font];
     if (sz.width == 0 || sz.height == 0) return nil;
     
-    PImage *img = [[PImage alloc] initWithWidth:nearestExp2(sz.width) height:nearestExp2(sz.width) format:RGBA];
+    PImage *img = [[PImage alloc] initWithWidth:ceilExp2(sz.width) height:ceilExp2(sz.width) format:RGB];
     [img drawText:str withFont:font inColor:clr];
     
     return [img autorelease];
