@@ -246,7 +246,7 @@ static const int slots = 4095;
 
 - (void)setup
 { 
-    [self size:320 :400]; 
+    [self size:320 :416]; 
     [self smooth]; 
     [self noStroke]; 
     [self background:hexColor(0xEEEEFF)]; 
