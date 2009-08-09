@@ -8,12 +8,15 @@
 
 #import "ProcessingSpec.h"
 
-#define NSPEC   34
+#define NSPEC   35
 
 @interface ProcessingSpec ()
 
 // Structure
 - (void)pushPopStyle;
+
+// Color
+- (void)lerpColor;
 
 // Shape
 - (void)arc;
@@ -65,6 +68,7 @@
     [self size:200 :200];    
     SEL selectors[] = {
         @selector(pushPopStyle),
+        @selector(lerpColor),
         @selector(arc),
         @selector(ellipse),
         @selector(line),
@@ -142,6 +146,27 @@
     [self popStyle];                // Restore the previous style
     [self popStyle];                // Restore original style
     [self ellipse:100 :50 :33 :33];  // Right    
+}
+
+#pragma mark -
+#pragma mark Color
+#pragma mark -
+- (void)lerpColor
+{
+    [self stroke:PWhiteColor];
+    [self background:[self color:51]];
+    color from = [self color:204 :102 :0];
+    color to = [self color:0 :102 :153];
+    color interA = [self lerpColor:from :to :0.33f];
+    color interB = [self lerpColor:from :to :0.66f];
+    [self fill:from];
+    [self rect:10 :20 :20 :60];
+    [self fill:interA];
+    [self rect:30 :20 :20 :60];
+    [self fill:interB];
+    [self rect:50 :20 :20 :60];
+    [self fill:to];
+    [self rect:70 :20 :20 :60];
 }
 
 #pragma mark -
@@ -499,7 +524,7 @@
 
 - (void)gray
 {
-    PImage *b = [self loadImage:@"red.png"];
+    PImage *b = [self loadImage:@"jelly.jpg"];
     [self image:b :0 :0];
     [self filter:GRAY];
 }
