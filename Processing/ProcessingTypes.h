@@ -99,6 +99,21 @@ static inline color hexColor(UInt32 hexdec)
     return CFSwapInt32HostToBig(c);
 }
 
+static inline color lerpColor(color c1, color c2, float amt)
+{
+    float fr = p_lerp(colorValue(c1, R), colorValue(c2, R), amt);
+    float fg = p_lerp(colorValue(c1, G), colorValue(c2, G), amt);
+    float fb = p_lerp(colorValue(c1, B), colorValue(c2, B), amt);
+    float fa = p_lerp(colorValue(c1, A), colorValue(c2, A), amt);
+    
+    UInt32 r = p_constrain(fr, 0, 255);
+    UInt32 g = p_constrain(fg, 0, 255);
+    UInt32 b = p_constrain(fb, 0, 255);
+    UInt32 a = p_constrain(fa, 0, 255);
+        
+    return (a << ALPHA_SHIFT) ^ (r << RED_SHIFT) ^ (g << GREEN_SHIFT) ^ (b << BLUE_SHIFT);
+}
+
 #pragma mark -
 #pragma mark Vertex
 #pragma mark -

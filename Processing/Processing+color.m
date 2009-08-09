@@ -303,8 +303,7 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 
 - (color)lerpColor:(color)c1 :(color)c2 :(float)amt
 {
-    // TODO: lerp Color.
-    return 0; 
+    return lerpColor(c1, c2, amt);
 }
 
 - (float)red:(color)clr
