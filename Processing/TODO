@@ -1,0 +1,52 @@
+
+[ ] All
+    [ ] Performance
+    [ ] Rubustness
+
+[ ] Structure
+    [ ] Rename PGraphics protocol, PGraphics2D, PGraphics3D to PRenderxxx.
+
+[ ] PGraphics2D
+    [ ] Do not using the ellipse code of Quartz2D? Drawing arc like 
+        PGraphics3D?
+    [ ] Remove the line from {0, 0} to the end of curve.
+    [ ] Lazy initializing matrix stack.
+    [ ] Correct tint effect.
+
+[ ] PGraphics3D
+    [ ] Better circle drawing.
+    [ ] Refine sphere drawing.
+    [ ] tint effect when drawing image.
+    [ ] Implement Camera.
+    [ ] Correct lighting.
+    
+[ ] Text
+    [ ] Draw text in rectangle. Maybe we don't need a layout manager. Just
+        use the NSString#drawInRect.
+        
+[ ] Color
+    [ ] Try to support background(float gray) and like. Figure out a way
+        to distinguish (valid) gary value and RGBA color value.
+    [ ] Don't use PColor. Passing color to renders, since OpenGL can accept
+        unsigned byte color.
+
+[ ] Math
+    [ ] Perlin Noise performance!
+    [ ] Fast inverse square root?
+    [ ] Fast sine/cosine, or a LUT should be used.
+    
+[ ] Processing core
+    [ ] File input.
+    [ ] Screen aspection support?
+    
+[ ] Processing functions
+    [ ] BLUR filter.
+    [ ] ERODE filter.
+    [ ] DILATE filter.
+    [ ] SOFT_LIGHT blend mode.
+    [ ] DODGE blend mode.
+    [ ] BURN blend mode.
+    [ ] Optimize bilinear interpolation.
+    [ ] Use nearest neighbour if smooth is off?
+
+
