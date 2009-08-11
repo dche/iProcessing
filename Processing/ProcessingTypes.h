@@ -53,6 +53,11 @@ typedef enum {
     PGrayColor = ALPHA_MASK | 0x80808080,
 } PColorConstants;
 
+static inline color formColor(UInt32 r, UInt32 g, UInt32 b, UInt32 a)
+{
+    return (a << ALPHA_SHIFT) ^ (r << RED_SHIFT) ^ (g << GREEN_SHIFT) ^ (b << BLUE_SHIFT);
+}
+
 typedef struct {
     float red;
     float green;
@@ -101,6 +106,9 @@ static inline color hexColor(UInt32 hexdec)
 
 static inline color lerpColor(color c1, color c2, float amt)
 {
+    if (c1 == c2 || amt == 0) return c1;
+    if (amt == 1) return c2;
+    
     float fr = p_lerp(colorValue(c1, R), colorValue(c2, R), amt);
     float fg = p_lerp(colorValue(c1, G), colorValue(c2, G), amt);
     float fb = p_lerp(colorValue(c1, B), colorValue(c2, B), amt);
@@ -111,7 +119,7 @@ static inline color lerpColor(color c1, color c2, float amt)
     UInt32 b = p_constrain(fb, 0, 255);
     UInt32 a = p_constrain(fa, 0, 255);
         
-    return (a << ALPHA_SHIFT) ^ (r << RED_SHIFT) ^ (g << GREEN_SHIFT) ^ (b << BLUE_SHIFT);
+    return formColor(r, g, b, a);
 }
 
 #pragma mark -
