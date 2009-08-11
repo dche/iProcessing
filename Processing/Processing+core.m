@@ -7,8 +7,6 @@
 //
 
 #import "Processing.h"
-#import "PGraphics2D.h"
-#import "PGraphics3D.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <objc/objc-class.h>
@@ -21,7 +19,6 @@
 
 - (BOOL)overridedMethod:(SEL)meth;
 
-- (void)applyCurrentStyle;
 - (void)startLoop;
 - (void)stopLoop;
 - (void)drawView;
@@ -34,12 +31,8 @@
 
 @synthesize showFPS = showFPS_;
 
-@synthesize mode = mode_;
-@synthesize pixels = pixels_;
-@synthesize width = width_, height = height_;
-
 @synthesize mouseX = mouseX_, mouseY = mouseY_, pmouseX = pMouseX_, pmouseY = pMouseY_;
-@dynamic day, month, year, hour, minute, second, millis;
+@dynamic millis;
 
 #pragma mark -
 #pragma mark GLViewController methods
@@ -54,66 +47,39 @@
         showFPS_ = NO;
         frameRate_ = kDefaultFrameRate;
         startTime_ = [[NSDate date] retain];
-        
-        // Default noise parameters
-        [self noiseDetail:4 :0.5f];
-        [self noiseSeed:1];
-        // Default curve details.
-        curveDetail_ = 20;
-        [self curveTightness:0];
-        [self bezierDetail:20];
-        
-        styleStack_ = [[NSMutableArray alloc] init];
-        curStyle_ = [[PStyle alloc] init];
-        
+                
         [self setup];
         
-        if (nil == graphics_) {
+        if (nil == self.view) {
             [self release];
             return nil;
         }
         
-        matrix_ = [graphics_ matrix];
+        matrix_ = [self currentMatrix];
     }
     return self;
 }
 
-/// Execute a Processing code.
-///
-+ (void)execute:(NSString *)code inContainer:(UIView *)containerView
-{
-    // TBD.
-}
-
 - (void)dealloc
 {
-    [graphics_ release];
     [container_ release];
     [startTime_ release];
-    [curStyle_ release];
-    [styleStack_ release];
-    
-    [vertices_ release];
-    [indices_ release];
-    
-    if (self.mode == P3D) {
-        [accessories_ release];
-    }
     
     [super dealloc];
 }
 
 - (void)drawView
 {
-    frameCount_ += 1;    
-    [graphics_ draw];
+    frameCount_ += 1;
+    [super drawView];
 }
 
 - (void)guardedDraw
 {
     [self draw];
     
-    [graphics_ loadMatrix:matrix_];
+    // TODO: use flag to avoid loading matrix.
+    [self applyMatrix:matrix_];
     
     if (showFPS_) {
         [self pushStyle];
@@ -142,13 +108,6 @@
     [super viewWillAppear:animated];
     visible_ = NO;
     [self stopLoop];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath 
-                      ofObject:(id)object 
-                        change:(NSDictionary *)change 
-                       context:(void *)context
-{
 }
 
 #pragma mark -
@@ -208,33 +167,6 @@
         [fpsTimer_ invalidate];
         fpsTimer_ = nil;        
     }
-}
-
-- (void)applyCurrentStyle
-{
-    if (graphics_ == nil) return;
-    
-    // Only apply styles that affect state of graphics_.    
-    // fill color, stroke color, stroke cap, join and weight
-    BOOL doFill, doStroke, doTint;
-    
-    doFill = curStyle_.doFill;
-    doStroke = curStyle_.doStroke;
-    doTint = curStyle_.doTint;
-    
-    [self fill:curStyle_.fillColor];
-    [self stroke:curStyle_.strokeColor];
-    [self strokeCap:curStyle_.strokeCap];
-    [self strokeJoin:curStyle_.strokeJoin];
-    [self strokeWeight:curStyle_.strokeWeight];
-    [self tint:curStyle_.tintColor];
-    
-    if (!doFill) [self noFill];
-    if (!doStroke) [self noStroke];
-    if (!doTint) [self noTint];
-    
-    // font
-    [self textFont:curStyle_.curFont];
 }
 
 - (void)sampleFPS
@@ -330,26 +262,6 @@
     [self stopLoop];
 }
 
-// restore original style
-- (void)popStyle
-{
-    if ([styleStack_ count] < 1) return;
-    [curStyle_ release];
-    curStyle_ = [styleStack_ objectAtIndex:[styleStack_ count] - 1];
-    [curStyle_ retain];
-    [styleStack_ removeLastObject];
-    
-    [self applyCurrentStyle];
-}
-
-/// save current style
-- (void)pushStyle
-{
-    PStyle *style = [curStyle_ copy];
-    [styleStack_ addObject:style];
-    [style release];
-}
-
 /// Executes the draw() once. If in loop, does nothing.
 - (void)redraw
 {
@@ -362,36 +274,18 @@
 - (void)size:(float)width :(float)height
 {
     // By default, use the OpenGL backed render, but for 2D drawing.
-    [self size:width :height :QUARTZ2D];
+    [self size:width :height :P2D];
 }
 
 - (void)size:(float)width :(float)height :(int)mode
-{
-    if (width < 1 || height < 1 || (mode != P2D && mode != P3D && mode != QUARTZ2D)) {
-        return;
-    }
-    
-    mode_ = mode;
-    width_ = width;
-    height_ = height;
-    
+{    
     float cw, ch;    
     cw = container_.bounds.size.width;
     ch = container_.bounds.size.height;    
     CGRect frame = CGRectMake(0, 0, width, height);
     frame = CGRectOffset(frame, (cw-width)/2.0f, (ch-height)/2.0f);
     
-    switch (mode_) {
-        case QUARTZ2D:
-            self.view = [[PGraphics2D alloc] initWithFrame:frame controller:self];
-            break;
-        case OPENGL:
-            textureMode_ = IMAGE;
-        case P2D:
-        default:
-            self.view = [[PGraphics3D alloc] initWithFrame:frame controller:self];
-            break;
-    }
+    [super createRenderWithMode:mode frame:frame];
     [container_ addSubview:self.view];
 
     // put mouse in the center of the view;
@@ -399,14 +293,17 @@
     mouseY_ = pMouseY_ = height / 2.0f;
     
     self.view.userInteractionEnabled = YES;
-    graphics_ = (id<PGraphics>)self.view;
     
     // Set the default background color, which is not part of style.
     [self background:[self color:51]];
     // Disable smooth by default.
     [self noSmooth];
-    // Apply default style.
-    [self applyCurrentStyle];    
+}
+
+- (PGraphics *)createGraphics:(float)width :(float)height :(int)render
+{
+    PGraphics *pg = [[PGraphics alloc] initWithWidth:width height:height];
+    return [pg autorelease];
 }
 
 #pragma mark -
@@ -492,48 +389,6 @@
 #pragma mark -
 #pragma mark Input - Time
 #pragma mark -
-
-- (int)day
-{
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dc = [calendar components:NSDayCalendarUnit fromDate:[NSDate date]];
-    return [dc day];
-}
-
-- (int)month
-{
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dc = [calendar components:NSMonthCalendarUnit fromDate:[NSDate date]];
-    return [dc month];
-}
-
-- (int)year
-{
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dc = [calendar components:NSYearCalendarUnit fromDate:[NSDate date]];
-    return [dc year];
-}
-
-- (int)hour
-{
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dc = [calendar components:NSHourCalendarUnit fromDate:[NSDate date]];
-    return [dc hour];
-}
-
-- (int)minute
-{
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dc = [calendar components:NSMinuteCalendarUnit fromDate:[NSDate date]];
-    return [dc minute];
-}
-
-- (int)second
-{
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dc = [calendar components:NSSecondCalendarUnit fromDate:[NSDate date]];
-    return [dc second];
-}
 
 // Returns the milliseconds since the view loaded.
 - (int)millis
