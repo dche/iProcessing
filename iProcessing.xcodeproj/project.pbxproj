@@ -42,20 +42,20 @@
 		5D494863101F6CCE00D816E5 /* PAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D494861101F6CCE00D816E5 /* PAgent.h */; };
 		5D494864101F6CCF00D816E5 /* PAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D494862101F6CCE00D816E5 /* PAgent.m */; };
 		5DA3EDF10FE6AEEC0028380E /* Processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDD50FE6AEEC0028380E /* Processing.h */; };
-		5DA3EDF20FE6AEEC0028380E /* Processing+transformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */; };
-		5DA3EDF30FE6AEEC0028380E /* Processing+transformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDD70FE6AEEC0028380E /* Processing+transformation.h */; };
-		5DA3EDF40FE6AEEC0028380E /* Processing+image.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDD80FE6AEEC0028380E /* Processing+image.m */; };
-		5DA3EDF50FE6AEEC0028380E /* Processing+image.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDD90FE6AEEC0028380E /* Processing+image.h */; };
-		5DA3EDF60FE6AEEC0028380E /* Processing+math.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDDA0FE6AEEC0028380E /* Processing+math.m */; };
-		5DA3EDF70FE6AEEC0028380E /* Processing+text.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDDB0FE6AEEC0028380E /* Processing+text.h */; };
-		5DA3EDF80FE6AEEC0028380E /* Processing+text.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDDC0FE6AEEC0028380E /* Processing+text.m */; };
-		5DA3EDFA0FE6AEEC0028380E /* Processing+color.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDDE0FE6AEEC0028380E /* Processing+color.h */; };
-		5DA3EDFC0FE6AEEC0028380E /* Processing+color.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE00FE6AEEC0028380E /* Processing+color.m */; };
-		5DA3EDFD0FE6AEEC0028380E /* Processing+shape.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE10FE6AEEC0028380E /* Processing+shape.h */; };
-		5DA3EDFE0FE6AEEC0028380E /* Processing+shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE20FE6AEEC0028380E /* Processing+shape.m */; };
+		5DA3EDF20FE6AEEC0028380E /* PGraphics+transformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDD60FE6AEEC0028380E /* PGraphics+transformation.m */; };
+		5DA3EDF30FE6AEEC0028380E /* PGraphics+transformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDD70FE6AEEC0028380E /* PGraphics+transformation.h */; };
+		5DA3EDF40FE6AEEC0028380E /* PGraphics+image.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDD80FE6AEEC0028380E /* PGraphics+image.m */; };
+		5DA3EDF50FE6AEEC0028380E /* PGraphics+image.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDD90FE6AEEC0028380E /* PGraphics+image.h */; };
+		5DA3EDF60FE6AEEC0028380E /* PGraphics+math.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDDA0FE6AEEC0028380E /* PGraphics+math.m */; };
+		5DA3EDF70FE6AEEC0028380E /* PGraphics+text.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDDB0FE6AEEC0028380E /* PGraphics+text.h */; };
+		5DA3EDF80FE6AEEC0028380E /* PGraphics+text.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDDC0FE6AEEC0028380E /* PGraphics+text.m */; };
+		5DA3EDFA0FE6AEEC0028380E /* PGraphics+color.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDDE0FE6AEEC0028380E /* PGraphics+color.h */; };
+		5DA3EDFC0FE6AEEC0028380E /* PGraphics+color.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE00FE6AEEC0028380E /* PGraphics+color.m */; };
+		5DA3EDFD0FE6AEEC0028380E /* PGraphics+shape.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE10FE6AEEC0028380E /* PGraphics+shape.h */; };
+		5DA3EDFE0FE6AEEC0028380E /* PGraphics+shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE20FE6AEEC0028380E /* PGraphics+shape.m */; };
 		5DA3EE010FE6AEEC0028380E /* Processing+core.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE50FE6AEEC0028380E /* Processing+core.m */; };
 		5DA3EE020FE6AEEC0028380E /* ProcessingMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */; };
-		5DA3EE030FE6AEEC0028380E /* Processing+math.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE70FE6AEEC0028380E /* Processing+math.h */; };
+		5DA3EE030FE6AEEC0028380E /* PGraphics+math.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE70FE6AEEC0028380E /* PGraphics+math.h */; };
 		5DA3EE080FE6AEEC0028380E /* Processing+core.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDED0FE6AEEC0028380E /* Processing+core.h */; };
 		5DA3EE260FE6B35F0028380E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3EE250FE6B35E0028380E /* OpenGLES.framework */; };
 		5DA3EE420FE6B36F0028380E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3EE410FE6B36F0028380E /* QuartzCore.framework */; };
@@ -181,8 +181,8 @@
 		5DFB73B61003D1FF001DFD19 /* CubicGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB73B51003D1FF001DFD19 /* CubicGrid.m */; };
 		5DFB73BC1003D4BD001DFD19 /* RGBCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB73BB1003D4BD001DFD19 /* RGBCube.m */; };
 		5DFB73E51003DA7C001DFD19 /* Rotate1.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB73E41003DA7C001DFD19 /* Rotate1.m */; };
-		5DFB75F11005F9DB001DFD19 /* Processing+p3d.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFB75EF1005F9DB001DFD19 /* Processing+p3d.h */; };
-		5DFB75F21005F9DB001DFD19 /* Processing+p3d.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB75F01005F9DB001DFD19 /* Processing+p3d.m */; };
+		5DFB75F11005F9DB001DFD19 /* PGraphics+p3d.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DFB75EF1005F9DB001DFD19 /* PGraphics+p3d.h */; };
+		5DFB75F21005F9DB001DFD19 /* PGraphics+p3d.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB75F01005F9DB001DFD19 /* PGraphics+p3d.m */; };
 		5DFB778B10070887001DFD19 /* Rotate2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB778A10070887001DFD19 /* Rotate2.m */; };
 		5DFB78E7100AB475001DFD19 /* P3DSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB78E6100AB475001DFD19 /* P3DSpec.m */; };
 /* End PBXBuildFile section */
@@ -257,20 +257,20 @@
 		5D494862101F6CCE00D816E5 /* PAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAgent.m; sourceTree = "<group>"; };
 		5DA3EDC40FE69D4F0028380E /* libProcessing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libProcessing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DA3EDD50FE6AEEC0028380E /* Processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing.h; sourceTree = "<group>"; };
-		5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+transformation.m"; sourceTree = "<group>"; };
-		5DA3EDD70FE6AEEC0028380E /* Processing+transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+transformation.h"; sourceTree = "<group>"; };
-		5DA3EDD80FE6AEEC0028380E /* Processing+image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+image.m"; sourceTree = "<group>"; };
-		5DA3EDD90FE6AEEC0028380E /* Processing+image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+image.h"; sourceTree = "<group>"; };
-		5DA3EDDA0FE6AEEC0028380E /* Processing+math.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+math.m"; sourceTree = "<group>"; };
-		5DA3EDDB0FE6AEEC0028380E /* Processing+text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+text.h"; sourceTree = "<group>"; };
-		5DA3EDDC0FE6AEEC0028380E /* Processing+text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+text.m"; sourceTree = "<group>"; };
-		5DA3EDDE0FE6AEEC0028380E /* Processing+color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+color.h"; sourceTree = "<group>"; };
-		5DA3EDE00FE6AEEC0028380E /* Processing+color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+color.m"; sourceTree = "<group>"; };
-		5DA3EDE10FE6AEEC0028380E /* Processing+shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+shape.h"; sourceTree = "<group>"; };
-		5DA3EDE20FE6AEEC0028380E /* Processing+shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+shape.m"; sourceTree = "<group>"; };
+		5DA3EDD60FE6AEEC0028380E /* PGraphics+transformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGraphics+transformation.m"; sourceTree = "<group>"; };
+		5DA3EDD70FE6AEEC0028380E /* PGraphics+transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+transformation.h"; sourceTree = "<group>"; };
+		5DA3EDD80FE6AEEC0028380E /* PGraphics+image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGraphics+image.m"; sourceTree = "<group>"; };
+		5DA3EDD90FE6AEEC0028380E /* PGraphics+image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+image.h"; sourceTree = "<group>"; };
+		5DA3EDDA0FE6AEEC0028380E /* PGraphics+math.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGraphics+math.m"; sourceTree = "<group>"; };
+		5DA3EDDB0FE6AEEC0028380E /* PGraphics+text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+text.h"; sourceTree = "<group>"; };
+		5DA3EDDC0FE6AEEC0028380E /* PGraphics+text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGraphics+text.m"; sourceTree = "<group>"; };
+		5DA3EDDE0FE6AEEC0028380E /* PGraphics+color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+color.h"; sourceTree = "<group>"; };
+		5DA3EDE00FE6AEEC0028380E /* PGraphics+color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGraphics+color.m"; sourceTree = "<group>"; };
+		5DA3EDE10FE6AEEC0028380E /* PGraphics+shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+shape.h"; sourceTree = "<group>"; };
+		5DA3EDE20FE6AEEC0028380E /* PGraphics+shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGraphics+shape.m"; sourceTree = "<group>"; };
 		5DA3EDE50FE6AEEC0028380E /* Processing+core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+core.m"; sourceTree = "<group>"; };
 		5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingMacros.h; sourceTree = "<group>"; };
-		5DA3EDE70FE6AEEC0028380E /* Processing+math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+math.h"; sourceTree = "<group>"; };
+		5DA3EDE70FE6AEEC0028380E /* PGraphics+math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+math.h"; sourceTree = "<group>"; };
 		5DA3EDEC0FE6AEEC0028380E /* Processing */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Processing; sourceTree = "<group>"; };
 		5DA3EDED0FE6AEEC0028380E /* Processing+core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+core.h"; sourceTree = "<group>"; };
 		5DA3EE250FE6B35E0028380E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -469,8 +469,8 @@
 		5DFB73BB1003D4BD001DFD19 /* RGBCube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGBCube.m; sourceTree = "<group>"; };
 		5DFB73E31003DA7C001DFD19 /* Rotate1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rotate1.h; sourceTree = "<group>"; };
 		5DFB73E41003DA7C001DFD19 /* Rotate1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rotate1.m; sourceTree = "<group>"; };
-		5DFB75EF1005F9DB001DFD19 /* Processing+p3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+p3d.h"; sourceTree = "<group>"; };
-		5DFB75F01005F9DB001DFD19 /* Processing+p3d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+p3d.m"; sourceTree = "<group>"; };
+		5DFB75EF1005F9DB001DFD19 /* PGraphics+p3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+p3d.h"; sourceTree = "<group>"; };
+		5DFB75F01005F9DB001DFD19 /* PGraphics+p3d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGraphics+p3d.m"; sourceTree = "<group>"; };
 		5DFB778910070887001DFD19 /* Rotate2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rotate2.h; sourceTree = "<group>"; };
 		5DFB778A10070887001DFD19 /* Rotate2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rotate2.m; sourceTree = "<group>"; };
 		5DFB78E5100AB475001DFD19 /* P3DSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P3DSpec.h; sourceTree = "<group>"; };
@@ -685,20 +685,22 @@
 				5D1E8B3B10144C81002C61D7 /* Ext */,
 				5D04CEB6100DCB1100D0ED13 /* Sound */,
 				5DA3EDD50FE6AEEC0028380E /* Processing.h */,
-				5DA3EDD70FE6AEEC0028380E /* Processing+transformation.h */,
-				5DA3EDD60FE6AEEC0028380E /* Processing+transformation.m */,
-				5DA3EDD90FE6AEEC0028380E /* Processing+image.h */,
-				5DA3EDD80FE6AEEC0028380E /* Processing+image.m */,
-				5DA3EDDB0FE6AEEC0028380E /* Processing+text.h */,
-				5DA3EDDC0FE6AEEC0028380E /* Processing+text.m */,
-				5DA3EDDE0FE6AEEC0028380E /* Processing+color.h */,
-				5DA3EDE00FE6AEEC0028380E /* Processing+color.m */,
-				5DA3EDE10FE6AEEC0028380E /* Processing+shape.h */,
-				5DA3EDE20FE6AEEC0028380E /* Processing+shape.m */,
-				5DA3EDE70FE6AEEC0028380E /* Processing+math.h */,
-				5DA3EDDA0FE6AEEC0028380E /* Processing+math.m */,
+				5DA3EDD70FE6AEEC0028380E /* PGraphics+transformation.h */,
+				5DA3EDD60FE6AEEC0028380E /* PGraphics+transformation.m */,
+				5DA3EDD90FE6AEEC0028380E /* PGraphics+image.h */,
+				5DA3EDD80FE6AEEC0028380E /* PGraphics+image.m */,
+				5DA3EDDB0FE6AEEC0028380E /* PGraphics+text.h */,
+				5DA3EDDC0FE6AEEC0028380E /* PGraphics+text.m */,
+				5DA3EDDE0FE6AEEC0028380E /* PGraphics+color.h */,
+				5DA3EDE00FE6AEEC0028380E /* PGraphics+color.m */,
+				5DA3EDE10FE6AEEC0028380E /* PGraphics+shape.h */,
+				5DA3EDE20FE6AEEC0028380E /* PGraphics+shape.m */,
+				5DA3EDE70FE6AEEC0028380E /* PGraphics+math.h */,
+				5DA3EDDA0FE6AEEC0028380E /* PGraphics+math.m */,
 				5DE41D701022C35E00A7A9E3 /* ProcessingMath.h */,
 				5DA3EDEC0FE6AEEC0028380E /* Processing */,
+				5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */,
+				5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */,
 				5DA3EDED0FE6AEEC0028380E /* Processing+core.h */,
 				5DA3EDE50FE6AEEC0028380E /* Processing+core.m */,
 				5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */,
@@ -709,8 +711,8 @@
 				5DA3EF650FE6ED170028380E /* PGraphics2D.m */,
 				5DA3EF680FE6F2740028380E /* PGraphics3D.h */,
 				5DA3EF690FE6F2740028380E /* PGraphics3D.m */,
-				5DFB75EF1005F9DB001DFD19 /* Processing+p3d.h */,
-				5DFB75F01005F9DB001DFD19 /* Processing+p3d.m */,
+				5DFB75EF1005F9DB001DFD19 /* PGraphics+p3d.h */,
+				5DFB75F01005F9DB001DFD19 /* PGraphics+p3d.m */,
 				5DCE9EE20FFDB7A900A5E7DE /* OpenGL_support.h */,
 				5DF100090FFAA46700B7AFBE /* PImage.h */,
 				5DF100080FFAA46700B7AFBE /* PImage.m */,
@@ -721,8 +723,6 @@
 				5DBE65230FF1934C003176FB /* PObject.h */,
 				5DBE65240FF1934C003176FB /* PObject.m */,
 				5DBE5DF10FF01A23003176FB /* README */,
-				5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */,
-				5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */,
 			);
 			path = Processing;
 			sourceTree = "<group>";
@@ -1087,13 +1087,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DA3EDF10FE6AEEC0028380E /* Processing.h in Headers */,
-				5DA3EDF30FE6AEEC0028380E /* Processing+transformation.h in Headers */,
-				5DA3EDF50FE6AEEC0028380E /* Processing+image.h in Headers */,
-				5DA3EDF70FE6AEEC0028380E /* Processing+text.h in Headers */,
-				5DA3EDFA0FE6AEEC0028380E /* Processing+color.h in Headers */,
-				5DA3EDFD0FE6AEEC0028380E /* Processing+shape.h in Headers */,
+				5DA3EDF30FE6AEEC0028380E /* PGraphics+transformation.h in Headers */,
+				5DA3EDF50FE6AEEC0028380E /* PGraphics+image.h in Headers */,
+				5DA3EDF70FE6AEEC0028380E /* PGraphics+text.h in Headers */,
+				5DA3EDFA0FE6AEEC0028380E /* PGraphics+color.h in Headers */,
+				5DA3EDFD0FE6AEEC0028380E /* PGraphics+shape.h in Headers */,
 				5DA3EE020FE6AEEC0028380E /* ProcessingMacros.h in Headers */,
-				5DA3EE030FE6AEEC0028380E /* Processing+math.h in Headers */,
+				5DA3EE030FE6AEEC0028380E /* PGraphics+math.h in Headers */,
 				5DA3EE080FE6AEEC0028380E /* Processing+core.h in Headers */,
 				5DA3EF660FE6ED170028380E /* PGraphics2D.h in Headers */,
 				5DA3EF6A0FE6F2740028380E /* PGraphics3D.h in Headers */,
@@ -1105,7 +1105,7 @@
 				5DF1000B0FFAA46700B7AFBE /* PImage.h in Headers */,
 				5DCE9DD50FFCB3B900A5E7DE /* ProcessingFunctions.h in Headers */,
 				5DCE9EE30FFDB7A900A5E7DE /* OpenGL_support.h in Headers */,
-				5DFB75F11005F9DB001DFD19 /* Processing+p3d.h in Headers */,
+				5DFB75F11005F9DB001DFD19 /* PGraphics+p3d.h in Headers */,
 				5D1E8BCC1014D658002C61D7 /* PTexture.h in Headers */,
 				5D494786101EDB8300D816E5 /* Processing+accelerometer.h in Headers */,
 				5D494863101F6CCE00D816E5 /* PAgent.h in Headers */,
@@ -1317,12 +1317,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DA3EDF20FE6AEEC0028380E /* Processing+transformation.m in Sources */,
-				5DA3EDF40FE6AEEC0028380E /* Processing+image.m in Sources */,
-				5DA3EDF60FE6AEEC0028380E /* Processing+math.m in Sources */,
-				5DA3EDF80FE6AEEC0028380E /* Processing+text.m in Sources */,
-				5DA3EDFC0FE6AEEC0028380E /* Processing+color.m in Sources */,
-				5DA3EDFE0FE6AEEC0028380E /* Processing+shape.m in Sources */,
+				5DA3EDF20FE6AEEC0028380E /* PGraphics+transformation.m in Sources */,
+				5DA3EDF40FE6AEEC0028380E /* PGraphics+image.m in Sources */,
+				5DA3EDF60FE6AEEC0028380E /* PGraphics+math.m in Sources */,
+				5DA3EDF80FE6AEEC0028380E /* PGraphics+text.m in Sources */,
+				5DA3EDFC0FE6AEEC0028380E /* PGraphics+color.m in Sources */,
+				5DA3EDFE0FE6AEEC0028380E /* PGraphics+shape.m in Sources */,
 				5DA3EE010FE6AEEC0028380E /* Processing+core.m in Sources */,
 				5DA3EF670FE6ED170028380E /* PGraphics2D.m in Sources */,
 				5DA3EF6B0FE6F2740028380E /* PGraphics3D.m in Sources */,
@@ -1330,7 +1330,7 @@
 				5DD621AE0FF2C6F80056B47C /* PStyle.m in Sources */,
 				5DF1FFF60FFA1D7700B7AFBE /* PGraphics.m in Sources */,
 				5DF1000A0FFAA46700B7AFBE /* PImage.m in Sources */,
-				5DFB75F21005F9DB001DFD19 /* Processing+p3d.m in Sources */,
+				5DFB75F21005F9DB001DFD19 /* PGraphics+p3d.m in Sources */,
 				5D1E8BCD1014D658002C61D7 /* PTexture.m in Sources */,
 				5D494787101EDB8300D816E5 /* Processing+accelerometer.m in Sources */,
 				5D494864101F6CCF00D816E5 /* PAgent.m in Sources */,
