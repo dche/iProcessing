@@ -10,4 +10,35 @@
 
 @implementation PGraphics
 
+// Methods of environment and structure categories are disabled.
+- (void)size:(float)width :(float)height
+{}
+- (void)size:(float)width :(float)height :(int)mode
+{}
+- (void)loop
+{}
+- (void)redraw
+{}
+- (void)draw
+{}
+- (int)millis
+{ return 0; }
+- (void)setup
+{}
+
++ (id)grphics:(float)width :(float)height
+{
+    return nil;
+}
+
+- (void)beginDraw
+{
+    
+}
+
+- (void)endDraw
+{
+    
+}
+
 @end

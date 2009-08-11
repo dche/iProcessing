@@ -12,4 +12,8 @@
 
 }
 
++ (id)grphics:(float)width :(float)height;
+- (void)beginDraw;
+- (void)endDraw;
+
 @end
