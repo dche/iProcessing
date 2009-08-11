@@ -9,14 +9,8 @@
 #import "Processing+accelerometer.h"
 
 @implementation Processing (Accelerometer)
-@dynamic useAccelerometer;
 
-- (BOOL)useAccelerometer
-{
-    return YES;
-}
-
-- (void)setUseAccelerometer:(BOOL)use
+- (void)useAccelerometer:(BOOL)use
 {
     
 }

@@ -11,6 +11,6 @@
 
 @interface Processing (Accelerometer)
 
-@property (nonatomic, readonly) BOOL useAccelerometer;
+- (void)useAccelerometer:(BOOL)use;
 
 @end
