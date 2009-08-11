@@ -19,6 +19,7 @@ Specification mismatch
 4. You can't use tint(255, alpha) to make a image transparency.
 5. Following methods are not supported:
     background(gray)
+    background(PImage)
     fill(gray)
     stroke(gray)
     tint(gray)

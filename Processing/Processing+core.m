@@ -362,7 +362,7 @@
 - (void)size:(float)width :(float)height
 {
     // By default, use the OpenGL backed render, but for 2D drawing.
-    [self size:width :height :P2D];
+    [self size:width :height :QUARTZ2D];
 }
 
 - (void)size:(float)width :(float)height :(int)mode

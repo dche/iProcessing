@@ -85,7 +85,7 @@
 ?unbinary()
 ?unhex()
 
-==String Functions
+== String Functions
 
 ?join()
 ?match()
@@ -98,7 +98,7 @@
 ?splitTokens()
 ?trim()
 
-==Array Functions
+== Array Functions
 
 ?append()
 ?arrayCopy()
@@ -110,9 +110,9 @@
 ?splice()
 ?subset()
 
-==Control
+== Control
 
-===Relational Operators
+=== Relational Operators
 
 -== (equality)
 -> (greater than)
@@ -121,7 +121,7 @@
 -< (less than)
 -<= (less than or equal to)
 
-===Iteration
+=== Iteration
 
 -for
 -while
@@ -135,7 +135,7 @@
 -if
 -switch()
 
-===Logical Operators
+=== Logical Operators
 
 -&& (logical AND)
 -! (logical NOT)
@@ -254,11 +254,11 @@
 === Text Area
 
 -print()
--println()
+?println()
 
 === Image
 
--save()
++save()
 ?saveFrame()
 
 === Files
@@ -318,19 +318,19 @@
 
 === Coordinates
 
-?modelX()
-?modelY()
-?modelZ()
-?screenX()
-?screenY()
-?screenZ()
++modelX()
++modelY()
++modelZ()
++screenX()
++screenY()
++screenZ()
 
 === Material Properties
 
-?ambient()
-?emissive()
-?shininess()
-?specular()
++ambient()
++emissive()
++shininess()
++specular()
 
 == Color
 
