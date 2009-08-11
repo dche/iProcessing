@@ -10,7 +10,7 @@
 #import "Processing.h"
 
 @interface Plasma : Processing {
-
+    PGraphics *pg;
 }
 
 @end

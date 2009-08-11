@@ -420,6 +420,20 @@
     [topicsCategories setObject:listController forKey:listController.title];
     [listController release];
     
+    // Topics - Effects
+    examples = [[NSMutableDictionary alloc] init];    
+    /// Plasma
+    demoController = [[DemoViewController alloc] initWithNibName:@"DemoView" exampleClass:[Plasma class]];
+    [examples setObject:demoController forKey:@"Plasma"];
+    [demoController release];    
+    
+    listController = [[ExampleListController alloc] initWithNibName:@"ExampleList" bundle:nil];
+    listController.examples = examples;
+    [examples release];
+    listController.title = @"Effects";
+    [topicsCategories setObject:listController forKey:listController.title];
+    [listController release];
+    
     [categoryList setObject:topicsCategories forKey:@"Topics"];
     [topicsCategories release];    
 

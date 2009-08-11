@@ -85,6 +85,7 @@
 #import "Pattern.h"
 
 // Topics - Effects
+#import "Plasma.h"
 
 // Topics - Image Processing
 #import "Histogram.h"
