@@ -21,8 +21,16 @@ static inline float p_constrain(float x, float min, float max)
 {
     return (x < min) ? (min) : ((x > max) ? (max) : (x));
 }
-//+dist()
-//+exp()
+
+static inline float p_dist(float x1, float y1, float z1, float x2, float y2, float z2)
+{
+    p_sqrt(powf((x2 - x1), 2) + powf((y2 - y1), 2) + powf((z2 - z1), 2));
+}
+
+static inline float p_exp(float x)
+{
+    return expf(x);
+}
 
 static inline float p_floor(float x)
 {
@@ -46,7 +54,7 @@ static inline float p_log(float x)
 
 static inline float p_mag(float a, float b, float c)
 {
-    return 0;
+    return p_sqrt(a * a + b * b + c * c);
 }
 
 static inline float p_mag_inv(float a, float b, float c)
@@ -60,8 +68,19 @@ static inline float p_mag_inv(float a, float b, float c)
 //+norm()
 //+pow()
 //+round()
-//+sq()
-//+sqrt()
+static inline float p_sq(float x)
+{
+    return x * x;
+}
+
+static inline float p_sqrt(float x)
+{
+    if (x < 0) 
+        return sqrtf(-x);
+    else 
+        return sqrtf(x);
+}
+
 //
 //=== Trigonometry
 //

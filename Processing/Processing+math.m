@@ -23,7 +23,8 @@
 
 - (float)intNoise:(int)x
 {
-    // TODO: use nosieSeed_.
+    // TODO: apply nosieSeed_.
+    // TODO: TOO SLOOOOOOW! Even on Mac! Use LUT instead.
     x = (x<<13) ^ x;
     return (1.0 - ((x * (x * x * 15731 + 789221) + 1376312589) & 0x7fffffff) / 2147483648.0f);
 }
@@ -96,67 +97,65 @@
 
 - (float)abs:(float)x
 {
-    return (x < 0) ? (-x) : (x);
+    return p_abs(x);
 }
 
 - (float)ceil:(float)x
 {
-    return ceilf(x);
+    return p_ceil(x);
 }
 
 - (float)constrain:(float)value :(float)min :(float)max
 {
-    return (value < min) ? (min) : ((value > max) ? (max) : (value));
+    return p_constrain(value, min, max);
 }
 
 - (float)dist:(float)x1 :(float)y1 :(float)x2 :(float)y2
 {
-    return sqrtf(powf((x2 - x1), 2) + powf((y2 - y1), 2));
+    return p_dist(x1, y1, x2, y2, 0, 0);
 }
 
 - (float)dist:(float)x1 :(float)y1 :(float)z1 :(float)x2 :(float)y2 :(float)z2
 {
-    return sqrtf(powf((x2 - x1), 2) + powf((y2 - y1), 2) + powf((z2 - z1), 2));
+    return p_dist(x1, y1, z1, x2, y2, z2);
 }
 
 - (float)exp:(float)x
 {
-    return expf(x);
+    return p_exp(x);
 }
 
 - (float)floor:(float)x
 {
-    return floorf(x);
+    return p_floor(x);
 }
 
 - (float)lerp:(float)value1 :(float)value2 :(float)amt
 {
-    return value1 + (value2 - value1) * amt;
+    return p_lerp(value1, value2, amt);
 }
 
 /// Natural logrithm.
 - (float)log:(float)x
 {
-    if (x <= EPSILON)
-        return -MAXFLOAT;
-    return logf(x);
+    return p_log(x);
 }
 
 /// Vector's magtitude.
 - (float)mag:(float)a :(float)b
 {
-    return sqrtf(powf(a, 2) + powf(b, 2));;
+    return p_mag(a, b, 0);
 }
 
 - (float)mag:(float)a :(float)b :(float)c
 {
-    return sqrtf(powf(a, 2) + powf(b, 2) + powf(c, 2));
+    return p_mag(a, b, c);
 }
 
 /// Re-maps a number from one range to another.
 - (float)map:(float)value :(float)low1 :(float)high1 :(float)low2 :(float)high2
 {
-    if (fabsf(high1 - low1) < EPSILON) return low2;
+    if (p_abs(high1 - low1) < EPSILON) return low2;
     
     return (value - low1) / (high1 - low1) * (high2 - low2) + low2;
 }
@@ -206,13 +205,12 @@
 
 - (float)sq:(float)x
 {
-    return x * x;
+    return p_sq(x);
 }
 
 - (float)sqrt:(float)x
 {
-    if (x < 0) return sqrtf(-x);
-    return sqrtf(x);
+    return p_sqrt(x);
 }
 
 #pragma mark -
@@ -258,7 +256,7 @@
 
 - (float)sin:(float)x
 {
-    return sinf(x);
+    return p_sin(x);
 }
 
 - (float)tan:(float)x
