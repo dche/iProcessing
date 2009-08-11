@@ -6,6 +6,13 @@
  *  Copyright 2009 campl software. All rights reserved.
  *
  */
+static inline float p_sqrt(float x)
+{
+    if (x < 0) 
+        return sqrtf(-x);
+    else 
+        return sqrtf(x);
+}
 
 static inline float p_abs(float x)
 {
@@ -24,7 +31,7 @@ static inline float p_constrain(float x, float min, float max)
 
 static inline float p_dist(float x1, float y1, float z1, float x2, float y2, float z2)
 {
-    p_sqrt(powf((x2 - x1), 2) + powf((y2 - y1), 2) + powf((z2 - z1), 2));
+    return p_sqrt(powf((x2 - x1), 2) + powf((y2 - y1), 2) + powf((z2 - z1), 2));
 }
 
 static inline float p_exp(float x)
@@ -71,14 +78,6 @@ static inline float p_mag_inv(float a, float b, float c)
 static inline float p_sq(float x)
 {
     return x * x;
-}
-
-static inline float p_sqrt(float x)
-{
-    if (x < 0) 
-        return sqrtf(-x);
-    else 
-        return sqrtf(x);
 }
 
 //
