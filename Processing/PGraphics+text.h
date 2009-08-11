@@ -1,5 +1,5 @@
 //
-//  Processing+text.h
+//  PGraphics+text.h
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Processing+core.h"
+#import "PGraphics.h"
 
-@interface Processing (Text)
+@interface PGraphics (Text)
 
 - (void)text:(NSString *)str :(float)x :(float)y;
 - (void)text:(NSString *)str :(float)x :(float)y :(float)z;

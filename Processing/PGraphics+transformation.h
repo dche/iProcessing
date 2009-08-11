@@ -1,5 +1,5 @@
 //
-//  Processing+transformation.h
+//  PGraphics+transformation.h
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
@@ -7,14 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Processing+core.h"
+#import "PGraphics.h"
 
-@interface Processing (Transformation)
+@interface PGraphics (Transformation)
 
+- (Matrix3D)currentMatrix;
 - (void)applyMatrix:(float)n00 :(float)n01 :(float)n02 :(float)n03
                    :(float)n04 :(float)n05 :(float)n06 :(float)n07
                    :(float)n08 :(float)n09 :(float)n10 :(float)n11
                    :(float)n12 :(float)n13 :(float)n14 :(float)n15;
+- (void)applyMatrix:(Matrix3D)matrix;
 - (void)popMatrix;
 - (void)pushMatrix;
 - (void)resetMatrix;

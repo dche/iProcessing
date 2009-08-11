@@ -61,7 +61,7 @@ static const int kTextImageCacheSize = 16;
     return [CAEAGLLayer class];
 }
 
-- (id)initWithFrame:(CGRect)frame controller:(Processing *)p
+- (id)initWithFrame:(CGRect)frame controller:(PGraphics *)p
 {
     if (self = [super initWithFrame:frame]) {
         CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
@@ -179,14 +179,14 @@ static const int kTextImageCacheSize = 16;
 
 - (void)draw
 {
-    if (!p_) return;
+    if (!p_ || ![p_ respondsToSelector:@selector(guardedDraw)]) return;
     
     [EAGLContext setCurrentContext:context];
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
     if ([self threeD] && curLights_ > 0) {
         [self noLights];
     }
-    [p_ guardedDraw];
+    [(Processing *)p_ guardedDraw];
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
     

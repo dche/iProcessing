@@ -6,15 +6,16 @@
 //  Copyright 2009 campl software. All rights reserved.
 //
 
-#import "Processing+core.h"
-#import "Processing+math.h"
-#import "Processing+color.h"
-#import "Processing+shape.h"
-#import "Processing+transformation.h"
-#import "Processing+image.h"
-#import "Processing+text.h"
-#import "Processing+p3d.h"
+#import "PGraphics.h"
+#import "PGraphics+math.h"
+#import "PGraphics+color.h"
+#import "PGraphics+shape.h"
+#import "PGraphics+transformation.h"
+#import "PGraphics+image.h"
+#import "PGraphics+text.h"
+#import "PGraphics+p3d.h"
 
 #import "PObject.h"
 #import "PImage.h"
-#import "PGraphics.h"
+
+#import "Processing+core.h"

@@ -7,7 +7,7 @@
 //
 
 #import "PGraphicsProtocol.h"
-#import "Processing+core.h"
+#import "PGraphics.h"
 
 @interface PGraphics2D : UIView <PGraphics> {
     
@@ -19,7 +19,7 @@
     /// The pixels array.
     color *pixels_;
     
-    Processing *p_;
+    PGraphics *p_;
     BOOL doFill_;
     BOOL doStroke_;
     BOOL doTint_;

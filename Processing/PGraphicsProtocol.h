@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "ProcessingTypes.h"
 
-@class Processing;
+@class PGraphics;
 @class PImage;
 @protocol PTexture;
 
@@ -71,7 +71,7 @@
 /// Called by associated Processing.
 - (void)draw;
 
-- (id)initWithFrame:(CGRect)frame controller:(Processing *)p;
+- (id)initWithFrame:(CGRect)frame controller:(PGraphics *)p;
 
 /// Pixel data
 - (color)getPixelAtPoint:(CGPoint)p;

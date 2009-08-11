@@ -1,5 +1,5 @@
 //
-//  Processing+image.h
+//  PGraphics+image.h
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Processing+core.h"
+#import "PGraphics.h"
 
 @class PImage;
 
-@interface Processing (Image)
+@interface PGraphics (Image)
 
 /// Creates a new PImage.
 - (PImage *)createImage:(int)width :(int)height :(int)format;

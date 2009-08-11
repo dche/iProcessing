@@ -1,25 +1,41 @@
 //
-//  Processing+transformation.m
+//  PGraphics+transformation.m
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
 //  Copyright 2009 campl software. All rights reserved.
 //
 
-#import "Processing+transformation.h"
+#import "PGraphics+transformation.h"
 
 
-@implementation Processing (Transformation)
+@implementation PGraphics (Transformation)
+
+- (Matrix3D)currentMatrix
+{
+    return [graphics_ matrix];
+}
+
 - (void)applyMatrix:(float)n00 :(float)n01 :(float)n02 :(float)n03
                    :(float)n04 :(float)n05 :(float)n06 :(float)n07
                    :(float)n08 :(float)n09 :(float)n10 :(float)n11
                    :(float)n12 :(float)n13 :(float)n14 :(float)n15
 {
     if (shapeBegan_) return;
-    [graphics_ multMatrix:n00 :n01 :n02 :n03 
-                         :n04 :n05 :n06 :n07 
-                         :n08 :n09 :n10 :n11 
-                         :n12 :n13 :n14 :n15];
+
+    Matrix3D m;
+    Matrix3DSet(&m, 
+                n00, n01, n02, n03, 
+                n04, n05, n06, n07, 
+                n08, n09, n10, n11, 
+                n12, n13, n14, n15);
+    [self applyMatrix:m];
+}
+
+- (void)applyMatrix:(Matrix3D)matrix
+{
+    if (shapeBegan_) return;
+    [graphics_ loadMatrix:matrix];
 }
 
 - (void)popMatrix

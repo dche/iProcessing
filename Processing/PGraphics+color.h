@@ -1,5 +1,5 @@
 //
-//  Processing+color.h
+//  PGraphics+color.h
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Processing+core.h"
+#import "PGraphics.h"
 
-@interface Processing (Color)
+@interface PGraphics (Color)
 
 #pragma mark -
 #pragma mark Color - Setting

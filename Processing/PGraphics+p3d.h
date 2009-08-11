@@ -1,5 +1,5 @@
 //
-//  Processing+p3d.h
+//  PGraphics+p3d.h
 //  iProcessing
 //
 //  Created by Kenan Che on 09-07-09.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Processing+core.h"
+#import "PGraphics.h"
 
-@interface Processing (ThreeD)
+@interface PGraphics (ThreeD)
 
 #pragma mark Texture
 - (void)texture:(NSObject<PTexture> *)img;

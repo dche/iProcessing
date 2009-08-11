@@ -7,14 +7,14 @@
 //
 
 #import "PGraphicsProtocol.h"
-#import "Processing+core.h"
+#import "PGraphics.h"
 
 #import "OpenGL_support.h"
 
 @interface PGraphics3D : UIView <PGraphics> {
 
 @private
-    Processing *p_;
+    PGraphics *p_;
     
     /// Flag of first initialized, to avoid duplicated setupGL()
     BOOL inInit_;

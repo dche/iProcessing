@@ -1,5 +1,5 @@
 //
-//  Processing+color.m
+//  PGraphics+color.m
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
@@ -19,7 +19,7 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
     return colorValue(clr, component) * range / 255.0f;
 }
 
-@implementation Processing (Color)
+@implementation PGraphics (Color)
 
 - (void)background:(color)clr
 {

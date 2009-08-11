@@ -1,5 +1,5 @@
 //
-//  Processing+math+random.h
+//  PGraphics+math+random.h
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Processing+core.h"
+#import "PGraphics.h"
 
-@interface Processing (Math)
+@interface PGraphics (Math)
 
 
 #pragma mark -

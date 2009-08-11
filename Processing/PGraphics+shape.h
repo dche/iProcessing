@@ -1,5 +1,5 @@
 //
-//  Processing+shape.h
+//  PGraphics+shape.h
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-05.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Processing+core.h"
+#import "PGraphics.h"
 
-@interface Processing (Shape)
+@interface PGraphics (Shape)
 
 #pragma mark -
 #pragma mark Shape - 2D primitive

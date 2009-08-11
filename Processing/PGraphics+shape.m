@@ -1,12 +1,12 @@
 //
-//  Processing+shape.m
+//  PGraphics+shape.m
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-05.
 //  Copyright 2009 campl software. All rights reserved.
 //
 
-#import "Processing+shape.h"
+#import "PGraphics+shape.h"
 
 #define kDefaultVerticesArrayLength     30
 
@@ -31,7 +31,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
                 6*fff, 0,    0, 0);
 }
 
-@interface Processing (Vertices)
+@interface PGraphics (Vertices)
 
 - (void)addVertex:(PVertex)v :(PTextureCoord)tc;
 - (void)resetVertices;
@@ -45,7 +45,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
                     :(float)x4 :(float)y4 :(float)z4;
 @end
 
-@implementation Processing (Vertices)
+@implementation PGraphics (Vertices)
 
 - (void)addVertex:(PVertex)v :(PTextureCoord)tc
 {
@@ -90,10 +90,6 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
                 x4, y4, z4, 0);
     Matrix3DMultiply(drawMatrix, &m, &eDelta);
     
-    printMatrix3D(drawMatrix);
-    printMatrix3D(&m);
-    printMatrix3D(&eDelta);
-    
     float xplot1 = eDelta.m10;
     float xplot2 = eDelta.m20;
     float xplot3 = eDelta.m30;
@@ -119,7 +115,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
 @end
 
 
-@implementation Processing (Shape)
+@implementation PGraphics (Shape)
 
 #pragma mark -
 #pragma mark Shape - 2D primitive

@@ -56,7 +56,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 
 @implementation PGraphics2D
 
-- (id)initWithFrame:(CGRect)frame controller:(Processing *)p
+- (id)initWithFrame:(CGRect)frame controller:(PGraphics *)p
 {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];    // No background color.
@@ -70,8 +70,8 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 }
 
 - (void)drawRect:(CGRect)rect {
-    if (!p_) return;
-    [p_ guardedDraw];
+    if (!p_ || ![p_ respondsToSelector:@selector(guardedDraw)]) return;
+    [(Processing *)p_ guardedDraw];
     
     CGContextRef c = UIGraphicsGetCurrentContext();
     // Draw the image
@@ -476,6 +476,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 #pragma mark -
 #pragma mark Typography
 #pragma mark -
+
 - (void)textFont:(UIFont *)font
 {
     if (curFont_ != font) {

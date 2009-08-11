@@ -1,14 +1,14 @@
 //
-//  Processing+math+random.m
+//  PGraphics+math+random.m
 //  Processing Touch
 //
 //  Created by Kenan Che on 09-06-06.
 //  Copyright 2009 campl software. All rights reserved.
 //
 
-#import "Processing+math.h"
+#import "PGraphics+math.h"
 
-@interface Processing (PerlinNoise)
+@interface PGraphics (PerlinNoise)
 
 - (float)intNoise:(int)x;
 - (float)intNoise:(int)x :(float)y;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation Processing (PerlinNoise)
+@implementation PGraphics (PerlinNoise)
 
 - (float)intNoise:(int)x
 {
@@ -89,7 +89,7 @@
 @end
 
 
-@implementation Processing (Math)
+@implementation PGraphics (Math)
 
 #pragma mark -
 #pragma mark Calculation
@@ -112,7 +112,7 @@
 
 - (float)dist:(float)x1 :(float)y1 :(float)x2 :(float)y2
 {
-    return p_dist(x1, y1, x2, y2, 0, 0);
+    return p_dist(x1, y1, 0, x2, y2, 0);
 }
 
 - (float)dist:(float)x1 :(float)y1 :(float)z1 :(float)x2 :(float)y2 :(float)z2

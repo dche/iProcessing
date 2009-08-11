@@ -8,7 +8,7 @@
 
 #import "Processing.h"
 
-@implementation Processing (ThreeD)
+@implementation PGraphics (ThreeD)
 
 #pragma mark -
 #pragma mark Texture
