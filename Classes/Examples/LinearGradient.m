@@ -42,6 +42,7 @@ static const int X_AXIS = 2;
     // background
     color b1 = [self color:190 :190 :190];
     color b2 = [self color:20 :20 :20];
+    [self loadPixels];
     [self setGradient:0 :0 :[self width] :[self height] :b1 :b2 :Y_AXIS];
     //center squares
     color c1 = [self color:255 :120 :0];
@@ -53,7 +54,8 @@ static const int X_AXIS = 2;
     [self setGradient:25 :25 :75 :75 :c1 :c2 :Y_AXIS];
     [self setGradient:100 :25 :75 :75 :c3 :c4 :X_AXIS];
     [self setGradient:25 :100 :75 :75 :c2 :c5 :X_AXIS];
-    [self setGradient:100 :100 :75 :75 :c4 :c6 :Y_AXIS];    
+    [self setGradient:100 :100 :75 :75 :c4 :c6 :Y_AXIS];
+    [self updatePixels];
 }
 
 - (void)setGradient:(int)x :(int)y :(float)w :(float)h :(color)c1 :(color)c2 :(int)axis
@@ -74,7 +76,7 @@ static const int X_AXIS = 2;
                 color c = [self color:([self red:c1]+(j-y)*(deltaR/h))
                                      :([self green:c1]+(j-y)*(deltaG/h))
                                      :([self blue:c1]+(j-y)*(deltaB/h))];
-                [self set:i :j :c];
+                self.pixels[cordsToIndex(i, j, self.width, self.height, NO)] = c;
             }
         }  
     }  
@@ -86,7 +88,7 @@ static const int X_AXIS = 2;
                 color c = [self color:([self red:c1]+(j-x)*(deltaR/h))
                                      :([self green:c1]+(j-x)*(deltaG/h))
                                      :([self blue:c1]+(j-x)*(deltaB/h))];
-                [self set:j :i :c];
+                self.pixels[cordsToIndex(j, i, self.width, self.height, NO)] = c;
             }
         }  
     }
