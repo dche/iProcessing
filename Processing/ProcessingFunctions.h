@@ -104,6 +104,7 @@ static inline color blendColor(color sc, color dc, int mode)
 
     int factor = sa;
     
+    int cr, cg, cb;
     UInt32 r, g, b, a;
     
     a = MIN(da + factor, 255);
@@ -160,18 +161,18 @@ static inline color blendColor(color sc, color dc, int mode)
             g = alphaBlend(dg, 255 - ((255 - sg) * (255 - dg) >> 8), factor);
             b = alphaBlend(db, 255 - ((255 - sb) * (255 - db) >> 8), factor);
         case OVERLAY:
-            int cr = dr < da ? 2 * sr * dr : 255 - 2 * ((255 - sr) * (255 - dr) >> 8);
+            cr = dr < da ? 2 * sr * dr : 255 - 2 * ((255 - sr) * (255 - dr) >> 8);
             r = alphaBlend(dr, cr, factor);
-            int cg = dg < da ? 2 * sg * dg : 255 - 2 * ((255 - sg) * (255 - dg) >> 8);
+            cg = dg < da ? 2 * sg * dg : 255 - 2 * ((255 - sg) * (255 - dg) >> 8);
             r = alphaBlend(dg, cg, factor);
-            int cb = db < da ? 2 * sb * db : 255 - 2 * ((255 - sb) * (255 - db) >> 8);
+            cb = db < da ? 2 * sb * db : 255 - 2 * ((255 - sb) * (255 - db) >> 8);
             r = alphaBlend(db, cb, factor);            
         case HARD_LIGHT:
-            int cr = sr < 128 ? 2 * sr * dr : 255 - 2 * ((255 - sr) * (255 - dr) >> 8);
+            cr = sr < 128 ? 2 * sr * dr : 255 - 2 * ((255 - sr) * (255 - dr) >> 8);
             r = alphaBlend(dr, cr, factor);
-            int cg = sg < 128 ? 2 * sg * dg : 255 - 2 * ((255 - sg) * (255 - dg) >> 8);
+            cg = sg < 128 ? 2 * sg * dg : 255 - 2 * ((255 - sg) * (255 - dg) >> 8);
             r = alphaBlend(dg, cg, factor);
-            int cb = sb < 128 ? 2 * sb * db : 255 - 2 * ((255 - sb) * (255 - db) >> 8);
+            cb = sb < 128 ? 2 * sb * db : 255 - 2 * ((255 - sb) * (255 - db) >> 8);
             r = alphaBlend(db, cb, factor);                        
         case SOFT_LIGHT:
         case DODGE:
