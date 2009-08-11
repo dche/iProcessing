@@ -63,7 +63,7 @@ static inline UInt32 premultiplyColor(color clr)
     UInt8 g = (a * colorValue(clr, G)) >> 8;
     UInt8 b = (a * colorValue(clr, B)) >> 8;
     
-    return (a << ALPHA_SHIFT) ^ (b << BLUE_SHIFT) ^ (g << GREEN_SHIFT) ^ (r << RED_SHIFT);
+    return formColor(r, g, b, a);
 }
 
 static inline color dePremultiplyColor(UInt32 clr)
@@ -76,51 +76,116 @@ static inline color dePremultiplyColor(UInt32 clr)
     UInt8 g = ia * colorValue(clr, G);
     UInt8 b = ia * colorValue(clr, B);
     
-    return (a << ALPHA_SHIFT) ^ (b << BLUE_SHIFT) ^ (g << GREEN_SHIFT) ^ (r << RED_SHIFT);
+    return formColor(r, g, b, a);
 }
 
 #pragma mark -
 #pragma mark Image Processing - Blend
 #pragma mark -
 
+static inline int alphaBlend(int c1, int c2, int alpha)
+{
+    return p_constrain(c1 + (c2 - c1) * alpha >> 8, 0, 255);
+}
+
 static inline color blendColor(color sc, color dc, int mode)
 {
-    color c;
-//    float factor = colorValue(sc, A) / 255.0f;
+    if (mode == REPLACE) return sc;
     
+    int sr = colorValue(sc, R);
+    int sg = colorValue(sc, G);
+    int sb = colorValue(sc, B);
+    int sa = colorValue(sc, A);
+    
+    int dr = colorValue(dc, R);
+    int dg = colorValue(dc, G);
+    int db = colorValue(dc, B);
+    int da = colorValue(dc, A);
+
+    int factor = sa;
+    
+    UInt32 r, g, b, a;
+    
+    a = MIN(da + factor, 255);
     switch (mode) {
-        case BLEND:
-            // linear interpolation of colours: C = A*factor + B            
-            break;
         case ADD:
             // additive blending with white clip: C = min(A*factor + B, 255)
+            r = MIN((sr * factor >> 8) + dr, 255);
+            g = MIN((sg * factor >> 8) + dg, 255);
+            b = MIN((sb * factor >> 8) + db, 255);
             break;
         case SUBTRACT:
             // subtractive blending with black clip: C = max(B - A*factor, 0)
+            r = MAX(dr - (sr * factor >> 8), 0);
+            g = MAX(dg - (sg * factor >> 8), 0);
+            b = MAX(db - (sb * factor >> 8), 0);
             break;
         case DARKEST:
             // only the darkest colour succeeds: C = min(A*factor, B)
+            r = MIN(sr * factor >> 8, dr);
+            g = MIN(sg * factor >> 8, dg);
+            b = MIN(sb * factor >> 8, db);
             break;
         case LIGHTEST:
             // only the lightest colour succeeds: C = max(A*factor, B)
+            r = MAX(sr * factor >> 8, dr);
+            g = MAX(sg * factor >> 8, dg);
+            b = MAX(sb * factor >> 8, db);
             break;
         case DIFFERENCE:
-            // 
+            // C = |A - B|
+            r = alphaBlend(dr, p_abs(dr - sr), factor);
+            g = alphaBlend(dg, p_abs(dg - sg), factor);
+            b = alphaBlend(db, p_abs(db - sb), factor);
+            break;
         case EXCLUSION:
+            // Use the same algorithm of Processing source.
+            // Quote of the original comments:
+                /**
+                 * Cousin of difference, algorithm used here is based on a Lingo version
+                 * found here: http://www.mediamacros.com/item/item-1006687616/
+                 * (Not yet verified to be correct).
+                 */ 
+            r = alphaBlend(dr, sr + dr - (sr * dr >> 7), factor);
+            g = alphaBlend(dg, sg + dg - (sg * dg >> 7), factor);
+            b = alphaBlend(db, sb + db - (sb * db >> 7), factor);
         case MULTIPLY:
+            // C = A * B
+            r = alphaBlend(dr, sr * dr >> 8, factor);
+            g = alphaBlend(dg, sg * dg >> 8, factor);
+            b = alphaBlend(db, sb * db >> 8, factor);
         case SCREEN:
+            // The inverse of multiply.  C = 1 - (1-A) * (1-B)
+            r = alphaBlend(dr, 255 - ((255 - sr) * (255 - dr) >> 8), factor);
+            g = alphaBlend(dg, 255 - ((255 - sg) * (255 - dg) >> 8), factor);
+            b = alphaBlend(db, 255 - ((255 - sb) * (255 - db) >> 8), factor);
         case OVERLAY:
+            int cr = dr < da ? 2 * sr * dr : 255 - 2 * ((255 - sr) * (255 - dr) >> 8);
+            r = alphaBlend(dr, cr, factor);
+            int cg = dg < da ? 2 * sg * dg : 255 - 2 * ((255 - sg) * (255 - dg) >> 8);
+            r = alphaBlend(dg, cg, factor);
+            int cb = db < da ? 2 * sb * db : 255 - 2 * ((255 - sb) * (255 - db) >> 8);
+            r = alphaBlend(db, cb, factor);            
         case HARD_LIGHT:
+            int cr = sr < 128 ? 2 * sr * dr : 255 - 2 * ((255 - sr) * (255 - dr) >> 8);
+            r = alphaBlend(dr, cr, factor);
+            int cg = sg < 128 ? 2 * sg * dg : 255 - 2 * ((255 - sg) * (255 - dg) >> 8);
+            r = alphaBlend(dg, cg, factor);
+            int cb = sb < 128 ? 2 * sb * db : 255 - 2 * ((255 - sb) * (255 - db) >> 8);
+            r = alphaBlend(db, cb, factor);                        
         case SOFT_LIGHT:
         case DODGE:
         case BURN:
             break;
-        case REPLACE:
+        case BLEND:
         default:
-            c = sc;
+            // linear interpolation of colours: C = A*factor + B
+            r = alphaBlend(sr, dr, factor);
+            g = alphaBlend(sg, dg, factor);
+            b = alphaBlend(sb, db, factor);
             break;
     }
-    return sc;
+    return formColor(r, g, b, a);
 }
 
 static inline void blendImage(const color *src, int imgWidth, int imgHeight, 

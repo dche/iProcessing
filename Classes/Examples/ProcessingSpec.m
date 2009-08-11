@@ -8,7 +8,7 @@
 
 #import "ProcessingSpec.h"
 
-#define NSPEC   35
+#define NSPEC   36
 
 @interface ProcessingSpec ()
 
@@ -17,6 +17,7 @@
 
 // Color
 - (void)lerpColor;
+- (void)blendColor;
 
 // Shape
 - (void)arc;
@@ -69,6 +70,7 @@
     SEL selectors[] = {
         @selector(pushPopStyle),
         @selector(lerpColor),
+        @selector(blendColor),
         @selector(arc),
         @selector(ellipse),
         @selector(line),
@@ -167,6 +169,21 @@
     [self rect:50 :20 :20 :60];
     [self fill:to];
     [self rect:70 :20 :20 :60];
+}
+
+- (void)blendColor
+{
+    color orange = [self color:204 :102 :0];
+    color blue = [self color:0 :102 :153];
+    color orangeblueadd = blendColor(orange, blue, ADD);
+    [self background:[self color:51]];
+    [self noStroke];
+    [self fill:orange];
+    [self rect:14 :20 :20 :60];
+    [self fill:orangeblueadd];
+    [self rect:40 :20 :20 :60];
+    [self fill:blue];
+    [self rect:66 :20 :20 :60];
 }
 
 #pragma mark -

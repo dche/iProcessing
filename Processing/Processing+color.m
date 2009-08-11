@@ -168,7 +168,7 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 
 - (color)blendColor:(color)c1 :(color)c2 :(int)mode
 {
-    return 0;    
+    return blendColor(c1, c2, mode);    
 }
 
 - (float)blue:(color)clr
