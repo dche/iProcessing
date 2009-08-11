@@ -623,7 +623,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
                           :pv3->x :pv3->y :pv3->z 
                           :pv4->x :pv4->y :pv4->z];
         
-        // Vertex:: will reset curve vertices, so restore them here.
+        // Vertex:: will reset curve vertices counter and index, so restore them here.
         collectedCurveVertices_ = 3;
         firstCurveVertex_ = pv2 - curveVertices_;
     }

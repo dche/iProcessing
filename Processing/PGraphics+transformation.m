@@ -63,7 +63,7 @@
     if (self.mode == P2D) {
         [self rotateZ:angle];
     } else {
-        // FIXME: which anix should rotate around?
+        // FIXME: which axis should rotate around?
         [graphics_ rotate:angle :1 :1 :1];        
     }
 }
