@@ -357,7 +357,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     const PVertex *p = v;
     CGContextMoveToPoint(ctx, v->x, v->y);
     
-    int j = 0;
+    int j = 1;
     while (j++ < n) {
         p = p + 1;
         CGContextAddLineToPoint(ctx, p->x, p->y);
