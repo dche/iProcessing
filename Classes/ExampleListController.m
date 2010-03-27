@@ -8,6 +8,7 @@
 
 #import "ExampleListController.h"
 #import "iProcessingAppDelegate.h"
+#import "DemoViewController.h"
 
 @implementation ExampleListController
 
@@ -110,7 +111,7 @@
 	// [self.navigationController pushViewController:anotherViewController];
 	// [anotherViewController release];
     NSString *demo = [[examples allKeys] objectAtIndex:indexPath.row];
-    ExampleListController *controller = [examples objectForKey:demo];
+    DemoViewController *controller = [examples objectForKey:demo];
     controller.title = demo;
     iProcessingAppDelegate * app = [[UIApplication sharedApplication] delegate];
     [app.navigationController pushViewController:controller animated:YES];    

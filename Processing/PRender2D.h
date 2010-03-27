@@ -1,15 +1,15 @@
 //
-//  PGraphics2D.h
+//  PRender2D.h
 //  iProcessing
 //
 //  Created by Kenan Che on 09-06-16.
 //  Copyright 2009 campl software. All rights reserved.
 //
 
-#import "PGraphicsProtocol.h"
+#import "PRenderProtocol.h"
 #import "PGraphics.h"
 
-@interface PGraphics2D : UIView <PGraphics> {
+@interface PRender2D : UIView <PRender> {
     
 @private
     /// Quartz

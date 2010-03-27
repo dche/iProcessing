@@ -18,12 +18,12 @@
 
 - (void)image:(PImage *)img :(float)x :(float)y
 {
-    [graphics_ drawImage:img atPoint:CGPointMake(x, y)];
+    [renderer_ drawImage:img atPoint:CGPointMake(x, y)];
 }
 
 - (void)image:(PImage *)img :(float)x :(float)y :(float)width :(float)height
 {
-    [graphics_ drawImage:img inRect:normalizedRectangle(x, y, width, height, curStyle_.imageMode)];
+    [renderer_ drawImage:img inRect:normalizedRectangle(x, y, width, height, curStyle_.imageMode)];
 }
 
 - (void)imageMode:(int)mode
@@ -53,7 +53,7 @@
 
 - (void)noTint
 {
-    [graphics_ noTint];
+    [renderer_ noTint];
     curStyle_.doTint = NO;
 }
 
@@ -66,7 +66,7 @@
 {
     PColor pc = PColorMake(clr);
     
-    [graphics_ tint:pc.red :pc.green :pc.blue :pc.alpha];
+    [renderer_ tint:pc.red :pc.green :pc.blue :pc.alpha];
     curStyle_.tintColor = clr;
     curStyle_.doTint = YES;
 }
@@ -136,7 +136,7 @@
 
 - (color)get:(int)x :(int)y
 {
-    return [graphics_ getPixelAtPoint:CGPointMake(x, y)];
+    return [renderer_ getPixelAtPoint:CGPointMake(x, y)];
 }
 
 - (PImage *)get
@@ -146,7 +146,7 @@
 
 - (void)releasePixels
 {
-    [graphics_ releasePixels];
+    [renderer_ releasePixels];
     pixels_ = NULL;
 }
 
@@ -165,17 +165,17 @@
 
 - (void)loadPixels
 {
-    pixels_ = [graphics_ loadPixels];
+    pixels_ = [renderer_ loadPixels];
 }
 
 - (void)set:(int)x :(int)y :(color)clr
 {
-    [graphics_ setPixel:clr atPoint:CGPointMake(x, y)];
+    [renderer_ setPixel:clr atPoint:CGPointMake(x, y)];
 }
 
 - (void)updatePixels
 {
-    [graphics_ updatePixels];
+    [renderer_ updatePixels];
     pixels_ = NULL;
 }
 

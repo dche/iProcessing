@@ -31,7 +31,7 @@
 @class PImage;
 /// An OpenGL texture object container.
 /// This is internal class for font rendering performance.
-/// It is not part of Processing. And you should not use it.
+/// It is not part of Processing, and you should not use it.
 @interface PTexture : NSObject
 {
 @private

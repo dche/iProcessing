@@ -1,12 +1,12 @@
 //
-//  PGraphics2D.m
+//  PRender2D.m
 //  iProcessing
 //
 //  Created by Kenan Che on 09-06-16.
 //  Copyright 2009 campl software. All rights reserved.
 //
 
-#import "PGraphics2D.h"
+#import "PRender2D.h"
 #import "Processing.h"
 
 typedef struct {
@@ -35,7 +35,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
     }       
 }
 
-@interface PGraphics2D ()
+@interface PRender2D ()
 
 - (CGContextRef)createBitmapCGContextWithWidth:(NSUInteger)w height:(NSUInteger)h;
 
@@ -54,7 +54,7 @@ static inline CGPathDrawingMode drawingMode(BOOL doFill, BOOL doStroke)
 @end
 
 
-@implementation PGraphics2D
+@implementation PRender2D
 
 - (id)initWithFrame:(CGRect)frame controller:(PGraphics *)p
 {

@@ -1,5 +1,5 @@
 //
-//  PGraphics3D.m
+//  PRender3D.m
 //  iProcessing
 //
 //  Created by Kenan Che on 09-06-16.
@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "PGraphics3D.h"
+#import "PRender3D.h"
 #import "Processing.h"
 
 static const NSUInteger kDefaultIndicesNumber = 64;
@@ -17,7 +17,7 @@ static const int kMaxLights = 8;
 
 static const int kTextImageCacheSize = 16;
 
-@interface PGraphics3D ()
+@interface PRender3D ()
 
 - (BOOL)threeD;
 
@@ -54,7 +54,7 @@ static const int kTextImageCacheSize = 16;
 @end
 
 
-@implementation PGraphics3D
+@implementation PRender3D
 
 + (Class)layerClass 
 {
@@ -70,7 +70,6 @@ static const int kTextImageCacheSize = 16;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [NSNumber numberWithBool:NO], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
         
-        // CHECK: Do we need a version using GLES2?
         context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
         if (!context || ![EAGLContext setCurrentContext:context]) {
             [self release];
@@ -93,6 +92,7 @@ static const int kTextImageCacheSize = 16;
         textureMode_ = IMAGE;
         
         // Set up environment for drawing code in +Processing#setup()+.
+        // In case of drawing a static 3D image.
         [EAGLContext setCurrentContext:context];
         [self createFramebuffer];        
         [self setupGLView];
@@ -189,8 +189,6 @@ static const int kTextImageCacheSize = 16;
     [(Processing *)p_ guardedDraw];
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
-    
-    CHECK_GL_ERROR();
 }
 
 - (void)layoutSubviews
@@ -312,10 +310,10 @@ static const int kTextImageCacheSize = 16;
 }
 
 - (void)smooth
-{/* N/A on iPhone */}
+{/* N/A on iPhone platform */}
 
 - (void)noSmooth
-{/* N/A on iPhone */}
+{/* N/A on iPhone platform */}
 
 #pragma mark -
 #pragma mark Shape
@@ -1029,7 +1027,7 @@ static const int kTextImageCacheSize = 16;
 
 - (void)rotate:(float)theta :(float)x :(float)y :(float)z
 {
-    glRotatef(theta * RAD_TO_DEG, x, y, z);
+    glRotatef(p_degrees(theta), x, y, z);
 }
 
 - (void)scale:(float)x :(float)y :(float)z
@@ -1307,7 +1305,7 @@ static const int kTextImageCacheSize = 16;
         glLightfv(light, GL_SPOT_DIRECTION, (const GLfloat *)&dir);
         glLightfv(light, GL_DIFFUSE, (const GLfloat *)&pc);
         [self setAttenuationForLight:light];
-        glLightf(light, GL_SPOT_CUTOFF, a * RAD_TO_DEG);
+        glLightf(light, GL_SPOT_CUTOFF, p_degrees(a));
         glLightf(light, GL_SPOT_EXPONENT, c);
     }
 }

@@ -78,7 +78,6 @@
 {
     [self draw];
     
-    // TODO: use flag to avoid loading matrix.
     [self applyMatrix:matrix_];
     
     if (showFPS_) {

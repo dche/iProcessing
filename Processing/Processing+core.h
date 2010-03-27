@@ -26,11 +26,10 @@
     /// Number of frames since setup() is called.
     NSUInteger frameCount_;
     
-    /// Origin matrix. This matrix should be restored after each draw().
+    /// Origin matrix. 
+    /// This matrix should be restored after each draw().
     Matrix3D matrix_;
-            
-    //..........................
-
+                
     /// Mouse input states
     BOOL mousePressed_;
     float mouseX_;
@@ -108,7 +107,9 @@
 - (void)size:(float)width :(float)height;
 - (void)size:(float)width :(float)height :(int)mode;
 
+#pragma mark -
 #pragma mark Rendering
+#pragma mark -
 
 - (PGraphics *)createGraphics:(float)width :(float)height :(int)render;
 

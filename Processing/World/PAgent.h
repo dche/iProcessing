@@ -9,21 +9,27 @@
 #import <Foundation/Foundation.h>
 #import "PObject.h"
 
-@class Processing;
+@class PWorld;
 
 @interface PAgent : PObject {
 
 @private
     /// The unique id of a Agent.
     NSUInteger tag_;
-    NSUInteger gene_;
-    /// Age.
+    /// Age, in millisecond.
     NSUInteger birthTime_;
+    
+@protected
+    /// Gene of the agent.
+    NSUInteger gene_;
 }
 
 @property (nonatomic, readonly) NSUInteger age;
+@property (nonatomic, readonly) NSUInteger tag;
 
 - (id)initWithProcessing:(Processing *)p;
+
+- (PAgent *)clone;
 - (PAgent *)offspring:(PAgent *)a;
 
 @end

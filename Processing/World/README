@@ -1,0 +1,20 @@
+
+
+Design
+------
+
+1. World
+
+World is an iPhone application framework built upon Processing touch.
+
+A world consists of many PObjects, which can be static object that do not update
+its appearence over time, or dynamic object that will change its appearence
+over time.
+
+The PWorld maitains a list of PObjects, and schedules each PObject to draw.
+PWorld also take charge of 
+
+2. Agent
+
+
+

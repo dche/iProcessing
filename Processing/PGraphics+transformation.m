@@ -13,7 +13,7 @@
 
 - (Matrix3D)currentMatrix
 {
-    return [graphics_ matrix];
+    return [renderer_ matrix];
 }
 
 - (void)applyMatrix:(float)n00 :(float)n01 :(float)n02 :(float)n03
@@ -35,25 +35,25 @@
 - (void)applyMatrix:(Matrix3D)matrix
 {
     if (shapeBegan_) return;
-    [graphics_ loadMatrix:matrix];
+    [renderer_ loadMatrix:matrix];
 }
 
 - (void)popMatrix
 {
     if (shapeBegan_) return;
-    [graphics_ popMatrix];
+    [renderer_ popMatrix];
 }
 
 - (void)pushMatrix
 {
     if (shapeBegan_) return;
-    [graphics_ pushMatrix];
+    [renderer_ pushMatrix];
 }
 
 - (void)resetMatrix
 {
     if (shapeBegan_) return;
-    [graphics_ loadIdentity];
+    [renderer_ loadIdentity];
 }
 
 - (void)rotate:(float)angle
@@ -64,23 +64,23 @@
         [self rotateZ:angle];
     } else {
         // FIXME: which axis should rotate around?
-        [graphics_ rotate:angle :1 :1 :1];        
+        [renderer_ rotate:angle :1 :1 :1];        
     }
 }
 
 - (void)rotateX:(float)angle
 {
-    [graphics_ rotate:angle :1 :0 :0];
+    [renderer_ rotate:angle :1 :0 :0];
 }
 
 - (void)rotateY:(float)angle
 {
-    [graphics_ rotate:angle :0 :1 :0];
+    [renderer_ rotate:angle :0 :1 :0];
 }
 
 - (void)rotateZ:(float)angle
 {
-    [graphics_ rotate:angle :0 :0 :1];
+    [renderer_ rotate:angle :0 :0 :1];
 }
 
 - (void)scale:(float)size
@@ -96,7 +96,7 @@
 - (void)scale:(float)x :(float)y :(float)z
 {
     if (shapeBegan_) return;
-    [graphics_ scale:x :y :z];
+    [renderer_ scale:x :y :z];
 }
 
 - (void)translate:(float)x :(float)y
@@ -107,12 +107,12 @@
 - (void)translate:(float)x :(float)y :(float)z
 {
     if (shapeBegan_) return;
-    [graphics_ translate:x :y :z];
+    [renderer_ translate:x :y :z];
 }
 
 - (void)printMatrix
 {
-    Matrix3D m = [graphics_ matrix];
+    Matrix3D m = [renderer_ matrix];
     printMatrix3D(&m);
 }
 

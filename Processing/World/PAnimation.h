@@ -11,6 +11,11 @@
 
 @interface PAnimation : NSObject {
 
+@private
+    /// animation duration in milliseconds.
+    NSUInteger duration_;
 }
+
+- (void)drawFrame:(NSUInteger)frame;
 
 @end

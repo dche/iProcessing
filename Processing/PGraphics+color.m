@@ -24,7 +24,7 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 - (void)background:(color)clr
 {
     PColor pc = PColorMake(clr);
-    [graphics_ background:pc.red :pc.green :pc.blue :pc.alpha];        
+    [renderer_ background:pc.red :pc.green :pc.blue :pc.alpha];        
 }
 
 - (void)background:(float)gray :(float)alpha
@@ -85,7 +85,7 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 {
     PColor pc = PColorMake(clr);
     
-    [graphics_ fill:pc.red :pc.green :pc.blue :pc.alpha];
+    [renderer_ fill:pc.red :pc.green :pc.blue :pc.alpha];
     curStyle_.fillColor = clr;
     curStyle_.doFill = YES;
     
@@ -115,13 +115,13 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 
 - (void)noFill
 {
-    [graphics_ noFill];
+    [renderer_ noFill];
     curStyle_.doFill = NO;
 }
 
 - (void)noStroke
 {
-    [graphics_ noStroke];
+    [renderer_ noStroke];
     curStyle_.doStroke = NO;
 }
 
@@ -129,7 +129,7 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 {
     PColor pc = PColorMake(clr);
     
-    [graphics_ stroke:pc.red :pc.green :pc.blue :pc.alpha];
+    [renderer_ stroke:pc.red :pc.green :pc.blue :pc.alpha];
     curStyle_.strokeColor = clr; 
     curStyle_.doStroke = YES;
     
@@ -178,6 +178,7 @@ static inline float originalRGBValue(color clr, unsigned int component, float ra
 
 - (float)brightness:(color)clr
 {
+    // BUG: shold comput brightness first, and then clamp to color range.
     float max = [self max:[self red:clr] :[self green:clr] :[self blue:clr]];
     return max;    
 }

@@ -9,7 +9,7 @@
  *
  */
 
-/// color type. It is not a macro, but it is user visible. So defined here.
+/// color type.
 typedef UInt32 color;
 
 #define R  (3)
@@ -29,10 +29,6 @@ typedef UInt32 color;
 #define THIRD_PI    (PI / 3.0f)
 #define QUARTER_PI  (PI * 0.25f)
 #define TWO_PI      (PI * 2.0f)
-
-#define DEG_TO_RAD  (PI/180.0f)
-#define RAD_TO_DEG  (180.0f/PI)
-
 
 // for colors and/or images
 

@@ -1,17 +1,17 @@
 //
-//  PGraphics3D.h
+//  PRender3D.h
 //  iProcessing
 //
 //  Created by Kenan Che on 09-06-16.
 //  Copyright 2009 campl software. All rights reserved.
 //
 
-#import "PGraphicsProtocol.h"
+#import "PRenderProtocol.h"
 #import "PGraphics.h"
 
 #import "OpenGL_support.h"
 
-@interface PGraphics3D : UIView <PGraphics> {
+@interface PRender3D : UIView <PRender> {
 
 @private
     PGraphics *p_;
@@ -65,7 +65,7 @@
     // Lighting
     //................
     
-    /// 1 + the largest number of light currently enabled. 
+    /// curLights_ = 1 + the largest number of light currently enabled. 
     /// For examle, if LIGHT7 is enabled, curLights_ should equal to 8.
     NSUInteger curLights_;
     PColor lightSpecular_;

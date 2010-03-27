@@ -11,6 +11,7 @@
 
 @implementation PAgent
 @dynamic age;
+@synthesize tag = tag_;
 
 - (id)init
 {
@@ -28,6 +29,11 @@
 - (NSUInteger)age
 {
     return ([self.p millis] - birthTime_);
+}
+
+- (PAgent *)clone
+{
+    return nil;
 }
 
 - (PAgent *)offspring:(PAgent *)a

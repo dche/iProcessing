@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ProcessingFunctions.h"
-#import "PGraphicsProtocol.h"
+#import "PRenderProtocol.h"
 #import "PStyle.h"
 #import "PImage.h"
 
@@ -16,7 +16,7 @@
 
 @private
     /// The render.
-    id<PGraphics> graphics_;
+    id<PRender> renderer_;
     
     /// Width
     float width_;

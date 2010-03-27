@@ -69,12 +69,51 @@ static inline float p_mag_inv(float a, float b, float c)
     return 0;
 }
 
-//+map()
-//+max()
-//+min()
-//+norm()
-//+pow()
-//+round()
+static inline float p_map(float x, float low1, float high1, float low2, float high2)
+{
+    if (p_abs(high1 - low1) < EPSILON) return low2;
+    
+    return (x - low1) * (high2 - low2) / (high1 - low1)  + low2;    
+}
+
+static inline float p_max(float x, float y)
+{
+    return x > y ? x : y;
+}
+
+static inline float p_max3(float x, float y, float z)
+{
+    return p_max(p_max(x, y), z);
+}
+
+static inline float p_min(float x, float y)
+{
+    return x < y ? x : y;
+}
+
+static inline float p_min3(float x, float y, float z)
+{
+    return p_min(p_min(x, y), z);
+}
+
+static inline float p_norm(float x, float low, float high)
+{
+    return p_map(x, low, high, 0, 1);
+}
+
+static inline float p_pow(float x, float exp)
+{
+    if (x < 0 && (exp != p_floor(exp))) {
+        return powf(-x, p_floor(exp));
+    }
+    return powf(x, exp);
+}
+
+static inline float p_round(float x)
+{
+    return roundf(x);
+}
+
 static inline float p_sq(float x)
 {
     return x * x;
@@ -83,13 +122,40 @@ static inline float p_sq(float x)
 //
 //=== Trigonometry
 //
-//+acos()
-//+asin()
-//+atan()
-//+atan2()
-//+cos()
-//+degrees()
-//+radians()
+static inline float p_acos(float x)
+{
+    return acosf(p_constrain(x, -1, 1));
+}
+
+static inline float p_asin(float x)
+{
+    return asinf(p_constrain(x, -1, 1));
+}
+
+static inline float p_atan(float x)
+{
+    return atanf(x);
+}
+
+static inline float p_atan2(float y, float x)
+{
+    return atan2f(y, x);
+}
+
+static inline float p_cos(float x)
+{
+    return cosf(x);
+}
+
+static inline float p_degrees(float x)
+{    
+    return x * 180.0f / PI;
+}
+
+static inline float p_radians(float x)
+{
+    return x * PI / 180.0f;
+}
 
 static inline float p_sin(float x)
 {
@@ -105,8 +171,12 @@ static inline float p_sin(float x)
 	return (k&1) ? -y : y;
 }
 
-//+tan()
-//
+static inline float p_tan(float x)
+{
+    if (fabs(fmodf(x / HALF_PI, 2.0f) - 1.0f) < EPSILON) return 0;
+    
+    return tanf(x);
+}
 
 static inline float cosineInterpolate(float a, float b, float x)
 {

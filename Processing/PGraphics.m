@@ -7,8 +7,8 @@
 //
 
 #import "Processing.h"
-#import "PGraphics2D.h"
-#import "PGraphics3D.h"
+#import "PRender2D.h"
+#import "PRender3D.h"
 
 @interface PGraphics ()
 
@@ -52,7 +52,7 @@
 
 - (void)decalloc
 {
-    [graphics_ release];
+    [renderer_ release];
     
     [curStyle_ release];
     [styleStack_ release];
@@ -69,7 +69,7 @@
 
 - (void)createRenderWithMode:(int)mode frame:(CGRect)frame;
 {
-    if (graphics_ != nil || CGRectIsEmpty(frame) || (mode != P2D && mode != P3D && mode != QUARTZ2D)) {
+    if (renderer_ != nil || CGRectIsEmpty(frame) || (mode != P2D && mode != P3D && mode != QUARTZ2D)) {
         return;
     }
     
@@ -79,29 +79,29 @@
 
     switch (mode_) {
         case QUARTZ2D:
-            self.view = [[PGraphics2D alloc] initWithFrame:frame controller:self];
+            self.view = [[PRender2D alloc] initWithFrame:frame controller:self];
             break;
         case OPENGL:
             textureMode_ = IMAGE;
         case P2D:
         default:
-            self.view = [[PGraphics3D alloc] initWithFrame:frame controller:self];
+            self.view = [[PRender3D alloc] initWithFrame:frame controller:self];
             break;
     }
-    graphics_ = (id<PGraphics>)self.view;
+    renderer_ = (id<PRender>)self.view;
     // Apply default style.
     [self applyCurrentStyle];
 }
 
 - (void)drawView
 {
-    [graphics_ draw];
+    [renderer_ draw];
 }
 
 - (void)beginDraw
 {
     CGRect frame = CGRectMake(0, 0, width_, height_);
-    if (!CGRectIsEmpty(frame) && graphics_ == nil) {
+    if (!CGRectIsEmpty(frame) && renderer_ == nil) {
         [self createRenderWithMode:QUARTZ2D frame:frame];
     }    
 }
@@ -115,9 +115,9 @@
 
 - (void)applyCurrentStyle
 {
-    if (graphics_ == nil) return;
+    if (renderer_ == nil) return;
     
-    // Only apply styles that affect state of graphics_.    
+    // Only apply styles that affect state of renderer_.    
     // fill color, stroke color, stroke cap, join and weight
     BOOL doFill, doStroke, doTint;
     

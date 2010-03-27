@@ -8,7 +8,6 @@
 
 #import "PObject.h"
 
-
 @implementation PObject
 @synthesize p = p_;
 

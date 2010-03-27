@@ -4,25 +4,29 @@
     [ ] Rubustness
 
 [ ] Structure
-    [ ] Rename PGraphics protocol, PGraphics2D, PGraphics3D to PRenderxxx.
+    [x] Rename PGraphicsProtocol, PGraphics2D, PGraphics3D to PRenderxxx.
 
-[ ] PGraphics2D
+[ ] PRender2D
     [ ] Do not using the ellipse code of Quartz2D? Drawing arc like 
         PGraphics3D?
-    [ ] Remove the line from {0, 0} to the end of curve.
-    [ ] Lazy initializing matrix stack.
+    [x] Remove the line from {0, 0} to the end of curve.
+    [x] Lazy initializing matrix stack.
     [ ] Correct tint effect.
 
-[ ] PGraphics3D
+[ ] PRender3D
     [ ] Better circle drawing.
     [ ] Refine sphere drawing.
     [ ] tint effect when drawing image.
     [ ] Implement Camera.
     [ ] Correct lighting.
+    [ ] Handle OpenGL errors.
+    [ ] Use interleaved data structure.
+    [ ] Reduce number of glDrawElement() call.
     
 [ ] Text
     [ ] Draw text in rectangle. Maybe we don't need a layout manager. Just
         use the NSString#drawInRect.
+    [ ] Use Core Text.
         
 [ ] Color
     [ ] Try to support background(float gray) and like. Figure out a way

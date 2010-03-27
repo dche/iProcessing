@@ -1,0 +1,21 @@
+This is the sound library of iProcessing.
+
+API
+
+Load sound file
+
+Play sound file
+
+Metadata of sound file
+
+Sample data of sound file
+
+FFT
+
+Create sound buffer
+
+Play sound buffer
+
+Attach sound filter to buffer
+
+Record sound

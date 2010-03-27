@@ -41,7 +41,7 @@
             break;
     }
     
-    [graphics_ showText:str :rx :ry :z];
+    [renderer_ showText:str :rx :ry :z];
 }
 
 - (void)text:(NSString *)str :(float)x :(float)y :(float)width :(float)height
@@ -59,7 +59,7 @@
 {
     if (font == nil) return;
     curStyle_.curFont = font;
-    [graphics_ textFont:font];
+    [renderer_ textFont:font];
 }
 
 - (void)textFont:(UIFont *)font :(float)size
@@ -67,7 +67,7 @@
     if (font == nil) return;
     if (size < EPSILON) return;
     curStyle_.curFont = [font fontWithSize:size];
-    [graphics_ textFont:curStyle_.curFont];
+    [renderer_ textFont:curStyle_.curFont];
 }
 
 

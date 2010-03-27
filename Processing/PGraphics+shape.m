@@ -134,7 +134,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
     if (CGRectIsEmpty(rect) || CGRectIsNull(rect) || CGRectIsInfinite(rect))
         return;
     
-    [graphics_ arc:CGRectGetMinX(rect) 
+    [renderer_ arc:CGRectGetMinX(rect) 
                   :CGRectGetMinY(rect) 
                   :CGRectGetWidth(rect) 
                   :CGRectGetHeight(rect)
@@ -155,7 +155,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
     if (CGRectIsEmpty(rect) || CGRectIsNull(rect) || CGRectIsInfinite(rect))
         return;
     
-    [graphics_ ellipse:CGRectGetMinX(rect) 
+    [renderer_ ellipse:CGRectGetMinX(rect) 
                       :CGRectGetMinY(rect) 
                       :CGRectGetWidth(rect) 
                       :CGRectGetHeight(rect)];
@@ -231,7 +231,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
     CGRect rect = normalizedRectangle(x1, y1, x2, y2, curStyle_.rectMode);
     if (CGRectIsEmpty(rect) || CGRectIsNull(rect) || CGRectIsInfinite(rect))
         return;
-    [graphics_ rect:CGRectGetMinX(rect) 
+    [renderer_ rect:CGRectGetMinX(rect) 
                    :CGRectGetMinY(rect) 
                    :CGRectGetWidth(rect) 
                    :CGRectGetHeight(rect)];
@@ -450,15 +450,15 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
 
 - (void)smooth
 {
-    if ([graphics_ respondsToSelector:@selector(smooth)]) {
-        [graphics_ smooth];
+    if ([renderer_ respondsToSelector:@selector(smooth)]) {
+        [renderer_ smooth];
     }
 }
 
 - (void)noSmooth
 {
-    if ([graphics_ respondsToSelector:@selector(noSmooth)]) {
-        [graphics_ noSmooth];
+    if ([renderer_ respondsToSelector:@selector(noSmooth)]) {
+        [renderer_ noSmooth];
     }
 }
 
@@ -471,7 +471,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
         case PROJECT:
         case ROUND:
             curStyle_.strokeCap = mode;
-            [graphics_ strokeCap:mode];
+            [renderer_ strokeCap:mode];
             break;
         default:
             break;
@@ -487,7 +487,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
         case BEVEL:
         case ROUND:
             curStyle_.strokeJoin = mode;
-            [graphics_ strokeJoin:mode];
+            [renderer_ strokeJoin:mode];
             break;
         default:
             break;
@@ -500,7 +500,7 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
     if (shapeBegan_ || w < EPSILON) return;
     
     curStyle_.strokeWeight = w;
-    [graphics_ strokeWeight:w];
+    [renderer_ strokeWeight:w];
 }
 
 #pragma mark -
@@ -554,13 +554,13 @@ static inline void forwardDifferences(int segments, Matrix3D *m)
     if (mode == OPEN || mode == CLOSE) {
         
         if (self.mode == QUARTZ2D) {
-            [graphics_ draw2DShapeWithVertices:[vertices_ bytes] 
+            [renderer_ draw2DShapeWithVertices:[vertices_ bytes] 
                                   vertexNumber:[indices_ length]
                                        indices:[indices_ bytes] 
                                           mode:vertexMode_ 
                                          close:(mode == CLOSE)];
         } else {
-            [graphics_ draw3DShapeWithVertices:[vertices_ bytes] 
+            [renderer_ draw3DShapeWithVertices:[vertices_ bytes] 
                                   vertexNumber:[vertices_ length]/sizeof(PVertex)
                                        indices:[indices_ bytes] 
                                    indexNumber:[indices_ length]

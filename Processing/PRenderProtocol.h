@@ -1,5 +1,5 @@
 /*
- *  PGraphicsProtocol.h
+ *  PRenderProtocol.h
  *  iProcessing
  *
  *  Created by Kenan Che on 09-06-30.
@@ -14,7 +14,7 @@
 @class PImage;
 @protocol PTexture;
 
-@protocol PGraphics <NSObject>
+@protocol PRender <NSObject>
 
 @required
 

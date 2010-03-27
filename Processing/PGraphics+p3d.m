@@ -27,8 +27,8 @@
         case IMAGE:
         case NORMAL:
             textureMode_ = mode;
-            if ([graphics_ respondsToSelector:@selector(textureMode:)]) {
-                [graphics_ textureMode:mode];
+            if ([renderer_ respondsToSelector:@selector(textureMode:)]) {
+                [renderer_ textureMode:mode];
             }
             break;
         default:
@@ -54,14 +54,14 @@
 - (void)box:(float)width :(float)height :(float)depth
 {
     if (self.mode == P3D) {
-        [graphics_ boxWithWidth:width height:height depth:depth];
+        [renderer_ boxWithWidth:width height:height depth:depth];
     }
 }
 
 - (void)sphere:(float)radius
 {
     if (self.mode == P3D) {
-        [graphics_ sphereWithRadius:radius];
+        [renderer_ sphereWithRadius:radius];
     }
 }
 
@@ -73,7 +73,7 @@
 - (void)sphereDetail:(float)ures :(float)vres
 {
     if (self.mode != P3D) {
-        [graphics_ sphereDetailWithUres:ures vres:vres];
+        [renderer_ sphereDetailWithUres:ures vres:vres];
     }
 }
 
@@ -89,7 +89,7 @@
 - (void)ambientLight:(float)v1 :(float)v2 :(float)v3 :(float)x :(float)y :(float)z
 {
     if (self.mode == P3D) {
-        [graphics_ addAmbientLightWithColor:PColorMake([self color:v1 :v2 :v3])
+        [renderer_ addAmbientLightWithColor:PColorMake([self color:v1 :v2 :v3])
                                  atPosition:PVertexMake(x, y, z)];
     }
 }
@@ -97,7 +97,7 @@
 - (void)directionalLight:(float)v1 :(float)v2 :(float)v3 :(float)x :(float)y :(float)z
 {
     if (self.mode == P3D) {
-        [graphics_ addDirectionalLightWithColor:PColorMake([self color:v1 :v2 :v3]) 
+        [renderer_ addDirectionalLightWithColor:PColorMake([self color:v1 :v2 :v3]) 
                                     toDirection:PVertexMake(x, y, z)];
     }
 }
@@ -109,14 +109,14 @@
 - (void)lightFalloff:(float)constant :(float)linear :(float)quadratic
 {
     if (self.mode == P3D) {
-        [graphics_ lightAttenuationConst:constant linear:linear quardratic:quadratic];        
+        [renderer_ lightAttenuationConst:constant linear:linear quardratic:quadratic];        
     }
 }
 
 - (void)lightSpecular:(float)v1 :(float)v2 :(float)v3
 {
     if (self.mode == P3D) {
-        [graphics_ lightSpecular:PColorMake([self color:v1 :v2 :v3])];
+        [renderer_ lightSpecular:PColorMake([self color:v1 :v2 :v3])];
     }
 }
 
@@ -128,10 +128,10 @@
 {
     if (self.mode == P3D) {
         [self lightFalloff:1 :0 :0];
-        [graphics_ lightSpecular:PColorMake(PWhiteColor)];
+        [renderer_ lightSpecular:PColorMake(PWhiteColor)];
         
-        [graphics_ addAmbientLightWithColor:PColorMake(PGrayColor) atPosition:PVertexMake(0, 0, 0)];
-        [graphics_ addDirectionalLightWithColor:PColorMake(PGrayColor)
+        [renderer_ addAmbientLightWithColor:PColorMake(PGrayColor) atPosition:PVertexMake(0, 0, 0)];
+        [renderer_ addDirectionalLightWithColor:PColorMake(PGrayColor)
                                     toDirection:PVertexMake(0, 0, -1)];
     }    
 }
@@ -139,7 +139,7 @@
 - (void)noLights
 {
     if (self.mode == P3D) {
-        [graphics_ noLights];        
+        [renderer_ noLights];        
     }
 }
 
@@ -160,7 +160,7 @@
 - (void)pointLight:(float)v1 :(float)v2 :(float)v3 :(float)x :(float)y :(float)z
 {
     if (self.mode == P3D) {
-        [graphics_ addPointLightWithColor:PColorMake([self color:v1 :v2 :v3]) 
+        [renderer_ addPointLightWithColor:PColorMake([self color:v1 :v2 :v3]) 
                                atPosition:PVertexMake(x, y, z)];
     }
 }
@@ -171,7 +171,7 @@
                  :(float)angle :(float)concentration
 {
     if (self.mode == P3D) {
-        [graphics_ addSpotLightWithColor:PColorMake([self color:v1 :v2 :v3]) 
+        [renderer_ addSpotLightWithColor:PColorMake([self color:v1 :v2 :v3]) 
                                    angle:angle 
                            concentration:concentration 
                               atPosition:PVertexMake(x, y, z) 
@@ -195,7 +195,7 @@
     
     float ex = self.width / 2.0f;
     float ey = self.height / 2.0f;
-    float ez = ey / [self tan:60 * DEG_TO_RAD / 2.0f];
+    float ez = ey / [self tan:p_radians(60) / 2.0f];
     float cx = ex; float cy = ey; float cz = 0.0f;
     
     [self camera:ex :ey :ez :cx :cy :cz :0 :1 :0];
@@ -216,21 +216,21 @@
 - (void)frustum:(float)left :(float)right :(float)bottom :(float)top :(float)near :(float)far
 {
     if (self.mode == P3D) {
-        [graphics_ frustum :left :right :bottom :top :near :far];
+        [renderer_ frustum :left :right :bottom :top :near :far];
     }
 }
 
 - (void)ortho:(float)left :(float)right :(float)bottom :(float)top :(float)near :(float)far
 {
     if (self.mode == P3D) {
-        [graphics_ ortho :left :right :bottom :top :near :far];
+        [renderer_ ortho :left :right :bottom :top :near :far];
     }
 }
 
 - (void)perspective
 {
     // TODO: doc these numbers
-    float near = (self.height / 2.0f) / [self tan:60 * DEG_TO_RAD/2.0f];
+    float near = (self.height / 2.0f) / [self tan:p_radians(60) / 2.0f];
     float far = near * 1000;
 
     [self perspective:60 :self.height/self.width :near :far];
@@ -294,7 +294,7 @@
 - (void)ambient:(color)clr
 {
     if (self.mode == P3D) {
-        [graphics_ ambient:PColorMake(clr)];
+        [renderer_ ambient:PColorMake(clr)];
     }
 }
 
@@ -306,21 +306,21 @@
 - (void)emissive:(color)clr
 {
     if (self.mode == P3D) {
-        [graphics_ emissive:PColorMake(clr)];
+        [renderer_ emissive:PColorMake(clr)];
     }
 }
 
 - (void)shininess:(float)shine
 {
     if (self.mode == P3D) {
-        [graphics_ shininess:shine];
+        [renderer_ shininess:shine];
     }
 }
 
 - (void)specular:(color)clr
 {
     if (self.mode == P3D) {
-        [graphics_ specular:PColorMake(clr)];
+        [renderer_ specular:PColorMake(clr)];
     }
 }
 

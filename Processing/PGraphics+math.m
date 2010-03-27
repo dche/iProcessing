@@ -155,52 +155,46 @@
 /// Re-maps a number from one range to another.
 - (float)map:(float)value :(float)low1 :(float)high1 :(float)low2 :(float)high2
 {
-    if (p_abs(high1 - low1) < EPSILON) return low2;
-    
-    return (value - low1) / (high1 - low1) * (high2 - low2) + low2;
+    return p_map(value, low1, high1, low2, high2);
 }
 
 /// Determines the largest value in a sequence of numbers.
 - (float)max:(float)value1 :(float)value2
 {
-    return (value2 > value1) ? (value2) : (value1);
+    return p_max(value1, value2);
 }
 
 - (float)max:(float)value1 :(float)value2 :(float)value3
 {
-    return [self max:value1 :[self max:value2 :value3]];
+    return p_max3(value1, value2, value2);
 }
 
 /// Determines the smallest value in a sequence of numbers.
 - (float)min:(float)value1 :(float)value2
 {
-    return (value2 < value1) ? (value2) : (value1);
+    return p_min(value1, value2);
 }
 
 - (float)min:(float)value1 :(float)value2 :(float)value3
 {
-    return [self min:value1 :[self min:value2 :value3]];
+    return p_min3(value1, value2, value3);
 }
 
 /// Normalizes a number from another range into a value between 0 and 1.
 /// Identical to map(value, low, high, 0, 1); 
 - (float)norm:(float)value :(float)low :(float)high
 {
-    return [self map:value :low :high :0 :1];
+    return p_norm(value, low, high);
 }
 
 - (float)pow:(float)num :(float)exponent
 {
-    // TODO: refine the protection.
-    if (num < 0 && (exponent == floorf(exponent))) {
-        return powf(-num, exponent);
-    }
-    return powf(num, exponent);
+    return p_pow(num, exponent);
 }
 
 - (float)round:(float)x
 {
-    return roundf(x);
+    return p_round(x);
 }
 
 - (float)sq:(float)x
@@ -219,39 +213,37 @@
 
 - (float)acos:(float)x
 {
-    float y = [self constrain:x :-1 :1];
-    return acosf(y);
+    return p_acos(x);
 }
 
 - (float)asin:(float)x
 {
-    float y = [self constrain:x :-1.0f :1.0f];
-    return asinf(y);
+    return p_asin(x);
 }
 
 - (float)atan:(float)x
 {
-    return atanf(x);
+    return p_atan(x);
 }
 
 - (float)atan2:(float)y :(float)x
 {
-    return atan2f(y, x);
+    return p_atan2(y, x);
 }
 
 - (float)cos:(float)x
 {
-    return cosf(x);
+    return p_cos(x);
 }
 
 - (float)degrees:(float)angle
 {
-    return angle * 180.0f / PI;
+    return p_degrees(angle);
 }
 
 - (float)radians:(float)angle
 {
-    return angle * PI / 180.0f;
+    return p_radians(angle);
 }
 
 - (float)sin:(float)x
@@ -261,9 +253,7 @@
 
 - (float)tan:(float)x
 {
-    if (fabs(fmodf(x / HALF_PI, 2.0f) - 1.0f) < EPSILON) return 0;
-    
-    return tanf(x);
+    return p_tan(x);
 }
 
 
