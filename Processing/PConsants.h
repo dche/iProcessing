@@ -1,16 +1,38 @@
 /*
- *  ProcessingMacros.h
+ *  PConstants.h
  *  iProcessing
  *
- *  Defines names used as Processing constants.
+ *  Macros used as Processing constants.
  *
  *  Created by Kenan Che on 09-06-05.
  *  Copyright 2009 campl software. All rights reserved.
  *
  */
 
-/// color type.
-typedef UInt32 color;
+#pragma mark -
+#pragma mark Graphics mode
+#pragma mark -
+
+#define OPENGL      0
+#define P3D         OPENGL
+#define QUARTZ2D    1
+#define P2D         2
+
+#pragma mark -
+#pragma mark Math
+#pragma mark -
+
+#define EPSILON  (1e-3)
+
+#define PI  (3.14159265358979323846f)
+#define HALF_PI     (PI * 0.5f)
+#define THIRD_PI    (PI / 3.0f)
+#define QUARTER_PI  (PI * 0.25f)
+#define TWO_PI      (PI * 2.0f)
+
+#pragma mark -
+#pragma mark color and image
+#pragma mark -
 
 #define R  (3)
 #define G  (2)
@@ -20,25 +42,23 @@ typedef UInt32 color;
 #define H  (1)
 #define S  (2)
 
-#define EPSILON  (0.0001f)
+#define COLOR_SHIFT(c)  ((3 - (c)) * 8)
+#define RED_SHIFT       COLOR_SHIFT(R)
+#define GREEN_SHIFT     COLOR_SHIFT(G)
+#define BLUE_SHIFT      COLOR_SHIFT(B)
+#define ALPHA_SHIFT     COLOR_SHIFT(A)
 
-// useful goodness
+#define RED_MASK    (0xff << RED_SHIFT)
+#define GREEN_MASK  (0xff << GREEN_SHIFT)
+#define BLUE_MASK   (0xff << BLUE_SHIFT)
+#define ALPHA_MASK  (0xff << ALPHA_SHIFT)
 
-#define PI  (3.14159265358979323846f)
-#define HALF_PI     (PI * 0.5f)
-#define THIRD_PI    (PI / 3.0f)
-#define QUARTER_PI  (PI * 0.25f)
-#define TWO_PI      (PI * 2.0f)
-
-// for colors and/or images
-
-#define RGB    (1)  // image & color
+#define RGB    (1)  // image & color mode
 #define ARGB   (2)  // image
 #define RGBA   (2)
-#define HSB    (3)  // color
+#define HSB    (3)  // color mode
 #define ALPHA  (4)  // image
 #define CMYK   (5)  // image & color (someday)
-
 
 // image file types
 
@@ -46,7 +66,6 @@ typedef UInt32 color;
 #define TARGA  (1)
 #define JPEG   (2)
 #define GIF    (3)
-
 
 // filter/convert types
 
@@ -58,7 +77,6 @@ typedef UInt32 color;
 #define THRESHOLD  (16)
 #define ERODE      (17)
 #define DILATE     (18)
-
 
 // blend mode keyword definitions
 
@@ -78,26 +96,10 @@ typedef UInt32 color;
 #define DODGE       (1 << 12)
 #define BURN        (1 << 13)
 
-// colour component bitmasks
 
-#define RED_SHIFT   ((3 - R) * 8)
-#define GREEN_SHIFT ((3 - G) * 8)
-#define BLUE_SHIFT  ((3 - B) * 8)
-#define ALPHA_SHIFT ((3 - A) * 8)
-
-#define RED_MASK    (0xff << RED_SHIFT)
-#define GREEN_MASK  (0xff << GREEN_SHIFT)
-#define BLUE_MASK   (0xff << BLUE_SHIFT)
-#define ALPHA_MASK  (0xff << ALPHA_SHIFT)
-
-// types of projection matrices
-
-#define CUSTOM        (0) // user-specified fanciness
-#define ORTHOGRAPHIC  (2) // 2D isometric projection
-#define PERSPECTIVE   (3) // perspective matrix
-
-
-// shapes
+#pragma mark -
+#pragma mark shapes
+#pragma mark -
 
 // the low four bits set the variety,
 // higher bits set the specific shape type
@@ -136,73 +138,19 @@ typedef UInt32 color;
 
 // shape drawing modes
 
-/** Draw mode convention to use (x, y) to (width, height) */
+/// Draw mode convention to use (x, y) to (width, height)
 #define CORNER    (0)
-/** Draw mode convention to use (x1, y1) to (x2, y2) coordinates */
+/// Draw mode convention to use (x1, y1) to (x2, y2) coordinates
 #define CORNERS   (1)
-/** Draw mode from the center, and using the radius */
+/// Draw mode from the center, and using the radius
 #define RADIUS    (2)
-/**
- * Draw from the center, using second pair of values as the diameter.
- * Formerly called CENTER_DIAMETER in alpha releases.
- */
+/// Draw from the center, using second pair of values as the diameter.
 #define CENTER    (3)
-/**
- * Synonym for the CENTER constant. Draw from the center,
- * using second pair of values as the diameter.
- */
-#define DIAMETER  (3)
 
-// Horizontal alignment modes for text, and mouse buttons
-
+/// Horizontal alignment modes for text, and mouse buttons
 #define LEFT    (0)
 #define RIGHT   (1)
 // Share CENTER with shape modes.
-
-// vertically alignment modes for text
-
-/** Default vertical alignment for text placement */
-#define BASELINE  (0)
-/** Align text to the top */
-#define TOP  (101)
-/** Align text from the bottom, using the baseline. */
-#define BOTTOM  (102)
-
-
-// uv texture orientation modes
-
-/** texture coordinates in 0..1 range */
-#define NORMAL      (1)
-/** texture coordinates based on image width/height */
-#define IMAGE       (2)
-
-
-// text placement modes
-
-/**
- * textMode(MODEL) is the default, meaning that characters
- * will be affected by transformations like any other shapes.
- * <p/>
- * Changed value in 0093 to not interfere with LEFT, CENTER, and RIGHT.
- */
-#define MODEL  (4)
-
-/**
- * textMode(SHAPE) draws text using the the glyph outlines of
- * individual characters rather than as textures. If the outlines are
- * not available, then textMode(SHAPE) will be ignored and textMode(MODEL)
- * will be used instead. For this reason, be sure to call textMode()
- * <EM>after</EM> calling textFont().
- * <p/>
- * Currently, textMode(SHAPE) is only supported by OPENGL mode.
- * It also requires Java 1.2 or higher (OPENGL requires 1.4 anyway)
- */
-#define SHAPE  (5)
-
-
-// text alignment modes
-// are inherited from LEFT, CENTER, RIGHT
-
 
 // stroke modes
 
@@ -212,6 +160,58 @@ typedef UInt32 color;
 #define MITER     (1 << 3)
 #define BEVEL     (1 << 5)
 
+#pragma mark -
+#pragma mark Text
+#pragma mark -
+
+// vertically alignment modes for text
+
+/// Default vertical alignment for text placement
+#define BASELINE  (0)
+/// Align text to the top
+#define TOP  (101)
+/// Align text from the bottom, using the baseline.
+#define BOTTOM  (102)
+
+// text placement modes
+
+/**
+ * textMode(MODEL) is the default, meaning that characters
+ * will be affected by transformations like any other shapes.
+ * <p/>
+ */
+#define MODEL  (4)
+
+/**
+ * textMode(SHAPE) draws text using the the glyph outlines of
+ * individual characters rather than as textures. If the outlines are
+ * not available, then textMode(SHAPE) will be ignored and textMode(MODEL)
+ * will be used instead. For this reason, be sure to call textMode()
+ * <EM>after</EM> calling textFont().
+ */
+#define SHAPE  (5)
+
+
+// text alignment modes
+// are inherited from LEFT, CENTER, RIGHT
+
+
+#pragma mark -
+#pragma mark 3D
+#pragma mark -
+
+// types of projection matrices
+
+#define CUSTOM        (0) // user-specified fanciness
+#define ORTHOGRAPHIC  (2) // 2D isometric projection
+#define PERSPECTIVE   (3) // perspective matrix
+
+// uv texture orientation modes
+
+/// texture coordinates in 0..1 range
+#define NORMAL      (1)
+/// texture coordinates based on image width/height
+#define IMAGE       (2)
 
 // lighting
 
@@ -219,9 +219,3 @@ typedef UInt32 color;
 #define DIRECTIONAL   (1)
 //#define POINT   (2)  // shared with shape feature
 #define SPOT  (3)
-
-// Graphic mode
-#define OPENGL      0
-#define P3D         OPENGL
-#define QUARTZ2D    1
-#define P2D         2

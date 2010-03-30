@@ -31,6 +31,8 @@
 		5D1E8C34101571B5002C61D7 /* CubesWithinCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E8C33101571B5002C61D7 /* CubesWithinCube.m */; };
 		5D1E8EF71019C2FC002C61D7 /* berlin-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D1E8EF61019C2FC002C61D7 /* berlin-1.jpg */; };
 		5D1E940A101B62CF002C61D7 /* world32k.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D1E9409101B62CF002C61D7 /* world32k.jpg */; };
+		5D1F1D98115EFFA300CDF2D0 /* PEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F1D96115EFFA300CDF2D0 /* PEffect.h */; };
+		5D1F1D99115EFFA300CDF2D0 /* PEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F1D97115EFFA300CDF2D0 /* PEffect.m */; };
 		5D22DB9810335CCD00BB1809 /* PWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D22DB9610335CCD00BB1809 /* PWorld.h */; };
 		5D22DB9910335CCD00BB1809 /* PWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D22DB9710335CCD00BB1809 /* PWorld.m */; };
 		5D260A010FF5EDD000E0C0FC /* ShapePrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D260A000FF5EDD000E0C0FC /* ShapePrimitives.m */; };
@@ -64,7 +66,7 @@
 		5DA3EDFD0FE6AEEC0028380E /* PGraphics+shape.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE10FE6AEEC0028380E /* PGraphics+shape.h */; };
 		5DA3EDFE0FE6AEEC0028380E /* PGraphics+shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE20FE6AEEC0028380E /* PGraphics+shape.m */; };
 		5DA3EE010FE6AEEC0028380E /* Processing+core.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA3EDE50FE6AEEC0028380E /* Processing+core.m */; };
-		5DA3EE020FE6AEEC0028380E /* ProcessingMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */; };
+		5DA3EE020FE6AEEC0028380E /* PConsants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE60FE6AEEC0028380E /* PConsants.h */; };
 		5DA3EE030FE6AEEC0028380E /* PGraphics+math.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDE70FE6AEEC0028380E /* PGraphics+math.h */; };
 		5DA3EE080FE6AEEC0028380E /* Processing+core.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA3EDED0FE6AEEC0028380E /* Processing+core.h */; };
 		5DA3EE260FE6B35F0028380E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3EE250FE6B35E0028380E /* OpenGLES.framework */; };
@@ -117,7 +119,6 @@
 		5DCE9D9E0FFC63E700A5E7DE /* trees.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5DCE9D9D0FFC63E700A5E7DE /* trees.jpg */; };
 		5DCE9DD50FFCB3B900A5E7DE /* ProcessingFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DCE9DD40FFCB3B900A5E7DE /* ProcessingFunctions.h */; };
 		5DCE9E7C0FFCD4D200A5E7DE /* ImageBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE9E7B0FFCD4D200A5E7DE /* ImageBrightness.m */; };
-		5DCE9EE30FFDB7A900A5E7DE /* OpenGL_support.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DCE9EE20FFDB7A900A5E7DE /* OpenGL_support.h */; };
 		5DD190D30FEA48FF006A7842 /* ProcessingTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DD190D10FEA48FF006A7842 /* ProcessingTestViewController.xib */; };
 		5DD190E10FEA4970006A7842 /* ProcessingTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD190E00FEA4970006A7842 /* ProcessingTestViewController.m */; };
 		5DD1912D0FEA67AD006A7842 /* Hue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD1912C0FEA67AD006A7842 /* Hue.m */; };
@@ -254,6 +255,8 @@
 		5D1E8C33101571B5002C61D7 /* CubesWithinCube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubesWithinCube.m; sourceTree = "<group>"; };
 		5D1E8EF61019C2FC002C61D7 /* berlin-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "berlin-1.jpg"; sourceTree = "<group>"; };
 		5D1E9409101B62CF002C61D7 /* world32k.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = world32k.jpg; sourceTree = "<group>"; };
+		5D1F1D96115EFFA300CDF2D0 /* PEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEffect.h; sourceTree = "<group>"; };
+		5D1F1D97115EFFA300CDF2D0 /* PEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEffect.m; sourceTree = "<group>"; };
 		5D22DB95103348E500BB1809 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		5D22DB9610335CCD00BB1809 /* PWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWorld.h; sourceTree = "<group>"; };
 		5D22DB9710335CCD00BB1809 /* PWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWorld.m; sourceTree = "<group>"; };
@@ -297,7 +300,7 @@
 		5DA3EDE10FE6AEEC0028380E /* PGraphics+shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+shape.h"; sourceTree = "<group>"; };
 		5DA3EDE20FE6AEEC0028380E /* PGraphics+shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGraphics+shape.m"; sourceTree = "<group>"; };
 		5DA3EDE50FE6AEEC0028380E /* Processing+core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Processing+core.m"; sourceTree = "<group>"; };
-		5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingMacros.h; sourceTree = "<group>"; };
+		5DA3EDE60FE6AEEC0028380E /* PConsants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PConsants.h; sourceTree = "<group>"; };
 		5DA3EDE70FE6AEEC0028380E /* PGraphics+math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGraphics+math.h"; sourceTree = "<group>"; };
 		5DA3EDEC0FE6AEEC0028380E /* Processing */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Processing; sourceTree = "<group>"; };
 		5DA3EDED0FE6AEEC0028380E /* Processing+core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Processing+core.h"; sourceTree = "<group>"; };
@@ -393,7 +396,6 @@
 		5DCE9DD40FFCB3B900A5E7DE /* ProcessingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingFunctions.h; sourceTree = "<group>"; };
 		5DCE9E7A0FFCD4D200A5E7DE /* ImageBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrightness.h; sourceTree = "<group>"; };
 		5DCE9E7B0FFCD4D200A5E7DE /* ImageBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrightness.m; sourceTree = "<group>"; };
-		5DCE9EE20FFDB7A900A5E7DE /* OpenGL_support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_support.h; sourceTree = "<group>"; };
 		5DD190D10FEA48FF006A7842 /* ProcessingTestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProcessingTestViewController.xib; sourceTree = "<group>"; };
 		5DD190DF0FEA4970006A7842 /* ProcessingTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingTestViewController.h; sourceTree = "<group>"; };
 		5DD190E00FEA4970006A7842 /* ProcessingTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessingTestViewController.m; sourceTree = "<group>"; };
@@ -633,6 +635,13 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
+		5D17281C11610F3A00A1F14A /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Effects;
+			sourceTree = "<group>";
+		};
 		5D1E8C2E1014DC5C002C61D7 /* Simulate */ = {
 			isa = PBXGroup;
 			children = (
@@ -733,6 +742,7 @@
 		5DA3EDBF0FE69D1D0028380E /* Processing */ = {
 			isa = PBXGroup;
 			children = (
+				5D17281C11610F3A00A1F14A /* Effects */,
 				5DDDF4A0101CE26100B3881E /* World */,
 				5D04CEB6100DCB1100D0ED13 /* Sound */,
 				5DA3EDD50FE6AEEC0028380E /* Processing.h */,
@@ -748,25 +758,26 @@
 				5DA3EDE20FE6AEEC0028380E /* PGraphics+shape.m */,
 				5DA3EDE70FE6AEEC0028380E /* PGraphics+math.h */,
 				5DA3EDDA0FE6AEEC0028380E /* PGraphics+math.m */,
-				5DE41D701022C35E00A7A9E3 /* ProcessingMath.h */,
 				5DA3EDEC0FE6AEEC0028380E /* Processing */,
-				5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */,
-				5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */,
 				5DA3EDED0FE6AEEC0028380E /* Processing+core.h */,
 				5DA3EDE50FE6AEEC0028380E /* Processing+core.m */,
-				5DA3EDE60FE6AEEC0028380E /* ProcessingMacros.h */,
+				5DA3EDE60FE6AEEC0028380E /* PConsants.h */,
+				5DE41D701022C35E00A7A9E3 /* ProcessingMath.h */,
 				5DD626CD0FF59F480056B47C /* ProcessingTypes.h */,
 				5DCE9DD40FFCB3B900A5E7DE /* ProcessingFunctions.h */,
 				5DF1FFF70FFA1DBF00B7AFBE /* PRenderProtocol.h */,
+				5DF1FFF30FFA1D7700B7AFBE /* PGraphics.h */,
+				5DF1FFF40FFA1D7700B7AFBE /* PGraphics.m */,
 				5DA3EF640FE6ED170028380E /* PRender2D.h */,
 				5DA3EF650FE6ED170028380E /* PRender2D.m */,
 				5DA3EF680FE6F2740028380E /* PRender3D.h */,
 				5DA3EF690FE6F2740028380E /* PRender3D.m */,
 				5DEBDEAA1045EAC30051666E /* PRender3D_GLES2.h */,
 				5DEBDEAB1045EAC30051666E /* PRender3D_GLES2.m */,
+				5D1F1D96115EFFA300CDF2D0 /* PEffect.h */,
+				5D1F1D97115EFFA300CDF2D0 /* PEffect.m */,
 				5DFB75EF1005F9DB001DFD19 /* PGraphics+p3d.h */,
 				5DFB75F01005F9DB001DFD19 /* PGraphics+p3d.m */,
-				5DCE9EE20FFDB7A900A5E7DE /* OpenGL_support.h */,
 				5DF100090FFAA46700B7AFBE /* PImage.h */,
 				5DF100080FFAA46700B7AFBE /* PImage.m */,
 				5D1E8BCA1014D658002C61D7 /* PTexture.h */,
@@ -1138,7 +1149,7 @@
 				5DA3EDF70FE6AEEC0028380E /* PGraphics+text.h in Headers */,
 				5DA3EDFA0FE6AEEC0028380E /* PGraphics+color.h in Headers */,
 				5DA3EDFD0FE6AEEC0028380E /* PGraphics+shape.h in Headers */,
-				5DA3EE020FE6AEEC0028380E /* ProcessingMacros.h in Headers */,
+				5DA3EE020FE6AEEC0028380E /* PConsants.h in Headers */,
 				5DA3EE030FE6AEEC0028380E /* PGraphics+math.h in Headers */,
 				5DA3EE080FE6AEEC0028380E /* Processing+core.h in Headers */,
 				5DA3EF660FE6ED170028380E /* PRender2D.h in Headers */,
@@ -1150,7 +1161,6 @@
 				5DF1FFF80FFA1DBF00B7AFBE /* PRenderProtocol.h in Headers */,
 				5DF1000B0FFAA46700B7AFBE /* PImage.h in Headers */,
 				5DCE9DD50FFCB3B900A5E7DE /* ProcessingFunctions.h in Headers */,
-				5DCE9EE30FFDB7A900A5E7DE /* OpenGL_support.h in Headers */,
 				5DFB75F11005F9DB001DFD19 /* PGraphics+p3d.h in Headers */,
 				5D1E8BCC1014D658002C61D7 /* PTexture.h in Headers */,
 				5DE41D711022C35E00A7A9E3 /* ProcessingMath.h in Headers */,
@@ -1160,6 +1170,7 @@
 				5DEBDEAC1045EAC30051666E /* PRender3D_GLES2.h in Headers */,
 				5D8F997A1051996E00C12DD2 /* PSound.h in Headers */,
 				5D8F997E10519A4C00C12DD2 /* Processing+sound.h in Headers */,
+				5D1F1D98115EFFA300CDF2D0 /* PEffect.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1422,6 +1433,7 @@
 				5DEBDEAD1045EAC30051666E /* PRender3D_GLES2.m in Sources */,
 				5D8F997B1051996E00C12DD2 /* PSound.m in Sources */,
 				5D8F997F10519A4C00C12DD2 /* Processing+sound.m in Sources */,
+				5D1F1D99115EFFA300CDF2D0 /* PEffect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

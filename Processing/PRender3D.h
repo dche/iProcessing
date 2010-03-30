@@ -9,7 +9,7 @@
 #import "PRenderProtocol.h"
 #import "PGraphics.h"
 
-#import "OpenGL_support.h"
+#import <OpenGLES/EAGL.h>
 
 @interface PRender3D : UIView <PRender> {
 

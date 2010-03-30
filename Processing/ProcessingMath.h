@@ -184,7 +184,7 @@ static inline float cosineInterpolate(float a, float b, float x)
     if (x == 1) return b;
     
     float ft = x * PI;
-	float f = (1 - cosf(ft)) * 0.5f;
+	float f = (1 - p_cos(ft)) * 0.5f;
     
-	return a*(1-f) + b*f;    
+	return a * (1 - f) + b * f;    
 }

@@ -36,12 +36,15 @@
  3. This notice may not be removed or altered from any source distribution.
  */
 
-#import "ProcessingMacros.h"
+#import "PConsants.h"
 #import "ProcessingMath.h"
 
 #pragma mark -
 #pragma mark Color Manipulation
 #pragma mark -
+
+/// color type.
+typedef UInt32 color;
 
 typedef enum {
     PBlackColor = ALPHA_MASK,
@@ -68,7 +71,7 @@ typedef struct {
 static inline UInt8 colorValue(color clr, unsigned int component)
 {
     if (component > 3) return 0;
-    return (clr >> ((3 - component) * 8) & 0xFF);
+    return clr >> (COLOR_SHIFT(component) & 0xFF);
 }
 
 static inline float PColorNorm(color clr, unsigned int component)
@@ -182,7 +185,7 @@ static inline PVector PVectorCross(PVector vr, PVector vl)
 
 static inline void PVectorNormalize(PVector *v)
 {
-    float mag = sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
+    float mag = p_mag(v->x, v->y, v->z);
 
     if (mag > 0) {
         v->x /= mag;
